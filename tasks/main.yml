@@ -14,3 +14,24 @@
   package:
     name: fail2ban
 
+- name: Allow workstation to be broadcasted via Multicast for discover convenience
+  rescue:
+    - name: Bailout when any task failed
+      fail:
+        msg: Error occurred during customizing Avahi daemon settings
+  block:
+    - name: 'Allow workstation to be broadcasted via Multicast for discover convenience: Patch Avahi daemon configuration'
+      become: True
+      register: avahi_patched
+      replace:
+        path: /etc/avahi/avahi-daemon.conf
+        regexp: '^publish-workstation=.*$'
+        replace: publish-workstation=yes
+
+    - name: 'Allow workstation to be broadcasted via Multicast for discover convenience: Reload Avahi daemon config'
+      become: True
+      when: avahi_patched.changed
+      service:
+        name: avahi-daemon.service
+        # reload doesn't work
+        state: restarted
