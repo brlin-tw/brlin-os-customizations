@@ -1,4 +1,4 @@
-- name: 套用系統更新以避免觸發既有軟體缺陷
+- name: Apply system updates to avoid known issues
   become: True
   package:
     name: '*'

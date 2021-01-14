@@ -1,4 +1,4 @@
-- name: 套用客製內容
+- name: Apply OS customizations
   hosts: all
   roles:
     - name: '{{ playbook_dir }}/..'

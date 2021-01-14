@@ -1,13 +1,13 @@
-# Buo-ren, Lin's OS Customizations<br>林博仁的作業系統客製內容（開發中）
+# Buo-ren, Lin's OS Customizations
 
-本專案提供了個人慣用的作業系統環境的建置程序，用於方便自己在系統重新安裝後快速地恢復工作環境
+This project provides personally preferred operating system environment build process, for convenience after re-installing the system.
 
-透過使用 Ansible 自動化技術進行佈署，未來亦有可能支援其他作業系統散步版本
+Via the use of Ansible automation, it should be able to extend it to other OS distributions.
 
-## 依賴軟體
+## Dependencies
 
 * [Ansible](https://ansible.com)
 
-## 使用方式
+## How to use
 
-（待補）
+T.B.A.
