@@ -3,3 +3,14 @@
   package:
     name: '*'
     state: latest
+
+- name: Install OpenSSH server for administration convenience
+  become: True
+  package:
+    name: openssh-server
+
+- name: Install Fail2ban to prevent bruteforce attack of SSH service
+  become: True
+  package:
+    name: fail2ban
+
