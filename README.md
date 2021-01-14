@@ -1,4 +1,4 @@
-# brlin-os-customizations 林博仁的作業系統客製內容（開發中）
+# Buo-ren, Lin's OS Customizations<br>林博仁的作業系統客製內容（開發中）
 
 本專案提供了個人慣用的作業系統環境的建置程序，用於方便自己在系統重新安裝後快速地恢復工作環境
 
