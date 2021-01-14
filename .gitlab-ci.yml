@@ -1,0 +1,5 @@
+static-analysis:
+  stage: test
+  script:
+    - echo "Hello, $GITLAB_USER_LOGIN!"
+    - echo "This job tests something"
