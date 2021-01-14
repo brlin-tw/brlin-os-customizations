@@ -1,0 +1,5 @@
+- name: 套用系統更新以避免觸發既有軟體缺陷
+  become: True
+  package:
+    name: '*'
+    state: latest

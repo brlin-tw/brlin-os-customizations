@@ -1,0 +1,14 @@
+---
+# Ansible的被控設備清單(inventory)
+# 編輯參考：
+# - How to build your inventory — Ansible Documentation
+#   https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
+all:
+  # 主機定義
+  hosts:
+    remotehost:
+      ansible_host: 1.2.3.4
+      ansible_port: 2222
+      ansible_user: username
+      ansible_password: userpass
+      ansible_become_password: sudopass
