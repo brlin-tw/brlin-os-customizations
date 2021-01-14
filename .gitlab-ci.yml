@@ -1,5 +1,5 @@
 static-analysis:
   stage: test
+  image: alpine:3.12
   script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
-    - echo "This job tests something"
+    - ./continuous-integration/static-analysis.sh
