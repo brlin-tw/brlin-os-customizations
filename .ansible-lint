@@ -3,4 +3,4 @@ skip_list:
   # FALSE_POSITIVE: Using non-conforming role name for local launchability
   - '106'
   # FALSE_POSITIVE: We specifically intend to upgrade the whole system
-  - '403'  
+  - '403'
