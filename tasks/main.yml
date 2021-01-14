@@ -35,3 +35,26 @@
         name: avahi-daemon.service
         # reload doesn't work
         state: restarted
+
+- name: Install common utilities
+  become: True
+  package:
+    name:
+      - ghex
+      - git
+      - git-lfs
+      # For the `urlencode` command
+      - gridsite-clients
+      - kate
+      - keepassxc
+      - pipx
+      - tmux
+      - vcsh
+      - vim
+      - wireguard
+
+- name: Install codecs for multimedia playback
+  become: True
+  package:
+    name:
+      - ubuntu-restricted-extras
