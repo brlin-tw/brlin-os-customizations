@@ -1,0 +1,14 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Buo-ren, Lin's OS Customizations
+Upstream-Contact: 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+Source: https://gitlab.com/brlin/brlin-os-customizations
+
+# Sample paragraph, commented out:
+#
+# Files: src/*
+# Copyright: $YEAR $NAME <$CONTACT>
+# License: ...
+
+Files: README.md
+Copyright: 2021 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+License: CC-BY-SA-4.0

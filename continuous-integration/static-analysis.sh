@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 # Prepare and run static analysis to the source
+# Copyright 2020 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+
 apk add \
     bash \
     gcc \
