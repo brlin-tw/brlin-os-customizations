@@ -1,6 +1,7 @@
 ---
-# Ansible的被控設備清單(inventory)
-# 編輯參考：
+# Ansible inventory for local development testing
+#
+# Reference:
 # - How to build your inventory — Ansible Documentation
 #   https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
 #
@@ -11,11 +12,9 @@ all:
   vars:
     ansible_user: vagrant
 
-  # 主機定義
   hosts:
     default:
       ansible_host: 192.168.50.11
       ansible_ssh_private_key_file: .vagrant/machines/{{ inventory_hostname }}/virtualbox/private_key
 
-  # 主機群組定義
   children:

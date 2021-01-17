@@ -1,6 +1,7 @@
 ---
-# Ansible的被控設備清單(inventory)
-# 編輯參考：
+# Ansible inventory for regular remote hosts
+#
+# Reference:
 # - How to build your inventory — Ansible Documentation
 #   https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
 #
