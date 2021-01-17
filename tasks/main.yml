@@ -45,8 +45,12 @@
       - git-lfs
       # For the `urlencode` command
       - gridsite-clients
+      - htop
+      - iftop
+      - iotop
       - kate
       - keepassxc
+      - lm-sensors
       - pipx
       - tmux
       - vcsh
