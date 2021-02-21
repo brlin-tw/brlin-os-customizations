@@ -1,3 +1,14 @@
+# GitLab CI configuration file
+#
+# Reference:
+#   - GitLab CI/CD | GitLab
+#     https://docs.gitlab.com/ee/ci
+#   - Keyword reference for the .gitlab-ci.yml file | GitLab
+#     https://docs.gitlab.com/ee/ci/yaml
+#
+# Copyright 2021 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+
 static-analysis:
   stage: test
   image: alpine:3.12
