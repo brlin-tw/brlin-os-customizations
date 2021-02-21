@@ -3,6 +3,11 @@
 # Copyright 2021 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
+- name: Update local software sources cache
+  become: True
+  apt:
+    update_cache: yes
+
 - name: Apply system updates to avoid known issues
   become: True
   package:
