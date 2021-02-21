@@ -1,0 +1,22 @@
+# udev(7) rule for making libvirt bridge interfaces not managed by
+# NetworkManager(8)
+#
+# Adapted from /usr/lib/udev/rules.d/85-nm-unmanaged.rules
+# Do not manage Docker bridge interfaces (!15) · Merge Requests · NetworkManager / NetworkManager · GitLab
+# https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/merge_requests/15#note_30764
+#
+# Also adapted from:
+# Do not manage Docker bridge interfaces (!15) · Merge Requests · NetworkManager / NetworkManager · GitLab
+# https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/merge_requests/15#note_30764
+#
+# We would like to thank Tomáš Janoušek for sharing the initial code
+#
+# Copyright 2020 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+
+SUBSYSTEM!="net", GOTO="nm_unmanaged_docker_end"
+ACTION!="add|change", GOTO="nm_unmanaged_docker_end"
+
+SUBSYSTEM=="net", ACTION=="add|change", ATTR{address}=="52:54:00:*", ENV{INTERFACE}=="virbr*", ENV{NM_UNMANAGED}="1"
+
+LABEL="nm_unmanaged_docker_end"
