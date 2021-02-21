@@ -46,3 +46,10 @@ repos:
     rev: 2.1.5
     hooks:
       - id: shellcheck
+
+  # Check REUSE-compliance
+  # https://reuse.software/
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: latest
+    hooks:
+      - id: reuse
