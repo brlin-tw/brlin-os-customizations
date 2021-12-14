@@ -99,3 +99,10 @@
   copy:
     src: dont-manage-libvirt-managed-bridges.rules
     dest: /etc/udev/rules.d/85-nm-unmanaged-libvirt.rules
+
+- name: Install preferred desktop environments
+  become: True
+  package:
+    name:
+      - kde-standard
+      - xfce4
