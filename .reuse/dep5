@@ -9,6 +9,8 @@ Source: https://gitlab.com/brlin-tw/brlin-os-customizations
 # Copyright: $YEAR $NAME <$CONTACT>
 # License: ...
 
-Files: README* */README*
+Files:
+ README*
+ */README*
 Copyright: 2021 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
 License: CC-BY-SA-4.0
