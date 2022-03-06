@@ -81,6 +81,9 @@
   copy:
     src: dont-manage-docker-managed-bridges.rules
     dest: /etc/udev/rules.d/85-nm-unmanaged-docker.rules
+    owner: root
+    group: root
+    mode: 0644
 
 - name: Making LXD bridge interfaces not managed by NetworkManager
   become: True
@@ -90,6 +93,9 @@
   copy:
     src: dont-manage-lxd-managed-bridges.rules
     dest: /etc/udev/rules.d/85-nm-unmanaged-lxd.rules
+    owner: root
+    group: root
+    mode: 0644
 
 - name: Making libvirt bridge interfaces not managed by NetworkManager
   become: True
@@ -99,6 +105,9 @@
   copy:
     src: dont-manage-libvirt-managed-bridges.rules
     dest: /etc/udev/rules.d/85-nm-unmanaged-libvirt.rules
+    owner: root
+    group: root
+    mode: 0644
 
 - name: Install preferred desktop environments
   become: True
