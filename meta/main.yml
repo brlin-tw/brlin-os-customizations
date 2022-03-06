@@ -1,0 +1,37 @@
+---
+# Ansible role metadata
+#
+# Reference:
+#
+# * Role directory structure — Roles — Ansible Documentation
+#   https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-directory-structure
+# * Using `meta/main.yml — Dependencies — Galaxy User Guide — Ansible
+#   Galaxy Documentation
+#   https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#using-meta-main-yml
+# * Role Metadata — Creating Roles — Ansible Galaxy Documentation
+#   https://galaxy.ansible.com/docs/contributing/creating_role.html?role-metadata
+#
+# Copyright 2022 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+
+galaxy_info:
+  role_name: brlin-os-customizations
+  author: brlin
+  description: This role provides personally preferred operating system customizations, for convenience after re-installing the system.
+  license: CC-BY-SA-4.0+
+
+  # 我們目前僅支援受官方支援的 Ansible 版本
+  # https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html#ansible-core-release-cycle
+  min_ansible_version: 2.9
+
+  galaxy_tags:
+    - os
+    - customization
+
+  # 劇本平台相容性宣告
+  # https://galaxy.ansible.com/api/v1/platforms/?search=ubuntu
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+        - impish
