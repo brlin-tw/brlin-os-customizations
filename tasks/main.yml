@@ -121,3 +121,7 @@
   become: True
   reboot:
 
+- name: Report final result
+  debug:
+    msg: Customization finished, if the playbook is run on the localhost please reboot the system to apply modifications.
+
