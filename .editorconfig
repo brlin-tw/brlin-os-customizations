@@ -60,6 +60,9 @@ indent_size = 2
 [.*.{yml,yaml}]
 indent_size = 2
 
+[.ansible-lint]
+indent_size = 2
+
 # Keep the indentation style of the license text verbatim
 [/LICENSES/*]
 indent_size = unset
