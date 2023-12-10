@@ -5,35 +5,35 @@
 
 - name: Update local software sources cache
   become: True
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
 
 - name: Apply system updates to avoid known issues
   become: True
-  package:
+  ansible.builtin.package:
     name: '*'
     state: latest
 
 - name: Install OpenSSH server for administration convenience
   become: True
-  package:
+  ansible.builtin.package:
     name: openssh-server
 
 - name: Install Fail2ban to prevent bruteforce attack of SSH service
   become: True
-  package:
+  ansible.builtin.package:
     name: fail2ban
 
 - name: Allow workstation to be broadcasted via Multicast for discover convenience
   rescue:
     - name: Bailout when any task failed
-      fail:
+      ansible.builtin.fail:
         msg: Error occurred during customizing Avahi daemon settings
   block:
     - name: 'Allow workstation to be broadcasted via Multicast for discover convenience: Patch Avahi daemon configuration'
       become: True
       register: avahi_patched
-      replace:
+      ansible.builtin.replace:
         path: /etc/avahi/avahi-daemon.conf
         regexp: '^publish-workstation=.*$'
         replace: publish-workstation=yes
@@ -41,14 +41,14 @@
     - name: 'Allow workstation to be broadcasted via Multicast for discover convenience: Reload Avahi daemon config'
       become: True
       when: avahi_patched.changed
-      service:
+      ansible.builtin.service:
         name: avahi-daemon.service
         # reload doesn't work
         state: restarted
 
 - name: Install common utilities
   become: True
-  package:
+  ansible.builtin.package:
     name:
       - ghex
       - git
@@ -69,7 +69,7 @@
 
 - name: Install codecs for multimedia playback
   become: True
-  package:
+  ansible.builtin.package:
     name:
       - ubuntu-restricted-extras
 
@@ -78,7 +78,7 @@
   notify:
     - Apply udev rule changes
     - Reload NetworkManager configuration
-  copy:
+  ansible.builtin.copy:
     src: dont-manage-docker-managed-bridges.rules
     dest: /etc/udev/rules.d/85-nm-unmanaged-docker.rules
     owner: root
@@ -90,7 +90,7 @@
   notify:
     - Apply udev rule changes
     - Reload NetworkManager configuration
-  copy:
+  ansible.builtin.copy:
     src: dont-manage-lxd-managed-bridges.rules
     dest: /etc/udev/rules.d/85-nm-unmanaged-lxd.rules
     owner: root
@@ -102,7 +102,7 @@
   notify:
     - Apply udev rule changes
     - Reload NetworkManager configuration
-  copy:
+  ansible.builtin.copy:
     src: dont-manage-libvirt-managed-bridges.rules
     dest: /etc/udev/rules.d/85-nm-unmanaged-libvirt.rules
     owner: root
@@ -111,7 +111,7 @@
 
 - name: Install preferred desktop environments
   become: True
-  package:
+  ansible.builtin.package:
     name:
       - kde-standard
       - xfce4
@@ -119,8 +119,8 @@
 - name: Reboot
   when: ansible_connection != "local"
   become: True
-  reboot:
+  ansible.builtin.reboot:
 
 - name: Report final result
-  debug:
+  ansible.builtin.debug:
     msg: Customization finished, if the playbook is run on the localhost please reboot the system to apply modifications.

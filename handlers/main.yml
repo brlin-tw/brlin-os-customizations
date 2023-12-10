@@ -4,10 +4,10 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0
 - name: Apply udev rule changes
   become: True
-  command: udevadm trigger
+  ansible.builtin.command: udevadm trigger
 
 - name: Reload NetworkManager configuration
   become: True
-  service:
+  ansible.builtin.service:
     name: NetworkManager.service
     state: reloaded

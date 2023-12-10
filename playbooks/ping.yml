@@ -6,4 +6,4 @@
   gather_facts: false
   tasks:
     - name: Attempt an Ansible connection to the managed node
-      ping:
+      ansible.builtin.ping:
