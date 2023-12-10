@@ -132,5 +132,6 @@ rules:
 
   # Use this rule to forbid non-explictly typed truthy values other than `true` and `false`, for example `YES`, `False` and `off`.
   # https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.truthy
-  truthy: disable
+  truthy:
+    level: warning
 ...
