@@ -117,7 +117,7 @@
       - xfce4
 
 - name: Reboot
-  when: ansible_connection != local
+  when: ansible_connection != "local"
   become: True
   reboot:
 
