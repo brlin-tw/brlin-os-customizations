@@ -11,6 +11,8 @@
 - name: Apply system updates to avoid known issues
   become: True
   ansible.builtin.package:
+    # We specifically intend to upgrade all packages here
+    # noqa package-latest
     name: '*'
     state: latest
 

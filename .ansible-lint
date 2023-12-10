@@ -7,6 +7,4 @@ exclude_paths:
   - .cache/
   - playbooks/roles/
 
-skip_list:
-  # FALSE_POSITIVE: We specifically intend to upgrade the whole system
-  - package-latest
+skip_list: []
