@@ -7,4 +7,6 @@ exclude_paths:
   - .cache/
   - playbooks/roles/
 
-skip_list: []
+skip_list:
+  # FALSE_POSITIVE: The proposed style isn't better than name-rescue-block
+  - key-order[task]
