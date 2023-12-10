@@ -15,7 +15,7 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 galaxy_info:
-  role_name: brlin-os-customizations
+  role_name: brlin_os_customizations
   author: brlin
   description: This role provides personally preferred operating system customizations, for convenience after re-installing the system.
   license: CC-BY-SA-4.0+

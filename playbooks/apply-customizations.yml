@@ -5,4 +5,4 @@
 - name: Apply OS customizations
   hosts: all
   roles:
-    - role: brlin.brlin-os-customizations
+    - role: brlin.brlin_os_customizations
