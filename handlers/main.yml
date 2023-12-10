@@ -12,3 +12,10 @@
   ansible.builtin.service:
     name: NetworkManager.service
     state: reloaded
+
+- name: Reload Avahi daemon config
+  become: True
+  ansible.builtin.service:
+    name: avahi-daemon.service
+    # reload doesn't work
+    state: restarted
