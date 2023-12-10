@@ -3,6 +3,10 @@
 # Copyright 2021 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
+exclude_paths:
+  - .cache/
+  - playbooks/roles/
+
 skip_list:
   # FALSE_POSITIVE: Using non-conforming role name for local launchability
   - '106'
