@@ -22,7 +22,7 @@ galaxy_info:
 
   # 我們目前僅支援受官方支援的 Ansible 版本
   # https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html#ansible-core-release-cycle
-  min_ansible_version: 2.9
+  min_ansible_version: '2.9'
 
   galaxy_tags:
     - os
