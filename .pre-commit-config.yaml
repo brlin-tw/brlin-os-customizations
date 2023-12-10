@@ -44,7 +44,7 @@ repos:
   # Check Ansible assets
   # https://github.com/ansible-community/ansible-lint
   - repo: https://github.com/ansible-community/ansible-lint.git
-    rev: v5.3.1
+    rev: v6.22.1
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
