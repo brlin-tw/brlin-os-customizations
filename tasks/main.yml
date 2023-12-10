@@ -4,12 +4,12 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 - name: Update local software sources cache
-  become: True
+  become: true
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
 
 - name: Apply system updates to avoid known issues
-  become: True
+  become: true
   ansible.builtin.package:
     # We specifically intend to upgrade all packages here
     # noqa package-latest
@@ -17,17 +17,17 @@
     state: latest
 
 - name: Install OpenSSH server for administration convenience
-  become: True
+  become: true
   ansible.builtin.package:
     name: openssh-server
 
 - name: Install Fail2ban to prevent bruteforce attack of SSH service
-  become: True
+  become: true
   ansible.builtin.package:
     name: fail2ban
 
 - name: Allow workstation to be broadcasted via Multicast for discover convenience
-  become: True
+  become: true
   notify:
     - Reload Avahi daemon config
   ansible.builtin.replace:
@@ -36,7 +36,7 @@
     replace: publish-workstation=yes
 
 - name: Install common utilities
-  become: True
+  become: true
   ansible.builtin.package:
     name:
       - ghex
@@ -57,13 +57,13 @@
       - wireguard
 
 - name: Install codecs for multimedia playback
-  become: True
+  become: true
   ansible.builtin.package:
     name:
       - ubuntu-restricted-extras
 
 - name: Making Docker bridge interfaces not managed by NetworkManager
-  become: True
+  become: true
   notify:
     - Apply udev rule changes
     - Reload NetworkManager configuration
@@ -75,7 +75,7 @@
     mode: 0644
 
 - name: Making LXD bridge interfaces not managed by NetworkManager
-  become: True
+  become: true
   notify:
     - Apply udev rule changes
     - Reload NetworkManager configuration
@@ -87,7 +87,7 @@
     mode: 0644
 
 - name: Making libvirt bridge interfaces not managed by NetworkManager
-  become: True
+  become: true
   notify:
     - Apply udev rule changes
     - Reload NetworkManager configuration
@@ -99,7 +99,7 @@
     mode: 0644
 
 - name: Install preferred desktop environments
-  become: True
+  become: true
   ansible.builtin.package:
     name:
       - kde-standard
@@ -107,7 +107,7 @@
 
 - name: Reboot
   when: ansible_connection != "local"
-  become: True
+  become: true
   ansible.builtin.reboot:
 
 - name: Report final result

@@ -3,18 +3,18 @@
 # Copyright 2021 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 - name: Apply udev rule changes
-  become: True
-  changed_when: True
+  become: true
+  changed_when: true
   ansible.builtin.command: udevadm trigger
 
 - name: Reload NetworkManager configuration
-  become: True
+  become: true
   ansible.builtin.service:
     name: NetworkManager.service
     state: reloaded
 
 - name: Reload Avahi daemon config
-  become: True
+  become: true
   ansible.builtin.service:
     name: avahi-daemon.service
     # reload doesn't work
