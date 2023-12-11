@@ -2,8 +2,6 @@
 # NetworkManager(8)
 #
 # Adapted from /usr/lib/udev/rules.d/85-nm-unmanaged.rules
-# Do not manage Docker bridge interfaces (!15) · Merge Requests · NetworkManager / NetworkManager · GitLab
-# https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/merge_requests/15#note_30764
 #
 # Also adapted from:
 # Do not manage Docker bridge interfaces (!15) · Merge Requests · NetworkManager / NetworkManager · GitLab
