@@ -17,4 +17,8 @@ ACTION!="add|change", GOTO="nm_unmanaged_lxd_end"
 
 SUBSYSTEM=="net", ACTION=="add|change", ENV{INTERFACE}=="lxdbr*", ENV{NM_UNMANAGED}="1"
 
+# Seems to be for containers launched by specific _user_id_
+# e.g. lxdbr-1000
+SUBSYSTEM=="net", ACTION=="add|change", ENV{INTERFACE}=="lxdbr-*", ENV{NM_UNMANAGED}="1"
+
 LABEL="nm_unmanaged_lxd_end"
