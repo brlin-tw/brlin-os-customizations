@@ -15,6 +15,6 @@
 SUBSYSTEM!="net", GOTO="nm_unmanaged_lxd_end"
 ACTION!="add|change", GOTO="nm_unmanaged_lxd_end"
 
-ENV{INTERFACE}=="lxdbr[0-9]*", ENV{NM_UNMANAGED}="1"
+SUBSYSTEM=="net", ACTION=="add|change", ENV{INTERFACE}=="lxdbr*", ENV{NM_UNMANAGED}="1"
 
 LABEL="nm_unmanaged_lxd_end"
