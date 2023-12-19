@@ -110,6 +110,18 @@
     group: root
     mode: 0644
 
+- name: Making virtual ethernet device(veth) interfaces not managed by NetworkManager
+  become: true
+  notify:
+    - Apply udev rule changes
+    - Reload NetworkManager configuration
+  ansible.builtin.copy:
+    src: dont-manage-virtual-ethernet-device-interfaces.rules
+    dest: /etc/udev/rules.d/85-nm-unmanaged-veth.rules
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Install preferred desktop environments
   become: true
   ansible.builtin.package:
