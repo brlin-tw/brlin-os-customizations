@@ -12,9 +12,9 @@
 # Copyright 2020 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
-SUBSYSTEM!="net", GOTO="nm_unmanaged_docker_end"
-ACTION!="add|change", GOTO="nm_unmanaged_docker_end"
+SUBSYSTEM!="net", GOTO="nm_unmanaged_libvirt_end"
+ACTION!="add|change", GOTO="nm_unmanaged_libvirt_end"
 
 SUBSYSTEM=="net", ACTION=="add|change", ATTR{address}=="52:54:00:*", ENV{INTERFACE}=="virbr*", ENV{NM_UNMANAGED}="1"
 
-LABEL="nm_unmanaged_docker_end"
+LABEL="nm_unmanaged_libvirt_end"
