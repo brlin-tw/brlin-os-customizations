@@ -68,7 +68,7 @@
     - Apply udev rule changes
     - Reload NetworkManager configuration
   ansible.builtin.copy:
-    src: dont-manage-docker-managed-bridges.rules
+    src: udev.rules.d/dont-manage-docker-managed-bridges.rules
     dest: /etc/udev/rules.d/85-nm-unmanaged-docker.rules
     owner: root
     group: root
@@ -80,7 +80,7 @@
     - Apply udev rule changes
     - Reload NetworkManager configuration
   ansible.builtin.copy:
-    src: dont-manage-lxd-managed-bridges.rules
+    src: udev.rules.d/dont-manage-lxd-managed-bridges.rules
     dest: /etc/udev/rules.d/85-nm-unmanaged-lxd.rules
     owner: root
     group: root
@@ -92,7 +92,7 @@
     - Apply udev rule changes
     - Reload NetworkManager configuration
   ansible.builtin.copy:
-    src: dont-manage-libvirt-managed-bridges.rules
+    src: udev.rules.d/dont-manage-libvirt-managed-bridges.rules
     dest: /etc/udev/rules.d/85-nm-unmanaged-libvirt.rules
     owner: root
     group: root
@@ -104,7 +104,7 @@
     - Apply udev rule changes
     - Reload NetworkManager configuration
   ansible.builtin.copy:
-    src: dont-manage-multipass-qemu-bridges.rules
+    src: udev.rules.d/dont-manage-multipass-qemu-bridges.rules
     dest: /etc/udev/rules.d/85-nm-unmanaged-multipass.rules
     owner: root
     group: root
