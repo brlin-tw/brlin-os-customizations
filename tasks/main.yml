@@ -113,11 +113,10 @@
 - name: Making virtual ethernet device(veth) interfaces not managed by NetworkManager
   become: true
   notify:
-    - Apply udev rule changes
     - Reload NetworkManager configuration
   ansible.builtin.copy:
-    src: dont-manage-virtual-ethernet-device-interfaces.rules
-    dest: /etc/udev/rules.d/85-nm-unmanaged-veth.rules
+    src: NetworkManager.conf.d/90-unmanage-virtual-ethernet-network-interfaces.conf
+    dest: /etc/NetworkManager/conf.d/90-unmanage-virtual-ethernet-network-interfaces.conf
     owner: root
     group: root
     mode: 0644
@@ -128,6 +127,9 @@
     name:
       - kde-standard
       - xfce4
+
+- name: Cleanup customizations from old versions of the playbook
+  ansible.builtin.import_tasks: cleanup.yml
 
 - name: Reboot
   when: ansible_connection != "local"
