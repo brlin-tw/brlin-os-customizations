@@ -11,4 +11,3 @@ all:
   hosts:
     localhost:
       ansible_connection: local
-      ansible_become_password: sudopass
