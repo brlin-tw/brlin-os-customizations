@@ -25,7 +25,7 @@ script_dir="$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)"
 project_dir="${script_dir%/*}"
 
 for file in "${project_dir}/${CI_PROJECT_NAME}-"*; do
-    if test "${file}" == "${project_dir}/${CI_PROJECT_NAME}-*"; then
+    if test "${file}" = "${project_dir}/${CI_PROJECT_NAME}-*"; then
         # No release packages are found, avoid missing file error
         break
     fi
