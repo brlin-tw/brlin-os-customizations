@@ -16,17 +16,17 @@
     name: '*'
     state: latest
 
-- name: Install OpenSSH server for administration convenience
+- name: Setup the OpenSSH service for remote administration convenience
   become: true
   ansible.builtin.package:
     name: openssh-server
 
-- name: Install Fail2ban to prevent bruteforce attack of SSH service
+- name: Setup Fail2ban to prevent bruteforce attack of the SSH service
   become: true
   ansible.builtin.package:
     name: fail2ban
 
-- name: Allow workstation to be broadcasted via Multicast for discover convenience
+- name: Allow workstation to be broadcasted via Multicast for access convenience
   become: true
   notify:
     - Reload Avahi daemon config
