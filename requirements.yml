@@ -1,0 +1,13 @@
+# Ansible requirements declaration file
+#
+# References:
+#
+# * Installing multiple roles from a file — Galaxy User Guide — Ansible Community Documentation
+#   https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#installing-multiple-roles-from-a-file
+#
+# Copyright 2024 林博仁(Buo-ren, Lin) <buo.ren.lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+roles:
+  # For switching to local software archive mirror
+  - name: chusiang.switch-apt-mirror
+    version: 1.0.7
