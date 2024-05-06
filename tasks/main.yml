@@ -235,6 +235,8 @@
   ansible.builtin.package:
     name:
       - kde-standard
+      # Wayland session
+      - plasma-workspace-wayland
 
 - name: Ensure that the XFCE desktop environment is installed, which provides light-weight desktop experience.
   become: true
