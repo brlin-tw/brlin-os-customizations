@@ -35,25 +35,126 @@
     regexp: '^publish-workstation=.*$'
     replace: publish-workstation=yes
 
-- name: Install common utilities
+- name: >-
+    Ensure that the GHex hex editor is installed, which is useful in examining binary files.
   become: true
   ansible.builtin.package:
     name:
       - ghex
+
+- name: >-
+    Ensure that the Git version control system is installed, which
+    is used to manage personal and third-party projects.
+  become: true
+  ansible.builtin.package:
+    name:
       - git
+
+- name: >-
+    Ensure that the Git Large File System(LFS) software is
+    installed, which allows managing huge binary objects in a Git
+    repository.
+  become: true
+  ansible.builtin.package:
+    name:
       - git-lfs
-      # For the `urlencode` command
+
+- name: >-
+    Ensure that the gridsite-clients package is installed, which
+    provides the `urlencode` command for encoding and decoding
+    percent-encoded URLs.
+  become: true
+  ansible.builtin.package:
+    name:
       - gridsite-clients
+
+- name: >-
+    Ensure that the htop process viewer utility is installed,
+    which is used to examine and manipulate the running processes.
+  become: true
+  ansible.builtin.package:
+    name:
       - htop
+
+- name: >-
+    Ensure that the iftop utility is installed, which is used to
+    monitor the data transfer of the network connections.
+  become: true
+  ansible.builtin.package:
+    name:
       - iftop
+
+- name: >-
+    Ensure that the iotop utility is installed, which is used to
+    monitor the data transfer of the storage devices.
+  become: true
+  ansible.builtin.package:
+    name:
       - iotop
+
+- name: >-
+    Ensure that the Kate Editor is installed, which is a powerful
+    plaintext file editor with syntax highlighting and other
+    powerful features.
+  become: true
+  ansible.builtin.package:
+    name:
       - kate
+
+- name: >-
+    Ensure that the KeePassXC application is installed, which is
+    used to manage secret information in the KeePass Password
+    Safes.
+  become: true
+  ansible.builtin.package:
+    name:
       - keepassxc
+
+- name: >-
+    Ensure that the lm-sensors package is installed, which allows
+    one to read the system's hardware sensor data.
+  become: true
+  ansible.builtin.package:
+    name:
       - lm-sensors
+
+- name: >-
+    Ensure that the pipx utility is installed, which is used to
+    cleanly manage Python applications using separate virtual
+    environments.
+  become: true
+  ansible.builtin.package:
+    name:
       - pipx
+
+- name: >-
+    Ensure that the tmux terminal multiplexer is installed, which allows multiple terminals be created on a single one.
+  become: true
+  ansible.builtin.package:
+    name:
       - tmux
+
+- name: >-
+    Ensure that the vcsh config manager is installed, which allows using the Git version control system to manage my configuration files.
+  become: true
+  ansible.builtin.package:
+    name:
       - vcsh
+
+- name: >-
+    Ensure that the vim plaintext editor is installed, which
+    allows high efficiency text editing.
+  become: true
+  ansible.builtin.package:
+    name:
       - vim
+
+- name: >-
+    Ensure that the WireGuard VPN software is installed, which
+    is used to connect some of the VPN services.
+  become: true
+  ansible.builtin.package:
+    name:
       - wireguard
 
 - name: Install codecs for multimedia playback
