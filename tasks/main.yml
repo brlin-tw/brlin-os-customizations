@@ -230,11 +230,16 @@
     group: root
     mode: 0644
 
-- name: Install preferred desktop environments
+- name: Ensure that the KDE desktop environment is installed, which provides feature-rich desktop experience.
   become: true
   ansible.builtin.package:
     name:
       - kde-standard
+
+- name: Ensure that the XFCE desktop environment is installed, which provides light-weight desktop experience.
+  become: true
+  ansible.builtin.package:
+    name:
       - xfce4
 
 - name: Cleanup customizations from old versions of the playbook
