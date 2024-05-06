@@ -88,3 +88,6 @@
 
 # Don't track continuous integration virtual environments
 /continuous-integration/venv/
+
+# Don't track JSON files which is used for testing API calls
+/*.json
