@@ -21,6 +21,9 @@ if ! set "${set_opts[@]}"; then
 fi
 
 required_commands=(
+    date
+    git
+    mv
     realpath
 )
 flag_required_command_check_failed=false
