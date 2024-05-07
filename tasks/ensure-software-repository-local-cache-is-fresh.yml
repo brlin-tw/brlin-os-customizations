@@ -1,0 +1,9 @@
+# Task list to ensure the software sources loal cache is fresh
+#
+# Copyright 2024 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+
+- name: Ensure that the APT local software sources cache is fresh.
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
