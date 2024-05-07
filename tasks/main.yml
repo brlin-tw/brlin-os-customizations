@@ -3,7 +3,8 @@
 # Copyright 2024 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
-- name: Use Taiwan local Ubuntu mirror to reduce package download time.
+- name: >-
+    Use Taiwan local Ubuntu mirror to reduce package download time.
   vars:
     ubuntu_apt_mirror: tw.archive.ubuntu.com
   ansible.builtin.include_role:
@@ -24,17 +25,21 @@
     name: '*'
     state: latest
 
-- name: Setup the OpenSSH service for remote administration convenience
+- name: >-
+    Setup the OpenSSH service for remote administration convenience
   become: true
   ansible.builtin.package:
     name: openssh-server
 
-- name: Setup Fail2ban to prevent bruteforce attack of the SSH service
+- name: >-
+    Setup Fail2ban to prevent bruteforce attack of the SSH service
   become: true
   ansible.builtin.package:
     name: fail2ban
 
-- name: Allow workstation to be broadcasted via Multicast for access convenience
+- name: >-
+    Allow workstation to be broadcasted via Multicast for access
+    convenience
   become: true
   notify:
     - Reload Avahi daemon config
@@ -44,7 +49,8 @@
     replace: publish-workstation=yes
 
 - name: >-
-    Ensure that the GHex hex editor is installed, which is useful in examining binary files.
+    Ensure that the GHex hex editor is installed, which is useful
+    in examining binary files.
   become: true
   ansible.builtin.package:
     name:
@@ -136,14 +142,17 @@
       - pipx
 
 - name: >-
-    Ensure that the tmux terminal multiplexer is installed, which allows multiple terminals be created on a single one.
+    Ensure that the tmux terminal multiplexer is installed,
+    which allows multiple terminals be created on a single one.
   become: true
   ansible.builtin.package:
     name:
       - tmux
 
 - name: >-
-    Ensure that the vcsh config manager is installed, which allows using the Git version control system to manage my configuration files.
+    Ensure that the vcsh config manager is installed, which
+    allows using the Git version control system to manage my
+    configuration files.
   become: true
   ansible.builtin.package:
     name:
@@ -219,7 +228,9 @@
     group: root
     mode: 0644
 
-- name: Making virtual ethernet device(veth) interfaces not managed by NetworkManager
+- name: >-
+    Making virtual ethernet device(veth) interfaces not managed by
+    NetworkManager
   become: true
   notify:
     - Reload NetworkManager configuration
@@ -230,7 +241,9 @@
     group: root
     mode: 0644
 
-- name: Ensure that the KDE desktop environment is installed, which provides feature-rich desktop experience.
+- name: >-
+    Ensure that the KDE desktop environment is installed, which
+    provides feature-rich desktop experience.
   become: true
   ansible.builtin.package:
     name:
@@ -238,7 +251,9 @@
       # Wayland session
       - plasma-workspace-wayland
 
-- name: Ensure that the XFCE desktop environment is installed, which provides light-weight desktop experience.
+- name: >-
+    Ensure that the XFCE desktop environment is installed, which
+    provides light-weight desktop experience.
   become: true
   ansible.builtin.package:
     name:
@@ -262,7 +277,8 @@
         mode: '0755'
 
     - name: >-
-        Install vcsh pre-merge hook to avoid import failure due to pre-existing config files.
+        Install vcsh pre-merge hook to avoid import failure due to
+        pre-existing config files.
       ansible.builtin.copy:
         src: vcsh-hooks/pre-merge-10-unclobber.sh
         dest: ~/.config/vcsh/hooks-available/pre-merge-10-unclobber.sh
@@ -274,7 +290,9 @@
         src: ../hooks-available/pre-merge-10-unclobber.sh
         state: link
 
-    - name: Query all vcsh-managed configuration repositories by Buo-ren, Lin.
+    - name: >-
+        Query all vcsh-managed configuration repositories by
+        Buo-ren, Lin.
       ansible.builtin.set_fact:
         vcsh_repo_names_raw: >-
           {{
