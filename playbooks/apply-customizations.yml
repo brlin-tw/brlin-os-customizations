@@ -6,3 +6,8 @@
   hosts: all
   roles:
     - role: brlin.brlin_os_customizations
+  environment: {}
+    # Set these environment variables if you need to access the
+    # internet via an HTTP/HTTPS proxy service
+    #http_proxy: http://192.168.49.1:8228
+    #https_proxy: http://192.168.49.1:8228
