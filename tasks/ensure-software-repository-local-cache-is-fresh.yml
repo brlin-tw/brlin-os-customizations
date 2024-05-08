@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 - name: Ensure that the APT local software sources cache is fresh.
+  when: ansible_distribution_file_variety == "Debian"
   become: true
   ansible.builtin.apt:
     update_cache: true

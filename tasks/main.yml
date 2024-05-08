@@ -5,6 +5,7 @@
 
 - name: >-
     Use Taiwan local Ubuntu mirror to reduce package download time.
+  when: ansible_distribution_file_variety == "Debian"
   vars:
     ubuntu_apt_mirror: tw.archive.ubuntu.com
   ansible.builtin.include_role:
