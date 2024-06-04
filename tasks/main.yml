@@ -37,7 +37,7 @@
     dest: /etc/udev/rules.d/85-nm-unmanaged-docker.rules
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
 
 - name: Making LXD bridge interfaces not managed by NetworkManager.
   become: true
@@ -49,7 +49,7 @@
     dest: /etc/udev/rules.d/85-nm-unmanaged-lxd.rules
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
 
 - name: Making libvirt bridge interfaces not managed by NetworkManager.
   become: true
@@ -61,7 +61,7 @@
     dest: /etc/udev/rules.d/85-nm-unmanaged-libvirt.rules
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
 
 - name: Making Multipass bridge interfaces not managed by NetworkManager.
   become: true
@@ -73,7 +73,7 @@
     dest: /etc/udev/rules.d/85-nm-unmanaged-multipass.rules
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
 
 - name: >-
     Making virtual ethernet device(veth) interfaces not managed by
@@ -86,7 +86,7 @@
     dest: /etc/NetworkManager/conf.d/90-unmanage-virtual-ethernet-network-interfaces.conf
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
 
 - name: Import vcsh-managed configurations.
   rescue:
