@@ -19,7 +19,7 @@ rules:
   # https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.braces
   braces:
     min-spaces-inside: 0
-    max-spaces-inside: 0
+    max-spaces-inside: 1
     min-spaces-inside-empty: -1
     max-spaces-inside-empty: -1
 
@@ -123,8 +123,8 @@ rules:
   # Use this rule to prevent values with octal numbers. In YAML, numbers that start with `0` are interpreted as octal, but this is not always wanted. For instance `010` is the city code of Beijing, and should not be converted to `8`.
   # https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.octal_values
   octal-values:
-    forbid-implicit-octal: false
-    forbid-explicit-octal: false
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true
 
   # Use this rule to forbid trailing spaces at the end of lines.
   # https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.trailing_spaces
