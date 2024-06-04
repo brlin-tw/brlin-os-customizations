@@ -129,6 +129,10 @@ if ! operation_timestamp="$(
 fi
 
 for file in "${files[@]}"; do
+    if ! test -e "${file}"; then
+        continue
+    fi
+
     backup_file="${file}.orig.${operation_timestamp}"
     printf \
         '%s: Warning: Moving pre-existing config file "%s" to "%s".\n' \
