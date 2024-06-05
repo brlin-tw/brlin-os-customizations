@@ -186,3 +186,28 @@
   ansible.builtin.package:
     name:
       - curl
+
+- name: >-
+    Setup the LXD container engine, which is used for building
+    snaps and for testing
+  rescue:
+    - name: Interrupt the play if any of the block tasks failed.
+      ansible.builtin.fail:
+        msg: 'Error: Unable to setup the LXD container engine.'
+  block:
+    - name: >-
+        Ensure that the LXD container engine is installed, which is used
+        for building snaps and for testing.
+      become: true
+      community.general.snap:
+        name: lxd
+
+    - name: >-
+        Add the running user to the LXD user group to allow easy access
+        to the container engine.
+      become: true
+      ansible.builtin.user:
+        name: '{{ ansible_user_id }}'
+        groups:
+          - lxd
+        append: true
