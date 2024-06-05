@@ -120,6 +120,15 @@
         state: link
 
     - name: >-
+        Satisfy the runtime dependency of the vcsh repository query
+        utility.
+      become: true
+      ansible.builtin.package:
+        name:
+          - curl
+          - jq
+
+    - name: >-
         Query all vcsh-managed configuration repositories by
         Buo-ren, Lin.
       ansible.builtin.set_fact:
