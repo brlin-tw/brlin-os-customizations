@@ -211,3 +211,11 @@
         groups:
           - lxd
         append: true
+
+- name: >-
+    Ensure that the Snapcraft packaging tool is installed, which is
+    used for building snaps.
+  become: true
+  community.general.snap:
+    name: snapcraft
+    classic: true

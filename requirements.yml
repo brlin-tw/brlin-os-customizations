@@ -11,3 +11,8 @@ roles:
   # For switching to local software archive mirror
   - name: chusiang.switch-apt-mirror
     version: 1.0.7
+
+collections:
+  # For the community.general.snap module
+  - name: community.general
+    version: 8.6.1
