@@ -262,3 +262,10 @@
       become: true
       ansible.builtin.package:
         name: steam-installer
+
+- name: >-
+    Ensure that the Git Cola application is installed, which is used to
+    manage Git repositories.
+  become: true
+  ansible.builtin.package:
+    name: git-cola
