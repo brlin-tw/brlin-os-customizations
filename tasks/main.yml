@@ -5,7 +5,15 @@
 
 - name: >-
     Use Taiwan local Ubuntu mirror to reduce package download time.
-  when: ansible_distribution_file_variety == "Debian"
+  # NOTE: Ubuntu >=24.04 uses the DEP822 software source format, which
+  # isn't compatible with the chusiang.switch-apt-mirror role at the
+  # moment
+  when: >-
+    ansible_distribution_file_variety == "Debian"
+      and (
+        ansible_distribution == "Ubuntu"
+          and ansible_distribution_version < "24.04"
+      )
   vars:
     ubuntu_apt_mirror: tw.archive.ubuntu.com
   ansible.builtin.include_role:
