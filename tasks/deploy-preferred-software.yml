@@ -178,3 +178,11 @@
   ansible.builtin.package:
     name:
       - xfce4
+
+- name: >-
+    Ensure that the curl HTTP(S)/FTP/etc... client is installed, which
+    is used for service testing.
+  become: true
+  ansible.builtin.package:
+    name:
+      - curl
