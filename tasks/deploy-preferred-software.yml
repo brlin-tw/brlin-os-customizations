@@ -219,3 +219,10 @@
   community.general.snap:
     name: snapcraft
     classic: true
+
+- name: >-
+    Ensure that the Asciiquarium utility is installed, which presents a
+    nice aquarium view in the text terminal.
+  become: true
+  community.general.snap:
+    name: asciiquarium
