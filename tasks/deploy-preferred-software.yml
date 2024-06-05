@@ -226,3 +226,39 @@
   become: true
   community.general.snap:
     name: asciiquarium
+
+- name: >-
+    Ensure that the Steam gaming platform is installed, which is used
+    to manage some of the games of mine.
+  when: >-
+    ansible_architecture == "i386"
+      or ansible_architecture == "x86_64"
+  rescue:
+    - name: Interrupt the play if any of the block tasks failed.
+      ansible.builtin.fail:
+        msg: 'Error: Unable to install the Steam gaming platform.'
+  block:
+    - name: >-
+        Query the foreign architectures enabled in the APT package
+        management system.
+      register: dpkg_foreign_arches_raw
+      changed_when: false
+      ansible.builtin.command: dpkg --print-foreign-architectures
+
+    - name: >-
+        Ensure that the i386 architecture of the APT package management
+        system is enabled to install Steam's runtime dependencies.
+      when: >-
+        ansible_architecture == "x86_64"
+          and "i386" not in dpkg_foreign_arches_raw.stdout_lines
+      become: true
+      register: dpkg_add_architecture_result
+      changed_when: dpkg_add_architecture_result.rc == 0
+      ansible.builtin.command: dpkg --add-architecture i386
+
+    - name: >-
+        Ensure that the Steam gaming platform is installed, which is used
+        to manage some of my games.
+      become: true
+      ansible.builtin.package:
+        name: steam-installer
