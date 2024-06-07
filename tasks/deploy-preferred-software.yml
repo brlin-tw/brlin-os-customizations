@@ -212,6 +212,18 @@
           - lxd
         append: true
 
+    - name: Making LXD bridge interfaces not managed by NetworkManager.
+      become: true
+      notify:
+        - Apply udev rule changes
+        - Reload NetworkManager configuration
+      ansible.builtin.copy:
+        src: udev.rules.d/dont-manage-lxd-managed-bridges.rules
+        dest: /etc/udev/rules.d/85-nm-unmanaged-lxd.rules
+        owner: root
+        group: root
+        mode: '0644'
+
 - name: >-
     Ensure that the Snapcraft packaging tool is installed, which is
     used for building snaps.
