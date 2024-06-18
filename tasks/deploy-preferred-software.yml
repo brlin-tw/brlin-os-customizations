@@ -281,3 +281,26 @@
   become: true
   ansible.builtin.package:
     name: git-cola
+
+- name: >-
+    Ensure that the html-query(hq) utility is installed, which is
+    used to parse the HTML document in some scripts.
+  rescue:
+    - name: Interrupt the play if any of the block tasks failed.
+      ansible.builtin.fail:
+        msg: 'Error: Unable to deploy the html-query(hq) utility.'
+  block:
+    - name: >-
+        Ensure that the html-query(hq) utility is installed,
+        which is used to parse the HTML document in some scripts.
+      become: true
+      community.general.snap:
+        name: orf-hq
+
+    - name: >-
+        Setup convenient command aliases for the html-query
+        utility.
+      become: true
+      community.general.snap_alias:
+        name: orf-hq
+        alias: hq
