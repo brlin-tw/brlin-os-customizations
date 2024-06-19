@@ -304,3 +304,10 @@
       community.general.snap_alias:
         name: orf-hq
         alias: hq
+
+- name: >-
+    Ensure that the KolourPaint application is installed, which
+    is used for annotate the screenshots.
+  become: true
+  ansible.builtin.package:
+    name: kolourpaint
