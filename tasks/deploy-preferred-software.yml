@@ -311,3 +311,11 @@
   become: true
   ansible.builtin.package:
     name: kolourpaint
+
+- name: >-
+    Ensure that the bindfs utility is installed, which is used to
+    workaround limitations regarding paths containing spaces of
+    build utilities like Make.
+  become: true
+  ansible.builtin.package:
+    name: bindfs
