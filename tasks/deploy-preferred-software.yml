@@ -399,3 +399,9 @@
         name: flathub
         state: present
         flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
+- name: Ensure that the OBS Studio application is installed.
+  become: true
+  community.general.flatpak:
+    name: com.obsproject.Studio
+    remote: flathub
