@@ -346,3 +346,10 @@
         iscan_interface_connect_result_raw.rc == 0
           and not iscan_interface_connect_result_raw.stdout_lines
       ansible.builtin.command: snap connect iscan:raw-usb
+
+- name: >-
+    Ensure that the QtQR application is installed, which is used to
+    scan QR codes without resort to using the mobile devices.
+  become: true
+  ansible.builtin.package:
+    name: qtqr
