@@ -319,3 +319,30 @@
   become: true
   ansible.builtin.package:
     name: bindfs
+
+- name: >-
+    Ensure that the Epson Imagescan V2 application is installed.
+  rescue:
+    - name: Interrupt the play if any of the block tasks failed.
+      ansible.builtin.fail:
+        msg: >-
+          Error: Unable to deploy the Epson Imagescan V2 application.
+  block:
+    - name: >-
+        Ensure that the Epson Imagescan V2 application is installed,
+        which is used to support scanning document/photos from an
+        Epson scanner on GNU+Linux
+      become: true
+      community.general.snap:
+        name: iscan
+
+    - name: >-
+        Ensure that the iscan snap is connected to the raw-usb snapd
+        confinement interface, so that it can communicate with the
+        USB scanners.
+      become: true
+      register: iscan_interface_connect_result_raw
+      changed_when: >-
+        iscan_interface_connect_result_raw.rc == 0
+          and not iscan_interface_connect_result_raw.stdout_lines
+      ansible.builtin.command: snap connect iscan:raw-usb
