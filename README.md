@@ -33,6 +33,15 @@ Via the use of Ansible automation, it should be able to extend it to other OS di
 
 1. (If using the localhost inventory) Reboot the system to apply the changes
 
+## References
+
+The following external materials are reference during the development of this project:
+
+* [Ubuntu Flathub Setup | Flathub](https://flathub.org/setup/Ubuntu)  
+  For the setup instructions of the Flatpak runtime on Ubuntu.
+* [community.general.flatpak_remote module – Manage flatpak repository remotes — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/flatpak_remote_module.html)  
+  Explains how to use the `community.general.flatpak_remote` module to setup up the Flathub software source.
+
 ## Licensing
 
 Unless otherwise noted(individual file's header/[REUSE DEP5](.reuse/dep5)), this product is licensed under [the 4.0 International version of the Creative Commons Attribution-ShareAlike license(CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/), or any of its recent versions you would prefer.

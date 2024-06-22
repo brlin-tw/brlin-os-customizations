@@ -353,3 +353,49 @@
   become: true
   ansible.builtin.package:
     name: qtqr
+
+- name: Enable the Flatpak package support.
+  rescue:
+    - name: Interrupt the play if any of the block tasks failed.
+      ansible.builtin.fail:
+        msg: >-
+          Error: Unable to enable the Flatpak package support.
+  block:
+    - name: >-
+        Enable the Flatpak stable versions PPA software source.
+      # Refer PPA support status at:
+      # https://launchpad.net/~flatpak/+archive/ubuntu/stable
+      when: >-
+        ansible_distribution == 'Ubuntu'
+          and (
+            ansible_distribution_version == '22.04'
+            or ansible_distribution_version == '20.04'
+          )
+      ansible.builtin.apt_repository:
+        repo: ppa:flatpak/stable
+
+    - name: Ensure that the Flatpak runtime is installed.
+      become: true
+      ansible.builtin.package:
+        name: flatpak
+
+    - name: >-
+        Ensure that the Flatpak plugin of the GNOME Software
+        application is installed.
+      become: true
+      ansible.builtin.package:
+        name: gnome-software-plugin-flatpak
+
+    - name: >-
+        Ensure that the Flatpak backend of the KDE Discover
+        application is installed.
+      become: true
+      ansible.builtin.package:
+        name: plasma-discover-backend-flatpak
+
+    - name: Ensure that the Flathub repository is enabled.
+      become: true
+      community.general.flatpak_remote:
+        name: flathub
+        state: present
+        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
