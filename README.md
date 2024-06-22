@@ -1,4 +1,4 @@
-# Buo-ren, Lin's OS Customizations
+# Buo-ren, Lin's OS customizations
 
 This project provides personally preferred operating system customizations, for convenience after re-installing the system.
 
