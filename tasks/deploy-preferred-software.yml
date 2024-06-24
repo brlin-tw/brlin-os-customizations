@@ -448,3 +448,10 @@
   community.general.snap:
     name: ocrmypdf
     channel: edge
+
+- name: >-
+    Ensure that the Audacity application is installed, which is used for
+    recording/editing audio tracks.
+  become: true
+  ansible.builtin.package:
+    name: audacity
