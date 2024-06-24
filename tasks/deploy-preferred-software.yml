@@ -412,3 +412,10 @@
   become: true
   community.general.snap:
     name: image-density-fixer
+
+- name: >-
+    Ensure that the sshpass utility is installed, which is required for Ansible
+    to connect to SSH servers.
+  become: true
+  ansible.builtin.package:
+    name: sshpass
