@@ -405,3 +405,10 @@
   community.general.flatpak:
     name: com.obsproject.Studio
     remote: flathub
+
+- name: >-
+    Ensure that the Image Density Fixer application is installed, for improving
+    the quality of OCR-ing camera-captured documents.
+  become: true
+  community.general.snap:
+    name: image-density-fixer
