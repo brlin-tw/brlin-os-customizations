@@ -419,3 +419,24 @@
   become: true
   ansible.builtin.package:
     name: sshpass
+
+- name: >-
+    Ensure that the tldr utility is installed, which is used to viewing tldr
+    pages.
+  rescue:
+    - name: Interrupt the play if any of the block tasks failed.
+      ansible.builtin.fail:
+        msg: 'Error: Unable to install the tldr utility'
+  block:
+    - name: >-
+        Ensure that the tldr utility is installed, which is used to viewing tldr
+        pages.
+      become: true
+      ansible.builtin.package:
+        name: tealdeer
+
+    - name: Update the local cache of the tldr pages.
+      become: false
+      register: tldr_update_result_raw
+      changed_when: tldr_update_result_raw.rc == 0
+      ansible.builtin.command: tldr --update
