@@ -455,3 +455,10 @@
   become: true
   ansible.builtin.package:
     name: audacity
+
+- name: >-
+    Ensure that the VLC application is installed, which is used for playing
+    multimedia files.
+  become: true
+  ansible.builtin.package:
+    name: vlc
