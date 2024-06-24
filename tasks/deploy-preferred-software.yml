@@ -440,3 +440,11 @@
       register: tldr_update_result_raw
       changed_when: tldr_update_result_raw.rc == 0
       ansible.builtin.command: tldr --update
+
+- name: >-
+    Ensure that the OCRmyPDF application is installed, which is used for OCR-ing
+    scanned documents.
+  become: true
+  community.general.snap:
+    name: ocrmypdf
+    channel: edge
