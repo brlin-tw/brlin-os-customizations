@@ -462,3 +462,10 @@
   become: true
   ansible.builtin.package:
     name: vlc
+
+- name: >-
+    Ensure that the Inkscape application is installed, which is used to
+    create vector images.
+  become: true
+  ansible.builtin.package:
+    name: inkscape
