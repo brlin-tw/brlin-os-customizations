@@ -469,3 +469,10 @@
   become: true
   ansible.builtin.package:
     name: inkscape
+
+- name: >-
+    Ensure that the Avahi Discover application is installed, for discovering
+    other hosts on the same network.
+  become: true
+  ansible.builtin.package:
+    name: avahi-discover
