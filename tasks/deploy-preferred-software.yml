@@ -476,3 +476,11 @@
   become: true
   ansible.builtin.package:
     name: avahi-discover
+
+- name: >-
+    Ensure that the equivs utility is installed, for creating meta-packages to
+    easily install/remove build/runtime dependencies.
+  when: ansible_os_family == "Debian"
+  become: true
+  ansible.builtin.package:
+    name: equivs
