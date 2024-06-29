@@ -484,3 +484,11 @@
   become: true
   ansible.builtin.package:
     name: equivs
+
+- name: >-
+    Ensure that the Lossless Cut application is installed, which is used to make
+    video clips without re-encoding them.
+  become: true
+  community.general.flatpak:
+    name: no.mifi.losslesscut
+    remote: flathub
