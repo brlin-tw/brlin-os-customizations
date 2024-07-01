@@ -498,3 +498,10 @@
   community.general.flatpak:
     name: io.github.webcamoid.Webcamoid
     remote: flathub
+
+- name: >-
+    Ensure that the img2pdf utility is installed, which is used to create
+    PDF documents from multiple images captured by a camera.
+  become: true
+  ansible.builtin.package:
+    name: img2pdf
