@@ -171,13 +171,27 @@
       # Wayland session
       - plasma-workspace-wayland
 
-- name: >-
-    Ensure that the XFCE desktop environment is installed, which
-    provides light-weight desktop experience.
-  become: true
-  ansible.builtin.package:
-    name:
-      - xfce4
+- name: Deploy the XFCE desktop environment.
+  rescue:
+    - name: Interrupt the play if any of the block tasks failed.
+      ansible.builtin.fail:
+        msg: 'Error: Unable to deploy the XFCE desktop environment.'
+  block:
+    - name: >-
+        Ensure that the XFCE desktop environment is installed, which
+        provides light-weight desktop experience.
+      become: true
+      ansible.builtin.package:
+        name:
+          - xfce4
+
+    - name: >-
+        Workaround an issue where the XFCE notification daemon may erroneously
+        launched in the KDE desktop environment(#18).
+      ansible.builtin.systemd_service:
+        scope: user
+        name: xfce4-notifyd.service
+        masked: true
 
 - name: >-
     Ensure that the curl HTTP(S)/FTP/etc... client is installed, which
