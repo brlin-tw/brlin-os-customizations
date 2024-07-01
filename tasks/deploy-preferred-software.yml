@@ -519,3 +519,10 @@
   become: true
   ansible.builtin.package:
     name: img2pdf
+
+- name: >-
+    Ensure that the FIO utility is installed, which is used to benchmark
+    storage device performances.
+  become: true
+  ansible.builtin.package:
+    name: fio
