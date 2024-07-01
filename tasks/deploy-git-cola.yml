@@ -1,0 +1,59 @@
+# Task list for deploying Git Cola on the managed nodes
+#
+# Copyright 2024 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+- name: >-
+    (Using native package) Ensure that the Git Cola application is installed,
+    which is used to manage Git repositories.
+  when: >-
+    not (
+      ansible_distribution == "Ubuntu"
+        and ansible_distribution_version == "24.04"
+    )
+  become: true
+  ansible.builtin.package:
+    name: git-cola
+
+- name: >-
+    (Using PyPI package) Install Git Cola from PyPI on buggy/unsupported
+    operating system distributions.
+  when: >-
+    ansible_distribution == "Ubuntu"
+      and ansible_distribution_version == "24.04"
+  rescue:
+    - name: Interrupt the play if any of the block tasks failed.
+      ansible.builtin.fail:
+        msg: 'Error: Unable to install Git Cola from PyPI.'
+  block:
+    - name: >-
+        Ensure that the Git Cola application is installed, which is used to
+        manage Git repositories.
+      register: gitcola_pipx_install_raw
+      # On Ubuntu 24.04 Git Cola packaging has a bug that prevent users from
+      # doing interactive rebase:
+      # Bug #2067317 “fatal: cannot exec git-cola-sequence-editor' on gi...”
+      # : Bugs : git-cola package : Ubuntu
+      # https://bugs.launchpad.net/ubuntu/+source/git-cola/+bug/2067317
+      changed_when: >-
+        gitcola_pipx_install_raw.rc == 0
+          and "already seems to be installed"
+            not in gitcola_pipx_install_raw.stdout
+      environment:
+        LANG: C
+      ansible.builtin.command: pipx install git-cola
+
+    - name: >-
+        Check whether the fcitx5 Qt5 platform input context plugin is installed.
+      register: fcitx5_qt_platform_input_context_plugin_presence_raw
+      ansible.builtin.stat:
+        path: /usr/lib/{{ ansible_architecture }}-linux-gnu/qt5/plugins/platforminputcontexts/libfcitx5platforminputcontextplugin.so
+
+    - name: Allow Fcitx5 input method framework to work in Git Cola.
+      when: fcitx5_qt_platform_input_context_plugin_presence_raw.stat.exists
+      ansible.builtin.file:
+        src: /usr/lib/{{ ansible_architecture }}-linux-gnu/qt5/plugins/platforminputcontexts/libfcitx5platforminputcontextplugin.so
+        dest: >-
+          {{ ansible_user_dir }}/.local/pipx/venvs/git-cola/lib/python{{
+          ansible_python.version_info[0] }}.{{ ansible_python.version_info[1]
+          }}/site-packages/PyQt5/Qt5/plugins/platforminputcontexts/libfcitx5platforminputcontextplugin.so
+        state: link

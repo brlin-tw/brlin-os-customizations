@@ -278,9 +278,7 @@
 - name: >-
     Ensure that the Git Cola application is installed, which is used to
     manage Git repositories.
-  become: true
-  ansible.builtin.package:
-    name: git-cola
+  ansible.builtin.include_tasks: deploy-git-cola.yml
 
 - name: >-
     Ensure that the html-query(hq) utility is installed, which is
