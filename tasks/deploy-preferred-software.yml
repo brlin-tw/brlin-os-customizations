@@ -490,3 +490,11 @@
   community.general.flatpak:
     name: no.mifi.losslesscut
     remote: flathub
+
+- name: >-
+    Ensure that the Webcamoid application is installed, which is used to make
+    video clips without re-encoding them.
+  become: true
+  community.general.flatpak:
+    name: io.github.webcamoid.Webcamoid
+    remote: flathub
