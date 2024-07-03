@@ -526,3 +526,10 @@
   become: true
   ansible.builtin.package:
     name: fio
+
+- name: >-
+    Ensure that the wl-clipboard utility is installed, which is used to process
+    copied text using command-line utilities.
+  become: true
+  ansible.builtin.package:
+    name: wl-clipboard
