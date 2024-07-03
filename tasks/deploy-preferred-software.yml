@@ -533,3 +533,10 @@
   become: true
   ansible.builtin.package:
     name: wl-clipboard
+
+- name: >-
+    Ensure that the OpenCC utility is installed, which is used to convert
+    Traditional Chinese text to Simplified Chinese, and vice-versa.
+  become: true
+  ansible.builtin.package:
+    name: opencc
