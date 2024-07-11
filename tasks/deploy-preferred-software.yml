@@ -540,3 +540,9 @@
   become: true
   ansible.builtin.package:
     name: opencc
+
+- name: >-
+    Ensure that the Docker Engine container runtime and its related utilities
+    are installed, which is used to construct testing environments for some of
+    my projects.
+  ansible.builtin.include_tasks: deploy-docker.yml
