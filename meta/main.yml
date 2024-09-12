@@ -11,7 +11,7 @@
 # * Role Metadata — Creating Roles — Ansible Galaxy Documentation
 #   https://galaxy.ansible.com/docs/contributing/creating_role.html?role-metadata
 #
-# Copyright 2022 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2024 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 galaxy_info:
@@ -28,11 +28,3 @@ galaxy_info:
     - os
     - customization
 
-  # 劇本平台相容性宣告
-  # https://galaxy.ansible.com/api/v1/platforms/?search=ubuntu
-  platforms:
-    - name: Ubuntu
-      versions:
-        - bionic
-        - jammy
-        - noble
