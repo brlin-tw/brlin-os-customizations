@@ -553,3 +553,10 @@
   become: true
   community.general.snap:
     name: shellcheck
+
+- name: >-
+    Ensure that the GNOME Tweaks utility is installed,
+    which is used to change the Gtk themes settings.
+  become: true
+  ansible.builtin.package:
+    name: gnome-tweaks
