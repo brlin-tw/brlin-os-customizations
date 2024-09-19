@@ -546,3 +546,10 @@
     are installed, which is used to construct testing environments for some of
     my projects.
   ansible.builtin.include_tasks: deploy-docker.yml
+
+- name: >-
+    Ensure that the ShellCheck utility is installed, which is
+    used to validate shell scripts.
+  become: true
+  community.general.snap:
+    name: shellcheck
