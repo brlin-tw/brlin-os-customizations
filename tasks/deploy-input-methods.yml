@@ -25,8 +25,20 @@
 
 - name: Ensure that the runtime dependency of the community.general.dconf module is installed.
   become: true
+  # Notes – community.general.dconf module – Modify and read dconf database — Ansible Community Documentation
+  # https://docs.ansible.com/ansible/latest/collections/community/general/dconf_module.html#notes
   ansible.builtin.package:
-    name: python3-gi
+    name:
+      - dconf-cli
+
+      # For the dbus-send command
+      - dbus-bin
+
+      # For the dbus-run-session command
+      - dbus-daemon
+
+      - python3-gi
+      - python3-psutil
 
 - name: Ensure that the preferred GNOME input sources configuration is set.
   become: false
