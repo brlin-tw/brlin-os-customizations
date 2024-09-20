@@ -157,6 +157,7 @@
 
 - name: Install codecs for multimedia playback.
   become: true
+  when: ansible_distribution == "Ubuntu"
   ansible.builtin.package:
     name:
       - ubuntu-restricted-extras
