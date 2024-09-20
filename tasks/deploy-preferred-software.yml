@@ -172,6 +172,9 @@
       # Wayland session
       - plasma-workspace-wayland
 
+- name: Deploy GNOME-like desktop environments.
+  ansible.builtin.import_tasks: deploy-gnome.yml
+
 - name: Deploy the XFCE desktop environment.
   rescue:
     - name: Interrupt the play if any of the block tasks failed.
