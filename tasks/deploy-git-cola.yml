@@ -40,7 +40,7 @@
             not in gitcola_pipx_install_raw.stdout
       environment:
         LANG: C
-      ansible.builtin.command: pipx install git-cola
+      ansible.builtin.command: pipx install --preinstall PyQt5 git-cola
 
     - name: >-
         Check whether the fcitx5 Qt5 platform input context plugin is installed.
