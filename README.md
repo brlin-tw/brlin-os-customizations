@@ -41,6 +41,8 @@ The following external materials are reference during the development of this pr
   For the setup instructions of the Flatpak runtime on Ubuntu.
 * [community.general.flatpak_remote module – Manage flatpak repository remotes — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/flatpak_remote_module.html)  
   Explains how to use the `community.general.flatpak_remote` module to setup up the Flathub software source.
+* [community.general.dconf module – Modify and read dconf database — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/dconf_module.html)  
+  Explains how to use the `community.general.dconf module` module to configure input method settings.
 
 ## Licensing
 

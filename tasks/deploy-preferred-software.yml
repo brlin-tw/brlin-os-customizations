@@ -197,6 +197,9 @@
         name: xfce4-notifyd.service
         masked: true
 
+- name: Deploy preferred input method configurations
+  ansible.builtin.import_tasks: deploy-input-methods.yml
+
 - name: >-
     Ensure that the curl HTTP(S)/FTP/etc... client is installed, which
     is used for service testing.

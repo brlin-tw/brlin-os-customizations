@@ -1,0 +1,66 @@
+# Task list for deploying the preferred input methods
+#
+# Copyright 2024 林博仁(Buo-ren, Lin) <buo.ren.lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+
+- name: Ensure that the IBus input method framework and the Chewing input method are installed.
+  become: true
+  ansible.builtin.package:
+    name:
+      - ibus
+
+      # GTK2 support
+      - ibus-gtk
+
+      - ibus-gtk3
+      - ibus-gtk4
+
+      # Wayland input-method-unstable-v1 protocol support
+      - ibus-wayland
+
+- name: Ensure that the IBus Chewing input method is installed.
+  become: true
+  ansible.builtin.package:
+    name: ibus-chewing
+
+- name: Ensure that the runtime dependency of the community.general.dconf module is installed.
+  become: true
+  ansible.builtin.package:
+    name: python3-gi
+
+- name: Ensure that the preferred GNOME input sources configuration is set.
+  become: false
+  community.general.dconf:
+    key: /org/gnome/desktop/input-sources/sources
+    value: "[('xkb', 'us'), ('ibus', 'chewing')]"
+    state: present
+
+- name: Ensure that the keybinding settings for switching input source in GNOME is set to Ctrl+Space.
+  become: false
+  community.general.dconf:
+    key: /org/gnome/desktop/wm/keybindings/switch-input-source
+    value: "['<Control>space']"
+
+- name: Ensure that the keybinding settings for switching input source backward in GNOME is set to Ctrl+Shift+Space.
+  become: false
+  community.general.dconf:
+    key: /org/gnome/desktop/wm/keybindings/switch-input-source-backward
+    value: "['<Shift><Control>space']"
+
+- name: Ensure that the keybinding settings for switching the Chewing input method of the IBus input method framework is set to Shift.
+  become: false
+  community.general.dconf:
+    key: /desktop/ibus/engine/chewing/chi-eng-mode-toggle
+    value: "'shift'"
+
+- name: Ensure that the default English letter case of the Chewing input method of the IBus input method framework is set to lowercase.
+  become: false
+  community.general.dconf:
+    key: /desktop/ibus/engine/chewing/default-english-case
+    value: "'lowercase'"
+
+- name: Ensure that page number will be shown in the candidate selection UI of the Chewing input method of the IBus input method framework.
+  become: false
+  community.general.dconf:
+    key: /desktop/ibus/engine/chewing/show-page-number
+    value: true
