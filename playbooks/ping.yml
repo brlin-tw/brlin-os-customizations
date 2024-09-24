@@ -1,9 +1,8 @@
----
-# Copyright 2022 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
-- name: Ensure control node is controllable
+- name: Ensure that the managed nodes are accessible
   hosts: all
   gather_facts: false
   tasks:
-    - name: Attempt an Ansible connection to the managed node
+    - name: Ensure that the managed nodes are accessible
       ansible.builtin.ping:

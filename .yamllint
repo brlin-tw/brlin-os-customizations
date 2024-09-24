@@ -12,7 +12,7 @@
 # This file is based on The Unofficial yamllint Configuration Templates
 # https://github.com/Lin-Buo-Ren/yamllint-configuration-templates
 #
-# Copyright 2021 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 rules:
   # Use this rule to control the number of spaces inside braces (`{` and `}`).
@@ -130,8 +130,6 @@ rules:
   # https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.trailing_spaces
   trailing-spaces: enable
 
-  # Use this rule to forbid non-explictly typed truthy values other than `true` and `false`, for example `YES`, `False` and `off`.
-  # https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.truthy
-  truthy:
-    level: warning
+  # Pre-YAML 1.2 boolean expressions are commonly used in Ansible
+  truthy: disable
 ...

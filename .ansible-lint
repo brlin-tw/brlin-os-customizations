@@ -1,11 +1,24 @@
-# ansible-lint configuration file
+# Ansible-lint configuration file
 #
-# Copyright 2021 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# References:
+#
+# * Configuration - Ansible Lint Documentation
+#   https://ansible.readthedocs.io/projects/lint/configuring/
+#
+# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
+# Profiles - Ansible Lint Documentation
+# https://ansible.readthedocs.io/projects/lint/profiles/
+profile: production
+
 exclude_paths:
+  # Implicit unless exclude_paths is defined in config
   - .cache/
-  - playbooks/roles/
+
+  # Don't check external Ansible resources
+  - playbooks/roles/*/
+  - playbooks/collections/*/
 
 skip_list:
   # FALSE_POSITIVE: The proposed style isn't better than name-rescue-block

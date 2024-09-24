@@ -1,11 +1,20 @@
-# Ansible requirements declaration file
+# Requirements of this Ansible project
+#
+# This file defines required roles and/or collections of this Ansible
+# project that can be installed using the following command:
+#
+#     ansible-galaxy install -r requirements.yml
 #
 # References:
 #
-# * Installing multiple roles from a file — Galaxy User Guide — Ansible Community Documentation
+# * Installing multiple roles from a file — Galaxy User Guide — Ansible
+#   Community Documentation
 #   https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#installing-multiple-roles-from-a-file
+# * Installing roles and collections from the same requirements.yml file
+#   — Galaxy User Guide — Ansible Community Documentation
+#   https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#installing-roles-and-collections-from-the-same-requirements-yml-file
 #
-# Copyright 2024 林博仁(Buo-ren, Lin) <buo.ren.lin@gmail.com>
+# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 roles:
   # For switching to local software archive mirror
@@ -17,6 +26,7 @@ roles:
     version: 7.3.0
 
 collections:
-  # For the community.general.snap module
+  # Dependency of the community.general.yaml callback plugin
+  # Dependency of the community.general.snap module
   - name: community.general
     version: 8.6.1

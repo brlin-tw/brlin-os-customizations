@@ -35,14 +35,14 @@ repos:
   # Check Markdown documents with Markdownlint(Node.js variant)
   # https://github.com/DavidAnson/markdownlint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.23.2
+    rev: v0.34.0
     hooks:
       - id: markdownlint
 
   # Check REUSE compliance
   # https://reuse.software/
   - repo: https://github.com/fsfe/reuse-tool
-    rev: v3.0.2
+    rev: v4.0.3
     hooks:
       - id: reuse
 
@@ -69,11 +69,12 @@ repos:
     hooks:
       - id: editorconfig-checker
         alias: ec
+        exclude: |
+          (?ix)^(
+            LICENSES/.*
+          )$
 
-  # Check Ansible assets
-  # https://github.com/ansible-community/ansible-lint
-  - repo: https://github.com/ansible-community/ansible-lint.git
-    rev: v6.22.1
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v24.7.0
     hooks:
       - id: ansible-lint
-        files: \.(yaml|yml)$

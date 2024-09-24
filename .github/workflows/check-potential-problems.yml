@@ -5,7 +5,7 @@
 # * Workflow syntax for GitHub Actions - GitHub Docs
 #   https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
 #
-# Copyright 2022 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 name: Check potential problems in the project
 on:
@@ -25,21 +25,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure PyPI data cache to speed up continuous integration
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-pip
           path: ${{ env.PIP_CACHE_DIR }}
 
       - name: >-
           Configure pre-commit data cache to speed up continuous integration
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
           path: ${{ env.PRE_COMMIT_HOME }}
 
       - name: >-
           Configure pre-built ShellCheck cache to speed up continuous integration
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-${{ runner.arch }}-shellcheck
           path: ${{ env.SHELLCHECK_DIR }}

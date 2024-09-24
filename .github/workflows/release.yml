@@ -5,7 +5,7 @@
 # * Workflow syntax for GitHub Actions - GitHub Docs
 #   https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
 #
-# Copyright 2023 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 name: Release product and their build aritfacts
 on:
@@ -66,7 +66,7 @@ jobs:
         run: ./continuous-integration/generate-release-description.sh
 
       - name: Publish the release archive to the GitHub Releases
-        uses: softprops/action-gh-release@v0.1.15
+        uses: softprops/action-gh-release@v2
         with:
           name: ${{ env.project_id }} ${{ env.release_version }}
           files: |

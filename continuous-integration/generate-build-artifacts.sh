@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 # Generate the project build artifacts
 #
-# Copyright 2023 林博仁(Buo-ren, Lin) <buo.ren.lin@gmail.com>
+# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 set \
     -o errexit \
     -o nounset
+
+if ! shopt -s nullglob; then
+    printf \
+        'Unable to set the nullglob shell option.\n' \
+        1>&2
+fi
 
 script="${BASH_SOURCE[0]}"
 if ! script="$(
@@ -76,6 +82,7 @@ printf \
     'Info: Generating the project archive...\n'
 project_id="${CI_PROJECT_NAME:-"${project_id}"}"
 release_id="${project_id}-${project_version}"
+uncompressed_project_archive="${release_id}.tar"
 git_archive_all_opts=(
     # Add an additional layer of folder for containing the archive
     # contents
@@ -84,9 +91,97 @@ git_archive_all_opts=(
 if ! \
     git-archive-all \
         "${git_archive_all_opts[@]}" \
-        "${release_id}.tar.gz"; then
+        "${uncompressed_project_archive}"; then
     printf \
         'Error: Unable to generate the project archive.\n' \
+        1>&2
+    exit 2
+fi
+
+printf \
+    'Info: Fetching external Ansible assets...\n'
+ansible_galaxy_opts=(
+    # Specify requirements file to fetch external assets from
+    -r requirements.yml
+)
+if ! ansible-galaxy install "${ansible_galaxy_opts[@]}"; then
+    printf \
+        'Error: Unable to fetch external Ansible assets.\n'
+    exit 2
+fi
+
+printf \
+    'Info: Injecting external Ansible resources...\n'
+for role in playbooks/roles/*/; do
+    role_dir="${role%/}"
+    role_name="${role_dir##*/}"
+    printf \
+        'Info: Injecting the %s role to the release archive...\n' \
+        "${role_name}"
+    tar_opts=(
+        # Add files to an existing archive
+        --append
+
+        # Transform member names to fit into release prefix
+        --transform="flags=rSH;s@^@${release_id}/@x"
+
+        # Show namae transformation results
+        --show-transformed-names
+
+        # Specify archive to operate on
+        --file="${uncompressed_project_archive}"
+
+        # Print names appended in the tar archive
+        --verbose
+    )
+    if ! tar "${tar_opts[@]}" "${role_dir}"; then
+        printf \
+            'Error: Unable to inject the %s role to the release archive...\n' \
+            "${role_name}"
+        exit 2
+    fi
+done
+
+for collection_dir in playbooks/collections/ansible_collections/*/; do
+    collection_dir="${collection_dir%/}"
+    printf \
+        'Info: Injecting the %s collection directory to the release archive...\n' \
+        "${collection_dir}"
+    tar_opts=(
+        # Add files to an existing archive
+        --append
+
+        # Transform member names to fit into release prefix
+        --transform="flags=rSH;s@^@${release_id}/@x"
+
+        # Show namae transformation results
+        --show-transformed-names
+
+        # Specify archive to operate on
+        --file="${uncompressed_project_archive}"
+
+        # Print names appended in the tar archive
+        --verbose
+    )
+    if ! tar "${tar_opts[@]}" "${collection_dir}"; then
+        printf \
+            'Error: Unable to inject the %s collection directory to the release archive...\n' \
+            "${collection_dir}"
+        exit 2
+    fi
+done
+
+printf \
+    'Info: Compressing the release archive...\n'
+gzip_opts=(
+    # Overwrite existing files
+    --force
+
+    --verbose
+)
+if ! gzip "${gzip_opts[@]}" "${uncompressed_project_archive}"; then
+    printf \
+        'Error: Unable to compress the release archive.\n' \
         1>&2
     exit 2
 fi
