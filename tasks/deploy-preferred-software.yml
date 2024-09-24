@@ -567,3 +567,6 @@
   become: true
   ansible.builtin.package:
     name: gnome-tweaks
+
+- name: Ensure that the Oracle VirtualBox application is installed, which is used to construct testing environments for some of my projects.
+  ansible.builtin.include_tasks: deploy-virtualbox.yml
