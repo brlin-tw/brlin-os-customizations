@@ -1,0 +1,93 @@
+# Task list for deploying Oracle VirtualBox to the managed nodes
+#
+# Copyright 2024 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+- name: Determine the latest version of the Oracle VirtualBox application.
+  run_once: true
+  register: virtualbox_latest_version_raw
+  failed_when: >-
+    virtualbox_latest_version_raw.status != 200
+      or virtualbox_latest_version_raw.content | length == 0
+  ansible.builtin.uri:
+    url: https://download.virtualbox.org/virtualbox/LATEST.TXT
+    return_content: true
+
+- name: Set the virtualbox_latest_version variable.
+  ansible.builtin.set_fact:
+    virtualbox_latest_version: '{{ virtualbox_latest_version_raw.content | trim }}'
+
+- name: Print the value of the virtualbox_latest_version variable for verbosity.
+  ansible.builtin.debug:
+    msg: 'The latest version of the Oracle VirtualBox application determined to be {{ virtualbox_latest_version }}.'
+
+- name: Split the Oracle VirtualBox version into components.
+  ansible.builtin.set_fact:
+    virtualbox_version_components: '{{ virtualbox_latest_version | ansible.builtin.split(".") }}'
+
+- name: Determine the major, minor, and patch version of the Oracle VirtualBox application.
+  ansible.builtin.set_fact:
+    virtualbox_major_version: '{{ virtualbox_version_components[0] }}'
+    virtualbox_minor_version: '{{ virtualbox_version_components[1] }}'
+    virtualbox_patch_version: '{{ virtualbox_version_components[2] }}'
+
+- name: >-
+    (Upstream official packages) Ensure that the Oracle VirtualBox application is installed, which is used to create development/testing environments.
+  # Linux_Downloads – Oracle VirtualBox
+  # https://www.virtualbox.org/wiki/Linux_Downloads
+  when: >-
+    (
+      ansible_distribution == "Ubuntu"
+        and (
+        ansible_distribution_version == "24.04"
+          or ansible_distribution_version == "22.04"
+          or ansible_distribution_version == "20.04"
+        )
+    ) or (
+      (
+        ansible_distribution == "RedHat"
+          or ansible_distribution == "OracleLinux"
+      ) and (
+        ansible_distribution_version == "9"
+          or ansible_distribution_version == "8"
+      )
+    ) or (
+      ansible_distribution == "Debian"
+        and (
+          ansible_distribution_version == "12"
+            or ansible_distribution_version == "11"
+        )
+    ) or (
+      ansible_distribution == "openSUSE"
+        and (
+          ansible_distribution_version == "15.6"
+            or ansible_distribution_version == "15.5"
+            or ansible_distribution_version == "15.4"
+            or ansible_distribution_version == "15.3"
+        )
+    ) or (
+      ansible_distribution == "Fedora"
+        and (
+          ansible_distribution_version == "40"
+            or ansible_distribution_version == "39"
+            or ansible_distribution_version == "38"
+            or ansible_distribution_version == "37"
+            or ansible_distribution_version == "36"
+        )
+    )
+  rescue:
+    - name: Terminate the play if any of the tasks failed in the block.
+      ansible.builtin.fail:
+        msg: 'Error: Unable to install the Oracle VirtualBox application.'
+  block:
+    - name: Delegate the task to the enmanuelmoreira.virtualbox role to do the installation.
+      vars:
+        virtualbox_version: '{{ virtualbox_major_version }}.{{ virtualbox_minor_version }}'
+        virtualbox_version_minor: '{{ virtualbox_patch_version }}'
+
+        virtualbox_user: '{{ ansible_user_id }}'
+        virtualbox_vm_folder_group: '{{ ansible_user_id }}'
+        virtualbox_vm_dir: '{{ ansible_user_dir }}/VirtualBox VMs'
+      ansible.builtin.include_role:
+        name: brlin.virtualbox
+        apply:
+          become: true
