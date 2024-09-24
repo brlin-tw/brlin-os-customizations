@@ -42,6 +42,12 @@ generate-build-artifacts:
     - ./continuous-integration/generate-build-artifacts.install-system-deps.sh
     - ./continuous-integration/generate-build-artifacts.sh
 
+  variables:
+    # Ensures that existing file permissions are respected when GitLab Runner clones the project.
+    # This allows ansible-galaxy to load the Ansible configuration file in the project directory.
+    # https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1736
+    FF_DISABLE_UMASK_FOR_DOCKER_EXECUTOR: "true"
+
 upload-release-assets:
   stage: deploy
   rules:
