@@ -25,6 +25,12 @@ roles:
   - name: geerlingguy.docker
     version: 7.3.0
 
+  # For installing Oracle VirtualBox
+  - name: brlin.virtualbox
+    src: https://gitlab.com/brlin/ansible-role-virtualbox.git
+    scm: git
+    version: temp/patches-applied
+
 collections:
   # Dependency of the community.general.yaml callback plugin
   # Dependency of the community.general.snap module

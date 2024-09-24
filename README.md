@@ -43,6 +43,16 @@ The following external materials are reference during the development of this pr
   Explains how to use the `community.general.flatpak_remote` module to setup up the Flathub software source.
 * [community.general.dconf module – Modify and read dconf database — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/dconf_module.html)  
   Explains how to use the `community.general.dconf module` module to configure input method settings.
+* [Linux_Downloads – Oracle VirtualBox](https://www.virtualbox.org/wiki/Linux_Downloads)  
+  Explains the supported GNU+Linux distributions of the official Oracle VirtualBox packages distribution.
+* [ansible/lib/ansible/module_utils/facts/system/distribution.py at aa24e97 · ansible/ansible](https://github.com/ansible/ansible/blob/aa24e97/lib/ansible/module_utils/facts/system/distribution.py)  
+  Explains the logic of determine the value of the `ansible_distribution` Ansible fact variable.
+* [Detect Latest VirtualBox Version | ChatGPT](https://chatgpt.com/share/66f14139-7358-8012-9cd6-022cd4c0bdff)  
+  Explains how to programmatically detect the latest released version of Oracle VirtualBox without installing the application.
+* [ansible.builtin.uri module – Interacts with webservices — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/uri_module.html#return-values)  
+  Explains how to use the `ansible.builtin.uri` module to access the version string of the latest Oracle VirtualBox release.
+* [ansible.builtin.set_fact module – Set host variable(s) and fact(s). — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/set_fact_module.html)  
+  Explains how to use the `ansible.builtin.set_fact` module to set a managed node variable.
 
 ## Licensing
 
