@@ -3,6 +3,10 @@
 # Copyright 2024 The common Ansible role template contributors <https://github.com/the-common/ansible-role-template/graphs/contributors>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 
+# Must be a version supported by current Vagrant
+# https://github.com/hashicorp/vagrant/blob/71150ee/plugins/providers/virtualbox/driver/meta.rb#L61-L72
+virtualbox_major_minor_version: '7.0'
+
 # Disable insane defaults of the enmanuelmoreira.hashicorp.vagrant role
 vagrant_experimental: "0"
 vagrant_force_color: "0"

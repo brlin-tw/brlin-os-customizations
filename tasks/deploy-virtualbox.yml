@@ -2,27 +2,98 @@
 #
 # Copyright 2024 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
-- name: Determine the latest version of the Oracle VirtualBox application.
-  run_once: true
-  register: virtualbox_latest_version_raw
-  failed_when: >-
-    virtualbox_latest_version_raw.status != 200
-      or virtualbox_latest_version_raw.content | length == 0
-  ansible.builtin.uri:
-    url: https://download.virtualbox.org/virtualbox/LATEST.TXT
-    return_content: true
+- name: Determine software version details for the latest version of the Oracle VirtualBox application
+  when: virtualbox_major_minor_version is undefined
+  rescue:
+    - name: Fail the play if any of the block tasks have errored.
+      ansible.builtin.fail:
+        msg: 'Error: Unable to determine software version details for the latest version of the Oracle VirtualBox application.'
+  block:
+    - name: Determine the latest version of the Oracle VirtualBox application.
+      run_once: true
+      register: virtualbox_latest_version_raw
+      failed_when: >-
+        virtualbox_latest_version_raw.status != 200
+          or virtualbox_latest_version_raw.content | length == 0
+      ansible.builtin.uri:
+        url: https://download.virtualbox.org/virtualbox/LATEST.TXT
+        return_content: true
 
-- name: Set the virtualbox_latest_version variable.
-  ansible.builtin.set_fact:
-    virtualbox_latest_version: '{{ virtualbox_latest_version_raw.content | trim }}'
+    - name: Set the virtualbox_version variable.
+      ansible.builtin.set_fact:
+        virtualbox_version: '{{ virtualbox_latest_version_raw.content | trim }}'
 
-- name: Print the value of the virtualbox_latest_version variable for verbosity.
-  ansible.builtin.debug:
-    msg: 'The latest version of the Oracle VirtualBox application determined to be {{ virtualbox_latest_version }}.'
+    - name: Print the value of the virtualbox_latest_version variable for verbosity.
+      ansible.builtin.debug:
+        msg: 'The latest version of the Oracle VirtualBox application determined to be {{ virtualbox_version }}.'
+
+- name: Determine software version details for the specified major.minor version of the Oracle VirtualBox application
+  when: virtualbox_major_minor_version is defined
+  rescue:
+    - name: Fail the play if any of the block tasks have errored.
+      ansible.builtin.fail:
+        msg: 'Error: Unable to determine software version details for the {{ virtualbox_major_minor_version }} version of the Oracle VirtualBox application.'
+  block:
+    - name: Fetch a copy of the index page of the Oracle VirtualBox application downloads website.
+      run_once: true
+      register: virtualbox_versions_raw
+      failed_when: >-
+        virtualbox_versions_raw.status != 200
+          or virtualbox_versions_raw.content | length == 0
+      ansible.builtin.uri:
+        url: https://download.virtualbox.org/virtualbox/
+        return_content: true
+
+    - name: Parse out all the VirtualBox versions from the upstream downloads site index page
+      ansible.builtin.set_fact:
+        virtualbox_versions: >-
+          {{
+            virtualbox_versions_raw.content
+              | ansible.builtin.regex_findall('(?<=")\d+\.\d+\.\d+(?=/")', multiline=True)
+          }}
+
+    - name: Split the Oracle VirtualBox major.minor version into components.
+      ansible.builtin.set_fact:
+        virtualbox_major_minor_version_components: '{{ virtualbox_major_minor_version | ansible.builtin.split(".") }}'
+
+    - name: Determine the major and minor version of the Oracle VirtualBox application.
+      ansible.builtin.set_fact:
+        virtualbox_major_version: '{{ virtualbox_major_minor_version_components[0] }}'
+        virtualbox_minor_version: '{{ virtualbox_major_minor_version_components[1] }}'
+
+    - name: Determine the next major.minor version of the specified minor version of the Oracle VirtualBox application.
+      ansible.builtin.set_fact:
+        virtualbox_next_major_minor_version: '{{ virtualbox_major_version }}.{{ virtualbox_minor_version | int + 1 }}'
+
+    - name: Filter VirtualBox versions that match the user-specified major.minor version.
+      ansible.builtin.set_fact:
+        virtualbox_versions_matched_major_minor: >-
+          {{
+            virtualbox_versions
+              | select(
+                "version",
+                virtualbox_major_minor_version,
+                operator=">",
+                version_type="loose"
+              ) | select(
+                "version",
+                virtualbox_next_major_minor_version,
+                operator="<",
+                version_type="loose"
+              ) | list
+          }}
+
+    - name: Determine the lastest VirtualBox version that matches the user-specified major.minor version.
+      ansible.builtin.set_fact:
+        virtualbox_version: '{{ virtualbox_versions_matched_major_minor | last }}'
+
+    - name: Report progress to the user.
+      ansible.builtin.debug:
+        msg: 'Info: Latest {{ virtualbox_major_minor_version }} VirtualBox version determined to be {{ virtualbox_version }}.'
 
 - name: Split the Oracle VirtualBox version into components.
   ansible.builtin.set_fact:
-    virtualbox_version_components: '{{ virtualbox_latest_version | ansible.builtin.split(".") }}'
+    virtualbox_version_components: '{{ virtualbox_version | ansible.builtin.split(".") }}'
 
 - name: Determine the major, minor, and patch version of the Oracle VirtualBox application.
   ansible.builtin.set_fact:
