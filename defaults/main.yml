@@ -1,0 +1,9 @@
+# The main default variables definition file
+#
+# Copyright 2024 The common Ansible role template contributors <https://github.com/the-common/ansible-role-template/graphs/contributors>
+# SPDX-License-Identifier: CC-BY-SA-4.0+
+
+# Disable insane defaults of the enmanuelmoreira.hashicorp.vagrant role
+vagrant_experimental: "0"
+vagrant_force_color: "0"
+vagrant_no_parallel: "0"

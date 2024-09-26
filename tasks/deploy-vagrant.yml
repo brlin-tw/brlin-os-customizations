@@ -1,0 +1,9 @@
+# Task list for deploying Hashicorp Vagrant to the managed nodes
+#
+# Copyright 2024 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+- name: Delegate the task to the enmanuelmoreira.virtualbox role to do the installation.
+  ansible.builtin.include_role:
+    name: enmanuelmoreira.hashicorp.vagrant
+    apply:
+      become: true

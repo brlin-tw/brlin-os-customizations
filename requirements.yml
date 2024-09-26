@@ -36,3 +36,7 @@ collections:
   # Dependency of the community.general.snap module
   - name: community.general
     version: 8.6.1
+
+  # For installing Vagrant
+  - name: enmanuelmoreira.hashicorp
+    version: 1.4.1
