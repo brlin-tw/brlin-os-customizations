@@ -570,3 +570,6 @@
 
 - name: Ensure that the Oracle VirtualBox application is installed, which is used to construct testing environments for some of my projects.
   ansible.builtin.include_tasks: deploy-virtualbox.yml
+
+- name: Ensure that the Vagrant utility is installed, which is used to construct testing environments that is not practical by using containers.
+  ansible.builtin.include_tasks: deploy-vagrant.yml
