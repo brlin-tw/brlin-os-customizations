@@ -8,6 +8,9 @@
 virtualbox_major_minor_version: '7.0'
 
 # Disable insane defaults of the enmanuelmoreira.hashicorp.vagrant role
-vagrant_experimental: "0"
-vagrant_force_color: "0"
-vagrant_no_parallel: "0"
+#
+# We cannot use the same variable name as within the called role as the default variables defined by the role itself always has priority.
+# https://github.com/ansible/ansible/issues/39684
+vagrant_experimental_override: "0"
+vagrant_force_color_override: "0"
+vagrant_no_parallel_override: "0"
