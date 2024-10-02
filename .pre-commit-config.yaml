@@ -78,3 +78,5 @@ repos:
     rev: v24.7.0
     hooks:
       - id: ansible-lint
+        additional_dependencies:
+          - jmespath

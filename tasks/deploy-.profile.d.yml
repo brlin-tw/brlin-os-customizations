@@ -1,0 +1,65 @@
+# Task list for deploying .profile.d to the managed nodes
+#
+# Copyright 2024 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+- name: Fetch the releases information of .profile.d from GitHub.
+  register: _profile_d_github_releases
+  failed_when: >-
+    _profile_d_github_releases is failed
+    or _profile_d_github_releases.status != 200
+    or _profile_d_github_releases.content | length == 0
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/brlin-tw/dot-profile.d/releases
+    return_content: true
+    headers:
+      Accept: application/vnd.github+json
+      X-GitHub-Api-Version: 2022-11-28
+
+- name: Determine the latest stable release of .profile.d.
+  ansible.builtin.set_fact:
+    _profile_d_latest_release: >-
+      {{
+        _profile_d_github_releases.json
+          | community.general.json_query('[?prerelease == `false`] | [0]')
+      }}
+
+- name: Determine the release archive asset of the latest stable release.
+  ansible.builtin.set_fact:
+    _profile_d_release_archive_asset: >-
+      {{
+        _profile_d_latest_release
+          | community.general.json_query('assets[?ends_with(name, `"tar.gz"`)] | [0]')
+      }}
+
+- name: Determine the download URL of the .profile.d release archive.
+  ansible.builtin.set_fact:
+    _profile_d_release_archive_url: >-
+      {{
+        _profile_d_release_archive_asset.browser_download_url
+      }}
+    _profile_d_release_archive_name: >-
+      {{
+        _profile_d_release_archive_asset.name
+      }}
+
+- name: Ensure the cache directory exists.
+  ansible.builtin.file:
+    path: '{{ cache_dir }}'
+    state: directory
+    mode: '0755'
+
+- name: Determine the path of the cached .profile.d release archive.
+  ansible.builtin.set_fact:
+    _profile_d_release_archive_cached: '{{ cache_dir }}/{{ _profile_d_release_archive_name }}'
+
+- name: Check whether the cached .profile.d release archive exists
+  register: cached_release_archive_existence_raw
+  ansible.builtin.stat:
+    path: '{{ _profile_d_release_archive_cached }}'
+
+- name: Download release archive of .profile.d.
+  when: not cached_release_archive_existence_raw.stat.exists
+  ansible.builtin.get_url:
+    url: '{{ _profile_d_release_archive_url }}'
+    dest: '{{ _profile_d_release_archive_cached }}'
+    mode: '0644'
