@@ -19,3 +19,9 @@
     name: avahi-daemon.service
     # reload doesn't work
     state: restarted
+
+- name: Clear the temporary directory for extracting the .profile.d release archive.
+  when: _profile_d_tempdir.path is defined
+  ansible.builtin.file:
+    path: '{{ _profile_d_tempdir.path }}'
+    state: absent

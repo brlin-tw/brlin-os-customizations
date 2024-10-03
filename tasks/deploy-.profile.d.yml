@@ -63,3 +63,22 @@
     url: '{{ _profile_d_release_archive_url }}'
     dest: '{{ _profile_d_release_archive_cached }}'
     mode: '0644'
+
+- name: Create a temporary directory for extracting the .profile.d release archive.
+  register: _profile_d_tempdir
+  notify: Clear the temporary directory for extracting the .profile.d release archive.
+  ansible.builtin.tempfile:
+    state: directory
+
+- name: Extract the .profile.d release archive.
+  ansible.builtin.unarchive:
+    src: '{{ _profile_d_release_archive_cached }}'
+    dest: '{{ _profile_d_tempdir.path }}'
+    extra_opts:
+      # Remove the leading product release folder for logic consistency
+      - --strip-components=1
+
+- name: Run the .profile.d installation program.
+  # We currently cannot determine whether the product installation program have changed anything, always assuming managed nodes have changed.
+  changed_when: true
+  ansible.builtin.command: '{{ _profile_d_tempdir.path }}/install.sh'
