@@ -53,6 +53,12 @@ The following external materials are reference during the development of this pr
   Explains how to use the `ansible.builtin.uri` module to access the version string of the latest Oracle VirtualBox release.
 * [ansible.builtin.set_fact module – Set host variable(s) and fact(s). — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/set_fact_module.html)  
   Explains how to use the `ansible.builtin.set_fact` module to set a managed node variable.
+* [Grammar — JMESPath Specification — JMESPath](https://jmespath.org/specification.html#grammar)  
+  Explains the grammar of the `literal` and `json-value` values.
+* [ends_with — Built-in Functions — JMESPath Specification — JMESPath](https://jmespath.org/specification.html#ends-with)  
+  Explains the usage of the `ends_with` built-in function.
+* [Examples – ansible.builtin.get_url module – Downloads files from HTTP, HTTPS, or FTP to node — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html#examples)  
+  Explains the usage of the ansible.builtin.get_url Ansible module.
 
 ## Licensing
 
