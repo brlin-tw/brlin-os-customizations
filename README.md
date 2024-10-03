@@ -59,6 +59,10 @@ The following external materials are reference during the development of this pr
   Explains the usage of the `ends_with` built-in function.
 * [Examples – ansible.builtin.get_url module – Downloads files from HTTP, HTTPS, or FTP to node — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html#examples)  
   Explains the usage of the ansible.builtin.get_url Ansible module.
+* [extra_opts – Parameters – ansible.builtin.unarchive module – Unpacks an archive after (optionally) copying it from the local machine — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/unarchive_module.html#parameter-extra_opts)  
+  Explains the usage of the `extra_opts` parameter of the ansible.builtin.unarchive Ansible module.
+* [ansible.builtin.tempfile module – Creates temporary files and directories — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/tempfile_module.html)  
+  Explains how to create a temporary directory using the ansible.builtin.tempfile Ansible module.
 
 ## Licensing
 
