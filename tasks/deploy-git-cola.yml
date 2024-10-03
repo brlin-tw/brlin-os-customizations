@@ -57,3 +57,9 @@
           ansible_python.version_info[0] }}.{{ ansible_python.version_info[1]
           }}/site-packages/PyQt5/Qt5/plugins/platforminputcontexts/libfcitx5platforminputcontextplugin.so
         state: link
+
+    - name: Configure user session to load Git Cola data files in non-standard path
+      ansible.builtin.copy:
+        src: dot-profile.d/configure-pipx-installation-git-cola-paths.source.sh
+        dest: '{{ ansible_user_dir }}/.profile.d/configure-pipx-installation-git-cola-paths.source.sh'
+        mode: '0644'
