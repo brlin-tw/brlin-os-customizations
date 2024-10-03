@@ -6,6 +6,9 @@
 - name: Ensure that the software repository local cache is fresh
   ansible.builtin.import_tasks: ensure-software-repository-local-cache-is-fresh.yml
 
+- name: Deploy .profile.d, which is used to manage user-wide settings.
+  ansible.builtin.include_tasks: deploy-.profile.d.yml
+
 - name: >-
     Setup the OpenSSH service for remote administration convenience.
   become: true
