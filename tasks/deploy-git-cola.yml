@@ -58,8 +58,19 @@
           }}/site-packages/PyQt5/Qt5/plugins/platforminputcontexts/libfcitx5platforminputcontextplugin.so
         state: link
 
+    - name: Remove outdated Git Cola pipx installation paths user session configuration scriptlet.
+      ansible.builtin.file:
+        path: '{{ _profile_d_dir }}/configure-pipx-installation-git-cola-paths.source.sh'
+        state: absent
+
     - name: Configure user session to load pipx installation Git Cola data files in non-standard path.
       ansible.builtin.copy:
         src: dot-profile.d/configure-pipx-installation-git-cola-paths.source.sh
-        dest: '{{ ansible_user_dir }}/.profile.d/configure-pipx-installation-git-cola-paths.source.sh'
+        dest: '{{ _profile_d_dir }}/20-configure-pipx-installation-git-cola-paths.source.sh'
         mode: '0644'
+
+- name: Configure user session to load source installation Git Cola executable and data files in non-standard paths.
+  ansible.builtin.copy:
+    src: dot-profile.d/configure-source-installation-git-cola-paths.source.sh
+    dest: '{{ _profile_d_dir }}/30-configure-source-installation-git-cola-paths.source.sh'
+    mode: '0644'
