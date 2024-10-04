@@ -72,5 +72,5 @@
 - name: Configure user session to load source installation Git Cola executable and data files in non-standard paths.
   ansible.builtin.copy:
     src: dot-profile.d/configure-source-installation-git-cola-paths.source.sh
-    dest: '{{ _profile_d_dir }}/20-configure-source-installation-git-cola-paths.source.sh'
+    dest: '{{ _profile_d_dir }}/30-configure-source-installation-git-cola-paths.source.sh'
     mode: '0644'
