@@ -12,7 +12,7 @@ fi
 
 # Git submodule content may not be checked out
 set -- "${git_cola_source_dir}/"*
-if test "${#}" = "${git_cola_source_dir}/*"; then
+if test "${1}" = "${git_cola_source_dir}/*"; then
     return
 fi
 
