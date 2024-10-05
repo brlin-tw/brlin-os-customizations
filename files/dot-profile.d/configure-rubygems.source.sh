@@ -8,6 +8,10 @@
 GEM_HOME="${HOME}/.gems"
 gem_executables_dir="${GEM_HOME}/bin"
 
+if ! test -e "${gem_executables_dir}"; then
+    return 0
+fi
+
 if test -z "${PATH}"; then
     PATH="${gem_executables_dir}"
     export PATH
