@@ -55,3 +55,9 @@
     src: dot-profile.d/configure-haskell-cabal.source.sh
     dest: '{{ _profile_d_dir }}/10-configure-haskell-cabal.source.sh'
     mode: '0644'
+
+- name: Configure RubyGems.
+  ansible.builtin.copy:
+    src: dot-profile.d/configure-rubygems.source.sh
+    dest: '{{ _profile_d_dir }}/10-configure-rubygems.source.sh'
+    mode: '0644'
