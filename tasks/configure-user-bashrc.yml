@@ -13,3 +13,9 @@
     src: dot-bashrc.d/setup-powerline-shell.source.sh
     dest: '{{ _bashrc_d_dir }}/10-setup-powerline-shell.source.sh'
     mode: '0644'
+
+- name: Configure RVM.
+  ansible.builtin.copy:
+    src: dot-bashrc.d/setup-rvm.source.sh
+    dest: '{{ _bashrc_d_dir }}/10-setup-rvm.source.sh'
+    mode: '0644'

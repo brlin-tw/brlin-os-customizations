@@ -61,3 +61,9 @@
     src: dot-profile.d/configure-rubygems.source.sh
     dest: '{{ _profile_d_dir }}/10-configure-rubygems.source.sh'
     mode: '0644'
+
+- name: Configure non-standard command search path for RVM.
+  ansible.builtin.copy:
+    src: dot-profile.d/configure-nonstandard-rvm-command-search-path.source.sh
+    dest: '{{ _profile_d_dir }}/99-configure-nonstandard-rvm-command-search-path.source.sh'
+    mode: '0644'
