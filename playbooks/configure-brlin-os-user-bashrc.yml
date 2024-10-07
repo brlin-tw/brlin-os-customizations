@@ -1,0 +1,14 @@
+# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+- name: Configure user bash run commands(bashrc) according to my preferences.
+  hosts: all
+  environment: {}
+    # Set these environment variables if you need to access the
+    # internet via an HTTP/HTTPS proxy service
+    #http_proxy: http://192.168.49.1:8228
+    #https_proxy: http://192.168.49.1:8228
+  tasks:
+    - name: Import corresponding task list from the brlin_os_customizations role
+      ansible.builtin.import_role:
+        name: brlin.brlin_os_customizations
+        tasks_from: configure-user-bashrc.yml
