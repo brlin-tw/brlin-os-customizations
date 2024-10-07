@@ -7,7 +7,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Don't bother if the quilt command is not installed
-if ! command quilt >/dev/null; then
+if ! command -v quilt >/dev/null; then
     return 0
 fi
 
