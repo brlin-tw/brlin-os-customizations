@@ -6,6 +6,8 @@
 
 # Install Ruby Gems to ~/.gems
 GEM_HOME="${HOME}/.gems"
+export GEM_HOME
+
 gem_executables_dir="${GEM_HOME}/bin"
 
 if ! test -e "${gem_executables_dir}"; then
@@ -20,5 +22,3 @@ else
         PATH="${gem_executables_dir}:${PATH}"
     fi
 fi
-
-export GEM_HOME
