@@ -44,6 +44,12 @@
     dest: '{{ _profile_d_dir }}/10-configure-debian-maintainer-identity.source.sh'
     mode: '0644'
 
+- name: Configure the Ubuntu developer identity.
+  ansible.builtin.copy:
+    src: dot-profile.d/configure-ubuntu-developer-identity.source.sh
+    dest: '{{ _profile_d_dir }}/10-configure-ubuntu-developer-identity.source.sh'
+    mode: '0644'
+
 - name: Configure the non-standard linuxbrew paths.
   ansible.builtin.copy:
     src: dot-profile.d/configure-linuxbrew-nonstandard-paths.source.sh
