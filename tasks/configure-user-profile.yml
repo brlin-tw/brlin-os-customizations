@@ -79,3 +79,9 @@
     src: dot-profile.d/configure-nonstandard-rocm-command-search-path.source.sh
     dest: '{{ _profile_d_dir }}/10-configure-nonstandard-rocm-command-search-path.source.sh'
     mode: '0644'
+
+- name: Configure non-standard Tesseract Orange command search path.
+  ansible.builtin.copy:
+    src: dot-profile.d/configure-nonstandard-tesseract-orange-command-search-path.source.sh
+    dest: '{{ _profile_d_dir }}/10-configure-nonstandard-tesseract-orange-command-search-path.source.sh'
+    mode: '0644'
