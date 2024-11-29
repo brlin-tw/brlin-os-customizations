@@ -19,3 +19,9 @@
     src: dot-bashrc.d/setup-rvm.source.sh
     dest: '{{ _bashrc_d_dir }}/10-setup-rvm.source.sh'
     mode: '0644'
+
+- name: Configure gpg-agent for PGP private key caching.
+  ansible.builtin.copy:
+    src: dot-bashrc.d/setup-gpg-agent.source.sh
+    dest: '{{ _bashrc_d_dir }}/10-setup-gpg-agent.source.sh'
+    mode: '0644'
