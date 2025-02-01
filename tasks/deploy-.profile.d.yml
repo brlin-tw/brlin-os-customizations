@@ -43,6 +43,7 @@
       }}
 
 - name: Ensure the cache directory exists.
+  delegate_to: localhost
   ansible.builtin.file:
     path: '{{ cache_dir }}'
     state: directory
@@ -59,6 +60,7 @@
 
 - name: Download release archive of .profile.d.
   when: not cached_release_archive_existence_raw.stat.exists
+  delegate_to: localhost
   ansible.builtin.get_url:
     url: '{{ _profile_d_release_archive_url }}'
     dest: '{{ _profile_d_release_archive_cached }}'
