@@ -293,6 +293,11 @@
       ansible.builtin.command: dpkg --add-architecture i386
 
     - name: >-
+        Reload APT local cache to apply foreign architecture settings.
+      when: ansible_architecture == "x86_64"
+      ansible.builtin.include_tasks: ensure-software-repository-local-cache-is-fresh.yml
+
+    - name: >-
         Ensure that the Steam gaming platform is installed, which is used
         to manage some of my games.
       become: true
