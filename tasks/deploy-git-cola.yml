@@ -59,7 +59,7 @@
       ansible.builtin.file:
         src: /usr/lib/{{ ansible_architecture }}-linux-gnu/qt5/plugins/platforminputcontexts/libfcitx5platforminputcontextplugin.so
         dest: >-
-          {{ ansible_user_dir }}/.local/pipx/venvs/git-cola/lib/python{{
+          {{ ansible_user_dir }}/.local/share/pipx/venvs/git-cola/lib/python{{
           ansible_python.version_info[0] }}.{{ ansible_python.version_info[1]
           }}/site-packages/PyQt5/Qt5/plugins/platforminputcontexts/libfcitx5platforminputcontextplugin.so
         state: link
