@@ -26,6 +26,12 @@
         msg: 'Error: Unable to install Git Cola from PyPI.'
   block:
     - name: >-
+        Ensure that the Tkinter support library is installed, which is used by the Git Cola to prompt remote credentials.
+      become: true
+      ansible.builtin.package:
+        name: python3-tk
+
+    - name: >-
         Ensure that the Git Cola application is installed, which is used to
         manage Git repositories.
       register: gitcola_pipx_install_raw
