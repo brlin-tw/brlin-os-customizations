@@ -581,3 +581,9 @@
 
 - name: Ensure that the Vagrant utility is installed, which is used to construct testing environments that is not practical by using containers.
   ansible.builtin.include_tasks: deploy-vagrant.yml
+
+- name: Ensure that the .profile.d solution is installed, which is used to conveniently configure my user profile settings.
+  ansible.builtin.include_tasks: deploy-.profile.d.yml
+
+- name: Ensure that the .bashrc.d solution is installed, which is used to conveniently configure my bash runcommands settings.
+  ansible.builtin.include_tasks: deploy-.bashrc.d.yml

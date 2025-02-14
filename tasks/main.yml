@@ -154,6 +154,12 @@
           - https://github.com/brlin-tw/{{ vcsh_repo_name }}.git
           - '{{ vcsh_repo_name | replace("vcsh-", "") }}'
 
+- name: Configure user profile settings.
+  ansible.builtin.include_tasks: configure-user-profile.yml
+
+- name: Configure bash runcommands settings.
+  ansible.builtin.include_tasks: configure-user-bashrc.yml
+
 - name: Cleanup customizations from old versions of the playbook.
   ansible.builtin.import_tasks: cleanup.yml
 
