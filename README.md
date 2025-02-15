@@ -104,6 +104,8 @@ The following external materials are reference during the development of this pr
   Explains the usage of the `extra_opts` parameter of the ansible.builtin.unarchive Ansible module.
 * [ansible.builtin.tempfile module – Creates temporary files and directories — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/tempfile_module.html)  
   Explains how to create a temporary directory using the ansible.builtin.tempfile Ansible module.
+* [KConfig - KConfig Entry Options](https://api.kde.org/frameworks/kconfig/html/options.html)  
+  Explains the effect of the `$e` configuration entry marking of a KDE KConfig configuration file.
 
 ## Licensing
 
