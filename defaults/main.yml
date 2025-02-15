@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 
 brlinos_skip_upgrade: false
+brlinos_skip_software_installation: false
 
 # Must be a version supported by current Vagrant
 # https://github.com/hashicorp/vagrant/blob/71150ee/plugins/providers/virtualbox/driver/meta.rb#L61-L72

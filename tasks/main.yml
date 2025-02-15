@@ -34,6 +34,7 @@
     state: latest
 
 - name: Deploy preferred software.
+  when: not brlinos_skip_software_installation
   ansible.builtin.import_tasks: deploy-preferred-software.yml
 
 - name: Check whether the Plastik window decoration in KDE desktop environment is configured

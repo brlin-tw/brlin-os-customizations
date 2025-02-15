@@ -63,6 +63,17 @@ Skip the full system upgrade process, this is useful in subsequent deployment, t
 
 **Default value:** `false`
 
+### brlinos_skip_software_installation
+
+Skip the lengthy preferred software installation process, this is useful if you only want to do the configuration portion of the play.
+
+**Supported values:**
+
+* `true`: Skip software installation.
+* `false`: Don't skip software installation.
+
+**Default value:** `false`
+
 ## References
 
 The following external materials are reference during the development of this project:
