@@ -30,7 +30,7 @@ Your Ansible managed nodes to deploy must satisfy the following requirements:
 1. Extract the downloaded release archive
 1. Launch a text terminal application
 1. In the text terminal application, change the working directory to the extracted project folder
-1. Run the following command to execute [the customization playbook](playbooks/apply-customizations.yml) and provide your sudo password on prompt:
+1. Run the following commands to execute [the customization playbook](playbooks/apply-customizations.yml) and provide your sudo password on prompt:
 
     ```bash
     ansible_playbook_opts=(
