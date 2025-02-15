@@ -1,6 +1,6 @@
 # Task list for installing and configuring my preferred software
 #
-# Copyright 2024 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 - name: Ensure that the software repository local cache is fresh
@@ -587,3 +587,14 @@
 
 - name: Ensure that the .bashrc.d solution is installed, which is used to conveniently configure my bash runcommands settings.
   ansible.builtin.include_tasks: deploy-.bashrc.d.yml
+
+- name: Ensure that the pre-commit framework is installed, which is used to run automated checks in most of my projects.
+  register: precommit_pipx_install_raw
+  become: false
+  changed_when: >-
+    precommit_pipx_install_raw.rc == 0
+      and "already seems to be installed"
+        not in precommit_pipx_install_raw.stdout
+  environment:
+    LANG: C
+  ansible.builtin.command: pipx install pre-commit
