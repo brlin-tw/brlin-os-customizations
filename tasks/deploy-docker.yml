@@ -18,3 +18,15 @@
     docker_install_compose_plugin: true
   ansible.builtin.import_role:
     name: geerlingguy.docker
+
+- name: Making Docker bridge interfaces not managed by NetworkManager.
+  become: true
+  notify:
+    - Apply udev rule changes
+    - Reload NetworkManager configuration
+  ansible.builtin.copy:
+    src: udev.rules.d/dont-manage-docker-managed-bridges.rules
+    dest: /etc/udev/rules.d/85-nm-unmanaged-docker.rules
+    owner: root
+    group: root
+    mode: '0644'
