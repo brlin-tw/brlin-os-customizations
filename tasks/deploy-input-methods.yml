@@ -53,6 +53,12 @@
     key: /org/gnome/desktop/wm/keybindings/switch-input-source
     value: "['<Control>space']"
 
+- name: Ensure that the keybinding settings for switching input source in non-GNOME is set to Ctrl+Space.
+  become: false
+  community.general.dconf:
+    key: /desktop/ibus/general/hotkey/triggers
+    value: "['<Control>space']"
+
 - name: Ensure that the keybinding settings for switching input source backward in GNOME is set to Ctrl+Shift+Space.
   become: false
   community.general.dconf:
