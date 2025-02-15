@@ -1,6 +1,6 @@
 # Default task list
 #
-# Copyright 2024 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 - name: >-
@@ -35,6 +35,43 @@
 
 - name: Deploy preferred software.
   ansible.builtin.import_tasks: deploy-preferred-software.yml
+
+- name: Check whether the Plastik window decoration in KDE desktop environment is configured
+  become: false
+  changed_when: false
+  register: kde_window_decoration_theme_raw
+  ansible.builtin.command:
+    argv:
+      - kreadconfig5
+      - --file
+      - kwinrc
+      - --group
+      - org.kde.kdecoration2
+      - --key
+      - theme
+
+- name: Use Plastik window decoration in KDE desktop environment to provide a Windows-like user interface.
+  when: kde_window_decoration_theme_raw.stdout != 'kwin4_decoration_qml_plastik'
+  become: false
+  register: plastik_configuration_result_raw
+  changed_when: plastik_configuration_result_raw.rc == 0
+  loop:
+    - key: library
+      value: org.kde.kwin.aurorae
+    - key: theme
+      value: kwin4_decoration_qml_plastik
+  loop_control:
+    loop_var: config
+  ansible.builtin.command:
+    argv:
+      - kwriteconfig5
+      - --file
+      - kwinrc
+      - --group
+      - org.kde.kdecoration2
+      - --key
+      - '{{ config.key }}'
+      - '{{ config.value }}'
 
 - name: Making Docker bridge interfaces not managed by NetworkManager.
   become: true
