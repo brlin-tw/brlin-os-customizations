@@ -76,3 +76,33 @@
   community.general.dconf:
     key: /desktop/ibus/engine/chewing/show-page-number
     value: true
+
+- name: Check the current Wayland virtual keyboard configuration of KDE.
+  become: false
+  changed_when: false
+  register: kde_wayland_virtual_keyboard_config_raw
+  ansible.builtin.command:
+    argv:
+      - kreadconfig5
+      - --file
+      - kwinrc
+      - --group
+      - Wayland
+      - --key
+      - InputMethod
+
+- name: Ensure the IBus Wayland virtual keyboard is set in the KDE desktop environment.
+  when: '"IBus" not in kde_wayland_virtual_keyboard_config_raw.stdout'
+  register: ibus_wayland_kwriteconfig_result
+  changed_when: ibus_wayland_kwriteconfig_result.rc == 0
+  ansible.builtin.command:
+    argv:
+      - kwriteconfig5
+      - --file
+      - kwinrc
+      - --group
+      - Wayland
+      - --key
+      # FIXME: No way to set the "Shell Expansion" Kconfig mark, though it doesn't really matter here
+      - InputMethod
+      - /usr/share/applications/org.freedesktop.IBus.Panel.Wayland.Gtk3.desktop
