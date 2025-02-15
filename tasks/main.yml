@@ -25,6 +25,7 @@
   ansible.builtin.import_tasks: ensure-software-repository-local-cache-is-fresh.yml
 
 - name: Apply system updates to avoid known issues.
+  when: not brlinos_skip_upgrade
   become: true
   ansible.builtin.package:
     # We specifically intend to upgrade all packages here

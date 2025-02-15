@@ -46,6 +46,23 @@ Your Ansible managed nodes to deploy must satisfy the following requirements:
 
 1. (If using the localhost inventory) Reboot the system to apply the changes
 
+## Variables to customize the playbooks' behaviors
+
+The following host variables can customize the playbooks' behaviors.
+
+You can specify it by using the `-e` `ansible-playbook` command option or by directly edit the inventory/playbook.
+
+### brlinos_skip_upgrade
+
+Skip the full system upgrade process, this is useful in subsequent deployment, to avoid disrupting the user session.
+
+**Supported values:**
+
+* `true`: Skip upgrade.
+* `false`: Don't skip upgrade.
+
+**Default value:** `false`
+
 ## References
 
 The following external materials are reference during the development of this project:

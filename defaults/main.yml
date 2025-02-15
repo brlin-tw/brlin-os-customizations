@@ -1,7 +1,10 @@
 # The main default variables definition file
 #
 # Copyright 2024 The common Ansible role template contributors <https://github.com/the-common/ansible-role-template/graphs/contributors>
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
+
+brlinos_skip_upgrade: false
 
 # Must be a version supported by current Vagrant
 # https://github.com/hashicorp/vagrant/blob/71150ee/plugins/providers/virtualbox/driver/meta.rb#L61-L72
