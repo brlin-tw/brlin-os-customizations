@@ -157,7 +157,7 @@
 
         virtualbox_user: '{{ ansible_user_id }}'
         virtualbox_vm_folder_group: '{{ ansible_user_id }}'
-        virtualbox_vm_dir: '{{ ansible_user_dir }}/VirtualBox VMs'
+        virtualbox_vm_dir: '{{ ansible_user_dir }}/VirtualBoxVMs'
       ansible.builtin.include_role:
         name: brlin.virtualbox
         apply:
