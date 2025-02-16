@@ -245,6 +245,38 @@
       # Wayland session
       - plasma-workspace-wayland
 
+- name: Check whether the preferred single click behavior is configured in the KDE desktop environment.
+  become: false
+  changed_when: false
+  register: kde_single_click_behavior_raw
+  ansible.builtin.command:
+    argv:
+      - kreadconfig5
+      - --file
+      - kdeglobals
+      - --group
+      - KDE
+      - --key
+      - SingleClick
+
+- name: Configure the preferred single click behavior in the KDE desktop environment.
+  when: kde_single_click_behavior_raw.stdout != "false"
+  become: false
+  register: kde_single_click_behavior_changing_raw
+  changed_when: kde_single_click_behavior_changing_raw.rc == 0
+  ansible.builtin.command:
+    argv:
+      - kwriteconfig5
+      - --file
+      - kdeglobals
+      - --group
+      - KDE
+      - --type
+      - bool
+      - --key
+      - SingleClick
+      - false
+
 - name: Check whether the Breeze Dark global theme is configured in the KDE desktop environment.
   become: false
   changed_when: false
