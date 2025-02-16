@@ -722,3 +722,8 @@
   environment:
     LANG: C
   ansible.builtin.command: pipx install reuse
+
+- name: Ensure that the Konqueror browser is installed, which is used for reading manual and info pages in KDE.
+  become: true
+  ansible.builtin.package:
+    name: konqueror
