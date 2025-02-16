@@ -126,6 +126,8 @@ The following external materials are reference during the development of this pr
   Explains how to apply task keywords to the included role.
 * The inotifywait(1) manual page  
   Explains how to use the `inotifywait` command to determine which configuration file to modify to change the desired settings.
+* [Session Environment Variables - KDE UserBase Wiki](https://userbase.kde.org/Session_Environment_Variables)  
+  Explains how to set environment variables in a KDE session.
 
 ## Licensing
 

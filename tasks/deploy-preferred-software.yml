@@ -245,6 +245,20 @@
       # Wayland session
       - plasma-workspace-wayland
 
+- name: Ensure that the session environment variables drop-in configuration directory exists.
+  become: false
+  ansible.builtin.file:
+    path: '{{ ansible_user_dir }}/.config/plasma-workspace/env'
+    state: directory
+    mode: '0755'
+
+- name: Workaround KDE desktop environment not honouring user profile settings.
+  become: false
+  ansible.builtin.copy:
+    src: plasma-workspace-env/load-user-profile.source.sh
+    dest: '{{ ansible_user_dir }}/.config/plasma-workspace/env/90-load-user-profile.source.sh'
+    mode: '0644'
+
 - name: Check whether the preferred single click behavior is configured in the KDE desktop environment.
   become: false
   changed_when: false
