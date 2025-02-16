@@ -184,7 +184,7 @@
 
     - name: >-
         Query all vcsh-managed configuration repositories by
-        Buo-ren, Lin.
+        Buo-ren Lin.
       ansible.builtin.set_fact:
         vcsh_repo_names_raw: >-
           {{
