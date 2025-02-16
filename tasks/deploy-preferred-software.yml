@@ -245,6 +245,30 @@
       # Wayland session
       - plasma-workspace-wayland
 
+- name: Check whether the Breeze Dark global theme is configured in the KDE desktop environment.
+  become: false
+  changed_when: false
+  failed_when: false
+  register: kde_global_theme_config_raw
+  ansible.builtin.command:
+    argv:
+      - grep
+      - --extended-regexp
+      - --quiet
+      - ^LookAndFeelPackage=org.kde.breezedark.desktop
+      - '{{ ansible_user_dir }}/.config/kdeglobals'
+
+- name: Configure the Breeze Dark KDE global theme.
+  when: kde_global_theme_config_raw.rc != 0
+  become: false
+  register: kde_global_theme_change_raw
+  changed_when: kde_global_theme_change_raw.rc != 0
+  ansible.builtin.command:
+    argv:
+      - lookandfeeltool
+      - --apply
+      - org.kde.breezedark.desktop
+
 - name: Check whether the Plastik window decoration in KDE desktop environment is configured
   become: false
   changed_when: false
