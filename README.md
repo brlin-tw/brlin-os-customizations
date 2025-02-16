@@ -74,6 +74,22 @@ Skip the lengthy preferred software installation process, this is useful if you 
 
 **Default value:** `false`
 
+## Development
+
+This section documents helpful information in developing this project:
+
+### Detecting configuration file responsible for a specific configuration
+
+Use the inotifywait command from [the inotify-tools package](https://github.com/inotify-tools/inotify-tools/wiki) to detect which file has been modified during a configuration change:
+
+```bash
+inotifywait \
+    --monitor \
+    --event close_write \
+    --recursive \
+    ~/.config
+```
+
 ## References
 
 The following external materials are reference during the development of this project:
@@ -108,6 +124,8 @@ The following external materials are reference during the development of this pr
   Explains the effect of the `$e` configuration entry marking of a KDE KConfig configuration file.
 * [apply - Parameters - ansible.builtin.include_role module – Load and execute a role — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_role_module.html#parameter-apply)  
   Explains how to apply task keywords to the included role.
+* The inotifywait(1) manual page  
+  Explains how to use the `inotifywait` command to determine which configuration file to modify to change the desired settings.
 
 ## Licensing
 
