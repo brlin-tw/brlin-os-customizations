@@ -106,6 +106,8 @@ The following external materials are reference during the development of this pr
   Explains how to create a temporary directory using the ansible.builtin.tempfile Ansible module.
 * [KConfig - KConfig Entry Options](https://api.kde.org/frameworks/kconfig/html/options.html)  
   Explains the effect of the `$e` configuration entry marking of a KDE KConfig configuration file.
+* [apply - Parameters - ansible.builtin.include_role module – Load and execute a role — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_role_module.html#parameter-apply)  
+  Explains how to apply task keywords to the included role.
 
 ## Licensing
 

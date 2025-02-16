@@ -162,3 +162,5 @@
         name: brlin.virtualbox
         apply:
           become: true
+          environment:
+            DEBIAN_FRONTEND: noninteractive
