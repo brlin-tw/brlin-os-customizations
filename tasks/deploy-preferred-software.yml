@@ -727,3 +727,8 @@
   become: true
   ansible.builtin.package:
     name: konqueror
+
+- name: Ensure that KDE Connect is installed, which is for syncing data with my mobile devices in the KDE desktop environment.
+  become: true
+  ansible.builtin.package:
+    name: kdeconnect
