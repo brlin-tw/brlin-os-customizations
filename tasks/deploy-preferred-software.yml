@@ -711,3 +711,14 @@
   environment:
     LANG: C
   ansible.builtin.command: pipx install pre-commit
+
+- name: Ensure that the REUSE tool is installed, which is used to ensure REUSE standard compliance in most of my projects.
+  register: reuse_pipx_install_raw
+  become: false
+  changed_when: >-
+    reuse_pipx_install_raw.rc == 0
+      and "already seems to be installed"
+        not in reuse_pipx_install_raw.stdout
+  environment:
+    LANG: C
+  ansible.builtin.command: pipx install reuse
