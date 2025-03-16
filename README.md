@@ -163,6 +163,10 @@ The following external materials are reference during the development of this pr
   Explains how to use the `inotifywait` command to determine which configuration file to modify to change the desired settings.
 * [Session Environment Variables - KDE UserBase Wiki](https://userbase.kde.org/Session_Environment_Variables)  
   Explains how to set environment variables in a KDE session.
+* The output of the `kreadconfig5 --help` command.  
+  Explains how to use the `kreadconfig5` command to query certain KDE configuration settings.
+* The output of the `kwriteconfig5 --help` command.  
+  Explains how to use the `kwriteconfig5` command to set certain KDE configuration settings.
 
 ## Licensing
 
