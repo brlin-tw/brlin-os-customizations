@@ -99,6 +99,35 @@
     name:
       - kate
 
+- name: Check whether the Kate Editor has the File System Browser plugin enabled.
+  become: false
+  changed_when: false
+  register: kate_file_system_browser_plugin_presence_raw
+  ansible.builtin.command:
+    argv:
+      - kreadconfig5
+      - --file
+      - '{{ ansible_user_dir }}/.local/share/kate/anonymous.katesession'
+      - --group
+      - Kate Plugins
+      - --key
+      - katefilebrowserplugin
+
+- name: Enable the File System Browser plugin of the Kate editor by default.
+  become: false
+  register: kate_fsb_plugin_enablement_result
+  changed_when: kate_fsb_plugin_enablement_result.rc == 0
+  ansible.builtin.command:
+    argv:
+      - kwriteconfig5
+      - --file
+      - '{{ ansible_user_dir }}/.local/share/kate/anonymous.katesession'
+      - --group
+      - Kate Plugins
+      - --key
+      - katefilebrowserplugin
+      - 'true'
+
 - name: >-
     Ensure that the KeePassXC application is installed, which is
     used to manage secret information in the KeePass Password
