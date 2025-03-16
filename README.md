@@ -103,6 +103,14 @@ inotifywait \
     ~/.config
 ```
 
+For files in a BTRFS filesystem that are indicated with inode number instead of file path in the `inotifywait` command's output, you can query the real path by running the following command _as root_:
+
+```bash
+btrfs inspect-internal inode-resolve _inode_num_ _mountpoint_
+```
+
+, where the _mountpoint_ placeholder should be replaced with the BTRFS volume mountpoint that contain the file.
+
 ### Detecting GSettings key responsible for a specific configuration
 
 Run the following command to detect which GSettings key has been modified during a configuration change:
@@ -161,6 +169,8 @@ The following external materials are reference during the development of this pr
   Explains how to apply task keywords to the included role.
 * The inotifywait(1) manual page  
   Explains how to use the `inotifywait` command to determine which configuration file to modify to change the desired settings.
+* [How to find the file at a certain btrfs inode - Server Fault](https://serverfault.com/questions/746938/how-to-find-the-file-at-a-certain-btrfs-inode)  
+  Explains how to query the corresponding file path from a BTRFS filesystem inode number.
 * [Session Environment Variables - KDE UserBase Wiki](https://userbase.kde.org/Session_Environment_Variables)  
   Explains how to set environment variables in a KDE session.
 * The output of the `kreadconfig5 --help` command.  
