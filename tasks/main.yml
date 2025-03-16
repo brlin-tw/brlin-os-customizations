@@ -74,6 +74,18 @@
     group: root
     mode: '0644'
 
+- name: Workaround lack of support for garbage collect operations(DISCARD/UNMAP/TRIM) on flash storage drives over the USB protocol
+  when: brlinos_apply_flash_storage_workarounds
+  become: true
+  notify:
+    - Apply udev rule changes
+  ansible.builtin.copy:
+    src: udev.rules.d/workaround-no-unmap-support-on-flash-memory-drives-over-usb.rules
+    dest: /etc/udev/rules.d/90-workaround-no-unmap-support-on-flash-memory-drives-over-usb.rules
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Cleanup customizations from old versions of the playbook.
   ansible.builtin.import_tasks: cleanup.yml
 

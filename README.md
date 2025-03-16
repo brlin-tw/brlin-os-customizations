@@ -74,6 +74,19 @@ Skip the lengthy preferred software installation process, this is useful if you 
 
 **Default value:** `false`
 
+### brlinos_apply_flash_storage_workarounds
+
+Whether to apply flash storage drive workarounds to enable TRIM-like support of certain drives on Linux.
+
+As wrongly apply workaround on drives with faulty TRIM-like command translation implementations this may cause data loss, users should evaluate the risk before enabling this option.
+
+**Supported values:**
+
+* `true`: Apply workarounds.
+* `false`: Don't apply workarounds.
+
+**Default value:** `false`
+
 ## Development
 
 This section documents helpful information in developing this project:

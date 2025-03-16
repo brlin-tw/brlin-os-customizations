@@ -1,0 +1,13 @@
+# udev(7) rule for workarounding lack of support for garbage collect operations(DISCARD/UNMAP/TRIM) on flash memory drives over the USB protocol
+#
+# References:
+#
+# * External SSD with TRIM support - Troubleshooting - Solid state drive - ArchWiki
+#   https://wiki.archlinux.org/title/Solid_state_drive#External_SSD_with_TRIM_support
+#
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+
+# TCELL USB3.2 4K FIRE thumb drive
+# https://www.tcelltc.com.tw/ec99/rwd1085/product.asp?prodid=TC-048-003&category_id=63&cty_id=63
+ACTION=="add|change", ATTRS{idVendor}=="090c", ATTRS{idProduct}=="3282", SUBSYSTEM=="scsi_disk", ATTR{provisioning_mode}="unmap"
