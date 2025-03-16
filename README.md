@@ -103,6 +103,28 @@ inotifywait \
     ~/.config
 ```
 
+### Detecting GSettings key responsible for a specific configuration
+
+Run the following command to detect which GSettings key has been modified during a configuration change:
+
+```bash
+gsettings monitor _schema_
+```
+
+You'll need to know the GSettings schema this key belong to before monitoring it, run the following command to determine the correct schema:
+
+```bash
+gsettings list-schemas
+```
+
+### Detecting dconf key responsible for a specific configuration
+
+Run the following command to detect which dconf key has been modified during a configuration change:
+
+```bash
+dconf watch /
+```
+
 ## References
 
 The following external materials are reference during the development of this project:
