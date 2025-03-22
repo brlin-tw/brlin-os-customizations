@@ -15,7 +15,7 @@ Your Ansible controller host must install the following software:
 
 * [Ansible](https://ansible.com)  
   For running deployment Ansible playbooks.
-* sshpass  
+* [sshpass](https://sourceforge.net/projects/sshpass/)  
   For supporting Ansible managed hosts that uses SSH password authentication.
 
 Your Ansible managed nodes to deploy must satisfy the following requirements:
