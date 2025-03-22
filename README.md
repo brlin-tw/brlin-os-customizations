@@ -17,6 +17,8 @@ Your Ansible controller host must install the following software:
   For running deployment Ansible playbooks.
 * [`jmespath` PyPI package](https://pypi.org/project/jmespath/)  
   For parsing JSON data from responses of the GitHub APIs.
+* [`lxml` PyPI package](https://pypi.org/project/lxml/)  
+  For manipulating XML configuration files.
 * [sshpass](https://sourceforge.net/projects/sshpass/)  
   For supporting Ansible managed hosts that uses SSH password authentication.
 
@@ -179,6 +181,8 @@ The following external materials are reference during the development of this pr
   Explains how to use the `kreadconfig5` command to query certain KDE configuration settings.
 * The output of the `kwriteconfig5 --help` command.  
   Explains how to use the `kwriteconfig5` command to set certain KDE configuration settings.
+* [community.general.xml module – Manage bits and pieces of XML files or strings — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/xml_module.html)  
+  Explains how to manipulate XML document in an Ansible playbook.
 
 ## Licensing
 
