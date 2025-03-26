@@ -17,8 +17,6 @@ Your Ansible controller host must install the following software:
   For running deployment Ansible playbooks.
 * [`jmespath` PyPI package](https://pypi.org/project/jmespath/)  
   For parsing JSON data from responses of the GitHub APIs.
-* [`lxml` PyPI package](https://pypi.org/project/lxml/)  
-  For manipulating XML configuration files.
 * [sshpass](https://sourceforge.net/projects/sshpass/)  
   For supporting Ansible managed hosts that uses SSH password authentication.
 

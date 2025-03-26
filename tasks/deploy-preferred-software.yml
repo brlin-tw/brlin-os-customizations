@@ -381,6 +381,11 @@
       - '{{ config.key }}'
       - '{{ config.value }}'
 
+- name: Install runtime dependencies for the Dolphin UI configuration file patching logic
+  become: true
+  ansible.builtin.package:
+    name: python3-lxml
+
 - name: Check whether the Dolphin UI configuration file exists
   become: false
   register: dolphinui_config_presence_raw
