@@ -1,6 +1,6 @@
 # Cleanup customizations from old versions of the playbook
 #
-# Copyright 2023 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2023 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 
 - name: Cleanup old udev configuration files

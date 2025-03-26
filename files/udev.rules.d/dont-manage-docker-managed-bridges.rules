@@ -13,7 +13,7 @@
 # libnetwork/utils.go at 954d1dd · moby/libnetwork
 # https://github.com/moby/libnetwork/blob/954d1dd/netutils/utils.go#L97
 #
-# Copyright 2020 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2020 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 SUBSYSTEM!="net", GOTO="nm_unmanaged_docker_end"

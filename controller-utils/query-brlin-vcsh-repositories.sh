@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Query all vcsh configuration repositories owned by Buo-ren, Lin
 #
-# Copyright 2024 林博仁(Buo-ren, Lin) <buo.ren.lin@gmail.com>
+# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 set_opts=(
