@@ -1,0 +1,210 @@
+# Task list for deploying the KDE desktop environment and its associated applications
+#
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+
+- name: >-
+    Ensure that the KDE desktop environment is installed, which
+    provides feature-rich desktop experience.
+  become: true
+  ansible.builtin.package:
+    name:
+      - kde-standard
+      # Wayland session
+      - plasma-workspace-wayland
+
+- name: Ensure that the session environment variables drop-in configuration directory exists.
+  become: false
+  ansible.builtin.file:
+    path: '{{ ansible_user_dir }}/.config/plasma-workspace/env'
+    state: directory
+    mode: '0755'
+
+- name: Workaround KDE desktop environment not honouring user profile settings.
+  become: false
+  ansible.builtin.copy:
+    src: plasma-workspace-env/load-user-profile.source.sh
+    dest: '{{ ansible_user_dir }}/.config/plasma-workspace/env/90-load-user-profile.source.sh'
+    mode: '0644'
+
+- name: Check whether the preferred single click behavior is configured in the KDE desktop environment.
+  become: false
+  changed_when: false
+  register: kde_single_click_behavior_raw
+  ansible.builtin.command:
+    argv:
+      - kreadconfig5
+      - --file
+      - kdeglobals
+      - --group
+      - KDE
+      - --key
+      - SingleClick
+
+- name: Configure the preferred single click behavior in the KDE desktop environment.
+  when: kde_single_click_behavior_raw.stdout != "false"
+  become: false
+  register: kde_single_click_behavior_changing_raw
+  changed_when: kde_single_click_behavior_changing_raw.rc == 0
+  ansible.builtin.command:
+    argv:
+      - kwriteconfig5
+      - --file
+      - kdeglobals
+      - --group
+      - KDE
+      - --type
+      - bool
+      - --key
+      - SingleClick
+      - false
+
+- name: Check whether the Breeze Dark global theme is configured in the KDE desktop environment.
+  become: false
+  changed_when: false
+  failed_when: false
+  register: kde_global_theme_config_raw
+  ansible.builtin.command:
+    argv:
+      - grep
+      - --extended-regexp
+      - --quiet
+      - ^LookAndFeelPackage=org.kde.breezedark.desktop
+      - '{{ ansible_user_dir }}/.config/kdeglobals'
+
+- name: Configure the Breeze Dark KDE global theme.
+  when: kde_global_theme_config_raw.rc != 0
+  become: false
+  register: kde_global_theme_change_raw
+  changed_when: kde_global_theme_change_raw.rc != 0
+  ansible.builtin.command:
+    argv:
+      - lookandfeeltool
+      - --apply
+      - org.kde.breezedark.desktop
+
+- name: Check whether the Plastik window decoration in KDE desktop environment is configured
+  become: false
+  changed_when: false
+  register: kde_window_decoration_theme_raw
+  ansible.builtin.command:
+    argv:
+      - kreadconfig5
+      - --file
+      - kwinrc
+      - --group
+      - org.kde.kdecoration2
+      - --key
+      - theme
+
+- name: Use Plastik window decoration in KDE desktop environment to provide a Windows-like user interface.
+  when: kde_window_decoration_theme_raw.stdout != 'kwin4_decoration_qml_plastik'
+  become: false
+  register: plastik_configuration_result_raw
+  changed_when: plastik_configuration_result_raw.rc == 0
+  loop:
+    - key: library
+      value: org.kde.kwin.aurorae
+    - key: theme
+      value: kwin4_decoration_qml_plastik
+  loop_control:
+    loop_var: config
+  ansible.builtin.command:
+    argv:
+      - kwriteconfig5
+      - --file
+      - kwinrc
+      - --group
+      - org.kde.kdecoration2
+      - --key
+      - '{{ config.key }}'
+      - '{{ config.value }}'
+
+- name: Install runtime dependencies for the Dolphin UI configuration file patching logic
+  become: true
+  ansible.builtin.package:
+    name: python3-lxml
+
+- name: Check whether the Dolphin UI configuration file exists
+  become: false
+  register: dolphinui_config_presence_raw
+  ansible.builtin.stat:
+    path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
+
+# NOTE: This customization won't work if the Dolphin UI configuration file doesn't exist in the first place, which requires a UI customization to be done manually beforehand.
+# https://gitlab.com/brlin/brlin-os-customizations/-/issues/15#note_2411474995
+- name: Install a base Dolphin UI configuration file from Dolphin 22.12.3 to work on
+  when: not dolphinui_config_presence_raw.stat.exists
+  become: false
+  ansible.builtin.copy:
+    src: kxmlgui5/dolphin/dolphinui.rc
+    dest: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
+    mode: '0644'
+
+- name: Check whether the "back to upper directory" toolbar option is already available
+  become: false
+  register: dolphin_go_up_toolbar_option_presence_raw
+  community.general.xml:
+    path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
+    xpath: '/gui/ToolBar[@name="mainToolBar"]/Action[@name="go_up"]'
+    count: true
+
+- name: Add the "back to upper directory" toolbar option to the Dolphin file manager's main toolbar.
+  when: dolphin_go_up_toolbar_option_presence_raw.count == 0
+  become: false
+  community.general.xml:
+    path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
+    backup: true
+    xpath: '/gui/ToolBar[@name="mainToolBar"]/Action[@name="go_back"]'
+    insertafter: true
+    add_children:
+      - Action:
+          name: go_up
+
+- name: >-
+    Ensure that the Kate Editor is installed, which is a powerful
+    plaintext file editor with syntax highlighting and other
+    powerful features.
+  become: true
+  ansible.builtin.package:
+    name:
+      - kate
+
+- name: Check whether the Kate Editor has the File System Browser plugin enabled.
+  become: false
+  changed_when: false
+  register: kate_file_system_browser_plugin_presence_raw
+  ansible.builtin.command:
+    argv:
+      - kreadconfig5
+      - --file
+      - '{{ ansible_user_dir }}/.local/share/kate/anonymous.katesession'
+      - --group
+      - Kate Plugins
+      - --key
+      - katefilebrowserplugin
+
+- name: Enable the File System Browser plugin of the Kate editor by default.
+  become: false
+  register: kate_fsb_plugin_enablement_result
+  changed_when: kate_fsb_plugin_enablement_result.rc == 0
+  ansible.builtin.command:
+    argv:
+      - kwriteconfig5
+      - --file
+      - '{{ ansible_user_dir }}/.local/share/kate/anonymous.katesession'
+      - --group
+      - Kate Plugins
+      - --key
+      - katefilebrowserplugin
+      - 'true'
+
+- name: Ensure that the Konqueror browser is installed, which is used for reading manual and info pages in KDE.
+  become: true
+  ansible.builtin.package:
+    name: konqueror
+
+- name: Ensure that KDE Connect is installed, which is for syncing data with my mobile devices in the KDE desktop environment.
+  become: true
+  ansible.builtin.package:
+    name: kdeconnect
