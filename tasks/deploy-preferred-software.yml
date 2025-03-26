@@ -392,21 +392,26 @@
   ansible.builtin.stat:
     path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
 
+# NOTE: This customization won't work if the Dolphin UI configuration file doesn't exist in the first place, which requires a UI customization to be done manually beforehand.
+# https://gitlab.com/brlin/brlin-os-customizations/-/issues/15#note_2411474995
+- name: Install a base Dolphin UI configuration file from Dolphin 22.12.3 to work on
+  when: not dolphinui_config_presence_raw.stat.exists
+  become: false
+  ansible.builtin.copy:
+    src: kxmlgui5/dolphin/dolphinui.rc
+    dest: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
+    mode: '0644'
+
 - name: Check whether the "back to upper directory" toolbar option is already available
   become: false
-  when: dolphinui_config_presence_raw.stat.exists
   register: dolphin_go_up_toolbar_option_presence_raw
   community.general.xml:
     path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
     xpath: '/gui/ToolBar[@name="mainToolBar"]/Action[@name="go_up"]'
     count: true
 
-# FIXME: This customization won't work if the Dolphin UI configuration file doesn't exist in the first place, which requires a UI customization to be done manually beforehand.
-# https://gitlab.com/brlin/brlin-os-customizations/-/issues/15#note_2411474995
 - name: Add the "back to upper directory" toolbar option to the Dolphin file manager's main toolbar.
-  when: >-
-    dolphinui_config_presence_raw.stat.exists
-    and dolphin_go_up_toolbar_option_presence_raw.count == 0
+  when: dolphin_go_up_toolbar_option_presence_raw.count == 0
   become: false
   community.general.xml:
     path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
