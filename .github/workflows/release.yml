@@ -16,7 +16,11 @@ on:
 jobs:
   release:
     name: Release product and their build aritfacts
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
+    permissions:
+      # Allow publishing release packages to Releases
+      contents: write
+      packages: write
     steps:
       - name: Check out content from the Git repository
         uses: actions/checkout@v4
