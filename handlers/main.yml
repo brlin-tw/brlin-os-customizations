@@ -1,6 +1,6 @@
 # Default handlers list
 #
-# Copyright 2021 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 - name: Apply udev rule changes
   become: true
@@ -31,3 +31,9 @@
   ansible.builtin.file:
     path: '{{ _bashrc_d_tempdir.path }}'
     state: absent
+
+- name: Restart systemd-sysctl service
+  become: true
+  ansible.builtin.service:
+    name: systemd-sysctl.service
+    state: restarted

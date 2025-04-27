@@ -7,6 +7,7 @@
 brlinos_skip_upgrade: false
 brlinos_skip_software_installation: false
 brlinos_apply_flash_storage_workarounds: false
+brlinos_inotify_max_user_watches: 1048576
 
 # Must be a version supported by current Vagrant
 # https://github.com/hashicorp/vagrant/blob/71150ee/plugins/providers/virtualbox/driver/meta.rb#L61-L72

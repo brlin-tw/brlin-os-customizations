@@ -1,0 +1,11 @@
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0+
+- name: Configure higher inotify watch limit on development hosts
+  notify:
+    - Restart systemd-sysctl service
+  ansible.builtin.template:
+    src: sysctl.d/increase-inotify-watches-limit.conf.j2
+    dest: /etc/sysctl.d/90-increase-inotify-watches-limit.conf
+    mode: '0644'
+    owner: root
+    group: root
