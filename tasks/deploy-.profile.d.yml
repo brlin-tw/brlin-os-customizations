@@ -1,7 +1,7 @@
 # Task list for deploying .profile.d to the managed nodes
 #
 # Copyright 2024 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
-# SPDX-License-Identifier: CC-BY-SA-4.0
+# SPDX-License-Identifier: CC-BY-SA-4.0+
 - name: Fetch the releases information of .profile.d from GitHub.
   register: _profile_d_github_releases
   failed_when: >-

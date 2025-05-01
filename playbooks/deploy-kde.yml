@@ -1,5 +1,5 @@
 # Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
-# SPDX-License-Identifier: CC-BY-SA-4.0
+# SPDX-License-Identifier: CC-BY-SA-4.0+
 - name: Deploy the KDE desktop environment and its associated applications
   hosts: all
   environment: {}

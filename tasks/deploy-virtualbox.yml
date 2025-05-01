@@ -1,7 +1,7 @@
 # Task list for deploying Oracle VirtualBox to the managed nodes
 #
 # Copyright 2024 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
-# SPDX-License-Identifier: CC-BY-SA-4.0
+# SPDX-License-Identifier: CC-BY-SA-4.0+
 - name: Determine software version details for the latest version of the Oracle VirtualBox application
   when: virtualbox_major_minor_version is undefined
   rescue:
