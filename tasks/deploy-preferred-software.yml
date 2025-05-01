@@ -114,6 +114,7 @@
       - katefilebrowserplugin
 
 - name: Enable the File System Browser plugin of the Kate editor by default.
+  when: kate_file_system_browser_plugin_presence_raw.stdout != 'true'
   become: false
   register: kate_fsb_plugin_enablement_result
   changed_when: kate_fsb_plugin_enablement_result.rc == 0
