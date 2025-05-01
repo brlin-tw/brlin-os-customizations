@@ -673,6 +673,7 @@
   ansible.builtin.include_tasks: deploy-virtualbox.yml
 
 - name: Ensure that the Vagrant utility is installed, which is used to construct testing environments that is not practical by using containers.
+  when: false
   ansible.builtin.include_tasks: deploy-vagrant.yml
 
 - name: Ensure that the .profile.d solution is installed, which is used to conveniently configure my user profile settings.
@@ -718,3 +719,130 @@
   become: true
   ansible.builtin.package:
     name: kdeconnect
+
+- name: Set default media player to VLC.
+  become: false
+  loop:
+    - video/mp4
+    - video/mpeg
+    - video/quicktime
+    - video/x-msvideo
+    - video/x-matroska
+    - video/webm
+    - video/vnd.rn-realvideo
+    - audio/mpeg
+    - audio/mp3
+    - audio/ogg
+    - audio/wav
+    - audio/x-wav
+    - audio/x-flac
+    - audio/x-m4a
+  loop_control:
+    loop_var: mime_type
+  community.general.gio_mime:
+    mime_type: "{{ mime_type }}"
+    handler: vlc.desktop
+
+- name: Set default image viewer to Gwenview.
+  become: false
+  loop:
+    - image/png
+    - image/jpeg
+    - image/gif
+    - image/bmp
+    - image/webp
+    - image/tiff
+    - image/x-ico
+    - image/x-portable-pixmap
+    - image/x-portable-graymap
+    - image/x-portable-bitmap
+    - image/svg+xml
+  loop_control:
+    loop_var: mime_type
+  community.general.gio_mime:
+    mime_type: "{{ mime_type }}"
+    handler: org.kde.gwenview.desktop
+
+- name: Set default PDF viewer to Okular.
+  become: false
+  loop:
+    - application/pdf
+    - application/x-pdf
+  loop_control:
+    loop_var: mime_type
+  community.general.gio_mime:
+    mime_type: "{{ mime_type }}"
+    handler: org.kde.okular.desktop
+
+- name: Set default text editor to Kate.
+  become: false
+  loop:
+    - text/plain
+    - text/x-shellscript
+    - text/x-python
+    - text/x-c
+    - text/x-c++
+    - text/x-java
+    - text/x-php
+    - text/x-ruby
+    - text/x-perl
+    - text/x-javascript
+    - text/x-json
+    - text/x-markdown
+    - text/x-yaml
+    - text/x-toml
+    - text/x-ini
+    - text/x-cmake
+    - text/x-makefile
+    - text/x-diff
+    - text/x-patch
+    - text/x-tex
+    - text/x-latex
+    - text/x-html
+    - text/x-css
+    - text/x-scss
+    - text/x-sass
+    - text/x-less
+    - text/x-coffeescript
+    - text/x-typescript
+    - text/x-jsx
+    - text/x-tsx
+    - text/x-vue
+    - text/x-svelte
+    - text/x-go
+    - text/x-rust
+    - text/x-swift
+    - text/x-kotlin
+    - text/x-scala
+    - text/x-clojure
+    - text/x-haskell
+    - text/x-erlang
+    - text/x-elixir
+    - text/x-dart
+    - text/x-lua
+    - text/x-r
+    - text/x-matlab
+    - text/x-fortran
+    - text/x-pascal
+    - text/x-ada
+    - text/x-cobol
+    - text/x-prolog
+    - text/x-scheme
+    - text/x-lisp
+    - text/x-ocaml
+    - text/x-fsharp
+    - text/x-groovy
+    - text/x-julia
+    - text/x-nim
+    - text/x-crystal
+    - text/x-d
+    - text/x-zig
+    - text/x-v
+    - text/x-odin
+    - text/x-jai
+    - text/x-odin
+  loop_control:
+    loop_var: mime_type
+  community.general.gio_mime:
+    mime_type: "{{ mime_type }}"
+    handler: org.kde.kate.desktop
