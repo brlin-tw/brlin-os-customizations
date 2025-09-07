@@ -77,6 +77,8 @@
   become: false
   register: kde_global_theme_change_raw
   changed_when: kde_global_theme_change_raw.rc != 0
+  environment:
+    QT_QPA_PLATFORM: offscreen
   ansible.builtin.command:
     argv:
       - lookandfeeltool
