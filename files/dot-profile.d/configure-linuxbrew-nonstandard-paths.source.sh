@@ -19,7 +19,7 @@ if test -e "${linuxbrew_prefix}"; then
     fi
 
     if test -z "${MANPATH}"; then
-        MANPATH="${linuxbrew_man_dir}"
+        MANPATH="${linuxbrew_man_dir}:/usr/share/man"
     else
         if ! is_dir_in_paths "${linuxbrew_man_dir}" "${MANPATH}"; then
             MANPATH="${linuxbrew_man_dir}:${MANPATH}"
@@ -27,7 +27,7 @@ if test -e "${linuxbrew_prefix}"; then
     fi
 
     if test -z "${INFOPATH}"; then
-        INFOPATH="${linuxbrew_info_dir}"
+        INFOPATH="${linuxbrew_info_dir}:/usr/share/info"
     else
         if ! is_dir_in_paths "${linuxbrew_info_dir}" "${INFOPATH}"; then
             INFOPATH="${linuxbrew_info_dir}:${INFOPATH}"
