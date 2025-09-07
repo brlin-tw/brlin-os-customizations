@@ -133,6 +133,13 @@
   ansible.builtin.stat:
     path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
 
+- name: Ensure the Dolphin kxmlgui configuration directory exists
+  when: not dolphinui_config_presence_raw.stat.exists
+  ansible.builtin.file:
+    path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin'
+    state: directory
+    mode: '0755'
+
 # NOTE: This customization won't work if the Dolphin UI configuration file doesn't exist in the first place, which requires a UI customization to be done manually beforehand.
 # https://gitlab.com/brlin/brlin-os-customizations/-/issues/15#note_2411474995
 - name: Install a base Dolphin UI configuration file from Dolphin 22.12.3 to work on
