@@ -181,6 +181,8 @@ The following external materials are reference during the development of this pr
   Explains how to use the `kwriteconfig5` command to set certain KDE configuration settings.
 * [community.general.xml module – Manage bits and pieces of XML files or strings — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/xml_module.html)  
   Explains how to manipulate XML document in an Ansible playbook.
+* [ansible.builtin.fileglob lookup – list files matching a pattern — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fileglob_lookup.html)  
+  Explains how to use the `ansible.builtin.fileglob` lookup plugin to list files matching a pattern.
 
 ## Licensing
 
