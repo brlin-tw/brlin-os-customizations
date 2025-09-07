@@ -1,7 +1,7 @@
 # shellcheck shell=sh
 # Configure Linuxbrew non-standard paths
 #
-# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 linuxbrew_prefix="/home/linuxbrew/.linuxbrew"
@@ -14,7 +14,7 @@ if test -e "${linuxbrew_prefix}"; then
         PATH="${linuxbrew_executables_dir}"
     else
         if ! is_dir_in_paths "${linuxbrew_executables_dir}" "${PATH}"; then
-            PATH="${linuxbrew_executables_dir}:${PATH}"
+            PATH="${PATH}:${linuxbrew_executables_dir}"
         fi
     fi
 
