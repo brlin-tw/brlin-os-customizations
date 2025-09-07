@@ -20,7 +20,7 @@
     dest: '{{ _profile_d_dir }}/10-configure-preferred-plaintext-document-editor-applications.source.sh'
     mode: '0644'
 
-- name: Configure ‎the Rust package manager command search path.
+- name: Configure the Rust package manager command search path.
   ansible.builtin.copy:
     src: dot-profile.d/configure-rust-package-manager-command-search-path.source.sh
     dest: '{{ _profile_d_dir }}/10-configure-rust-package-manager-command-search-path.source.sh'
