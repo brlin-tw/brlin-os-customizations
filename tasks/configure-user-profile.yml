@@ -1,87 +1,25 @@
 # Configure user profile according to my preferences
-# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 
-- name: Configure user session to use safe compiler flags.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-safe-compiler-flags.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-safe-compiler-flags.source.sh'
-    mode: '0644'
+- name: Ensure the .profile.d configuration drop-in directory exists.
+  ansible.builtin.file:
+    path: '{{ _profile_d_dir }}'
+    state: directory
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0755'
 
-- name: Configure common command search paths for the local user.
+- name: Deploy all .profile.d scriptlets.
+  loop: >-
+    {{ lookup(
+      'ansible.builtin.fileglob',
+      role_path + '/files/dot-profile.d/*.source.sh',
+      wantlist=True)
+    }}
+  loop_control:
+    label: '{{ item | basename }}'
   ansible.builtin.copy:
-    src: dot-profile.d/configure-local-user-common-command-search-paths.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-local-user-common-command-search-paths.source.sh'
-    mode: '0644'
-
-- name: Configure preferred plaintext document editor applications.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-preferred-plaintext-document-editor-applications.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-preferred-plaintext-document-editor-applications.source.sh'
-    mode: '0644'
-
-- name: Configure the Rust package manager command search path.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-rust-package-manager-command-search-path.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-rust-package-manager-command-search-path.source.sh'
-    mode: '0644'
-
-- name: Configure and use CCache to reduce software build time.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-ccache.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-ccache.source.sh'
-    mode: '0644'
-
-- name: Configure the Android build environment settings.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-android-build-environment.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-android-build-environment.source.sh'
-    mode: '0644'
-
-- name: Configure the Debian maintainer identity.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-debian-maintainer-identity.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-debian-maintainer-identity.source.sh'
-    mode: '0644'
-
-- name: Configure the Ubuntu developer identity.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-ubuntu-developer-identity.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-ubuntu-developer-identity.source.sh'
-    mode: '0644'
-
-- name: Configure the non-standard linuxbrew paths.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-linuxbrew-nonstandard-paths.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-linuxbrew-nonstandard-paths.source.sh'
-    mode: '0644'
-
-- name: Configure Haskell Cabal.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-haskell-cabal.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-haskell-cabal.source.sh'
-    mode: '0644'
-
-- name: Configure RubyGems.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-rubygems.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-rubygems.source.sh'
-    mode: '0644'
-
-- name: Configure non-standard command search path for RVM.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-nonstandard-rvm-command-search-path.source.sh
-    dest: '{{ _profile_d_dir }}/99-configure-nonstandard-rvm-command-search-path.source.sh'
-    mode: '0644'
-
-- name: Configure non-standard ROCm command search path.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-nonstandard-rocm-command-search-path.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-nonstandard-rocm-command-search-path.source.sh'
-    mode: '0644'
-
-- name: Configure non-standard Tesseract Orange command search path.
-  ansible.builtin.copy:
-    src: dot-profile.d/configure-nonstandard-tesseract-orange-command-search-path.source.sh
-    dest: '{{ _profile_d_dir }}/10-configure-nonstandard-tesseract-orange-command-search-path.source.sh'
+    src: '{{ item }}'
+    dest: '{{ _profile_d_dir }}/{{ item | basename }}'
     mode: '0644'
