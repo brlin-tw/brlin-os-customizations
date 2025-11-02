@@ -35,13 +35,6 @@
     dest: '{{ ansible_user_dir }}/.config/plasma-workspace/env/90-load-user-profile.source.sh'
     mode: '0644'
 
-- name: Workaround Fcitx input method not working in some apps in the Wayland session.
-  become: false
-  ansible.builtin.copy:
-    src: plasma-workspace-env/workaround-fcitx-input-method.source.sh
-    dest: '{{ ansible_user_dir }}/.config/plasma-workspace/env/90-workaround-fcitx-input-method.source.sh'
-    mode: '0644'
-
 - name: Check whether the preferred single click behavior is configured in the KDE desktop environment.
   become: false
   changed_when: false
