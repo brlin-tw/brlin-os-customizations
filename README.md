@@ -198,6 +198,8 @@ The following external materials are reference during the development of this pr
   Explains how to configure locale settings on RedHat-based OS distributions.
 * [community.general.snap module – Manages snaps — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/snap_module.html)  
   Explains how to install snap package against certain channel using the `community.general.snap` module.
+* [Prevent connectivity issues with LXD and Docker | How to configure your firewall | LXD docs](https://documentation.ubuntu.com/lxd/latest/howto/network_bridge_firewalld/#prevent-connectivity-issues-with-lxd-and-docker)  
+  Explains how to workaround Docker's bug so that LXD containers can access the Internet.
 
 ## Licensing
 
