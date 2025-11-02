@@ -192,6 +192,10 @@ The following external materials are reference during the development of this pr
   Explains how to manage NPM global packages in Ansible.
 * [ansible.builtin.version test – compare version strings — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/version_test.html)  
   Explains how to use compare two version strings in Ansible.
+* [community.general.locale_gen module – Creates or removes locales — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/locale_gen_module.html)  
+  Explains how to configure locale settings on Debian-based OS distributions.
+* [My reply in Request adding documentation on how to configure the system/user locale · Issue #2885 · rocky-linux/documentation](https://github.com/rocky-linux/documentation/issues/2885#issuecomment-3477637438)  
+  Explains how to configure locale settings on RedHat-based OS distributions.
 
 ## Licensing
 
