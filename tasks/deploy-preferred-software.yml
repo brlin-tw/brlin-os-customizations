@@ -208,6 +208,14 @@
       - curl
 
 - name: >-
+    Ensure that the yt-dlp video downloader is installed, which is used
+    for downloading videos from various platforms.
+  become: true
+  community.general.snap:
+    name: yt-dlp
+    channel: edge
+
+- name: >-
     Setup the LXD container engine, which is used for building
     snaps and for testing
   rescue:

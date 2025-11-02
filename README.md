@@ -196,6 +196,8 @@ The following external materials are reference during the development of this pr
   Explains how to configure locale settings on Debian-based OS distributions.
 * [My reply in Request adding documentation on how to configure the system/user locale · Issue #2885 · rocky-linux/documentation](https://github.com/rocky-linux/documentation/issues/2885#issuecomment-3477637438)  
   Explains how to configure locale settings on RedHat-based OS distributions.
+* [community.general.snap module – Manages snaps — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/snap_module.html)  
+  Explains how to install snap package against certain channel using the `community.general.snap` module.
 
 ## Licensing
 
