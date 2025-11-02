@@ -24,7 +24,7 @@ Your Ansible managed nodes to deploy must satisfy the following requirements:
 
 * Currently only the following distro and version combinations are supported:
     + Ubuntu 24.04
-    + Ubuntu 24.10
+    + Ubuntu 25.10
 * It must be accessible from the Ansible controller host via the SSH protocol, as an exception you can also use the managed node itself as the Ansible controller host.
 * It must have access to the Internet.
 
