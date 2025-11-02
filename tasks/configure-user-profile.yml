@@ -6,8 +6,8 @@
   ansible.builtin.file:
     path: '{{ _profile_d_dir }}'
     state: directory
-    owner: '{{ ansible_user }}'
-    group: '{{ ansible_user }}'
+    owner: '{{ ansible_user_id }}'
+    group: '{{ ansible_user_id }}'
     mode: '0755'
 
 - name: Deploy all .profile.d scriptlets.
