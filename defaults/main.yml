@@ -10,8 +10,8 @@ brlinos_apply_flash_storage_workarounds: false
 brlinos_inotify_max_user_watches: 1048576
 
 # Must be a version supported by current Vagrant
-# https://github.com/hashicorp/vagrant/blob/71150ee/plugins/providers/virtualbox/driver/meta.rb#L61-L72
-virtualbox_major_minor_version: '7.0'
+# https://github.com/hashicorp/vagrant/blob/f2960d5/plugins/providers/virtualbox/driver/meta.rb#L59-L74
+virtualbox_major_minor_version: '7.2'
 
 # Disable insane defaults of the enmanuelmoreira.hashicorp.vagrant role
 #
