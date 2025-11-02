@@ -92,6 +92,13 @@ As wrongly apply workaround on drives with faulty TRIM-like command translation 
 
 **Default value:** `false`
 
+### brlinos_inotify_max_user_watches
+
+Set the maximum number of inotify user watches.
+
+**Supported values:** Any positive integer.  
+**Default value:** `1048576`
+
 ## Development
 
 This section documents helpful information in developing this project:
