@@ -102,7 +102,9 @@
     virtualbox_patch_version: '{{ virtualbox_version_components[2] }}'
 
 - name: >-
-    (Upstream official packages) Ensure that the Oracle VirtualBox application is installed, which is used to create development/testing environments.
+    (Upstream official packages) Ensure that the Oracle VirtualBox
+    application is installed, which is used to create
+    development/testing environments.
   # Linux_Downloads – Oracle VirtualBox
   # https://www.virtualbox.org/wiki/Linux_Downloads
   when: >-
