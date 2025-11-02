@@ -10,6 +10,14 @@
   ansible.builtin.package:
     name:
       - kde-standard
+
+- name: Ensure that the Wayland session of KDE is installed.
+  when: >-
+    ansible_distribution == "Ubuntu"
+    and ansible_distribution_version <= "24.04"
+  become: true
+  ansible.builtin.package:
+    name:
       # Wayland session
       - plasma-workspace-wayland
 
@@ -40,7 +48,7 @@
   register: kde_single_click_behavior_raw
   ansible.builtin.command:
     argv:
-      - kreadconfig5
+      - kreadconfig6
       - --file
       - kdeglobals
       - --group
@@ -55,7 +63,7 @@
   changed_when: kde_single_click_behavior_changing_raw.rc == 0
   ansible.builtin.command:
     argv:
-      - kwriteconfig5
+      - kwriteconfig6
       - --file
       - kdeglobals
       - --group
@@ -98,7 +106,7 @@
   register: kde_window_decoration_theme_raw
   ansible.builtin.command:
     argv:
-      - kreadconfig5
+      - kreadconfig6
       - --file
       - kwinrc
       - --group
@@ -120,7 +128,7 @@
     loop_var: config
   ansible.builtin.command:
     argv:
-      - kwriteconfig5
+      - kwriteconfig6
       - --file
       - kwinrc
       - --group
@@ -192,7 +200,7 @@
   register: kate_file_system_browser_plugin_presence_raw
   ansible.builtin.command:
     argv:
-      - kreadconfig5
+      - kreadconfig6
       - --file
       - '{{ ansible_user_dir }}/.local/share/kate/anonymous.katesession'
       - --group
@@ -207,7 +215,7 @@
   changed_when: kate_fsb_plugin_enablement_result.rc == 0
   ansible.builtin.command:
     argv:
-      - kwriteconfig5
+      - kwriteconfig6
       - --file
       - '{{ ansible_user_dir }}/.local/share/kate/anonymous.katesession'
       - --group
