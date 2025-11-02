@@ -164,3 +164,13 @@
           become: true
           environment:
             DEBIAN_FRONTEND: noninteractive
+
+- name: Configure NetworkManager so that it won't manage the VirtualBox network interfaces.
+  notify: Reload NetworkManager configuration
+  become: true
+  ansible.builtin.copy:
+    src: NetworkManager.conf.d/90-unmanage-virtualbox-network-interfaces.conf
+    dest: /etc/NetworkManager/conf.d/90-unmanage-virtualbox-network-interfaces.conf
+    owner: root
+    group: root
+    mode: '0644'

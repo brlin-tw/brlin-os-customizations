@@ -183,6 +183,8 @@ The following external materials are reference during the development of this pr
   Explains how to manipulate XML document in an Ansible playbook.
 * [ansible.builtin.fileglob lookup – list files matching a pattern — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fileglob_lookup.html)  
   Explains how to use the `ansible.builtin.fileglob` lookup plugin to list files matching a pattern.
+* [Chapter 14. Configuring NetworkManager to ignore certain devices | Configuring and managing networking | Red Hat Enterprise Linux | 8 | Red Hat Documentation](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-networkmanager-to-ignore-certain-devices_configuring-and-managing-networking)  
+  Explains how to configure NetworkManager to ignore specific network devices.
 
 ## Licensing
 
