@@ -35,7 +35,7 @@ collections:
   # Dependency of the community.general.yaml callback plugin
   # Dependency of the community.general.snap module
   - name: community.general
-    version: 8.6.1
+    version: 11.4.0
 
   # For installing Vagrant
   - name: enmanuelmoreira.hashicorp
