@@ -1,0 +1,83 @@
+# Task list for deploying vcsh-managed configurations of Buo-ren Lin's
+# preferred operating system to the managed nodes
+#
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0+
+- name: >-
+    Ensure that the vcsh config manager is installed, which
+    allows using the Git version control system to manage my
+    configuration files.
+  become: true
+  ansible.builtin.package:
+    name:
+      - vcsh
+
+- name: Import vcsh-managed configurations.
+  rescue:
+    - name: Interrupt play if any of the block sub-tasks failed.
+      ansible.builtin.fail:
+        msg: 'Error: Unable to import vcsh-managed configurations.'
+  block:
+    - name: Ensure the vcsh hook directories are created.
+      loop:
+        - ~/.config/vcsh/hooks-available
+        - ~/.config/vcsh/hooks-enabled
+      loop_control:
+        loop_var: dir
+      ansible.builtin.file:
+        path: '{{ dir }}'
+        state: directory
+        mode: '0755'
+
+    - name: >-
+        Install vcsh pre-merge hook to avoid import failure due to
+        pre-existing config files.
+      ansible.builtin.copy:
+        src: vcsh-hooks/pre-merge-10-unclobber.sh
+        dest: ~/.config/vcsh/hooks-available/pre-merge-10-unclobber.sh
+        mode: '0755'
+
+    - name: Ensure the unclobber pre-merge hook is enabled
+      ansible.builtin.file:
+        path: ~/.config/vcsh/hooks-enabled/pre-merge-10-unclobber.sh
+        src: ../hooks-available/pre-merge-10-unclobber.sh
+        state: link
+
+    - name: >-
+        Satisfy the runtime dependency of the vcsh repository query
+        utility.
+      become: true
+      ansible.builtin.package:
+        name:
+          - curl
+          - jq
+
+    - name: >-
+        Query all vcsh-managed configuration repositories by
+        Buo-ren Lin.
+      ansible.builtin.set_fact:
+        vcsh_repo_names_raw: >-
+          {{
+            lookup(
+              "ansible.builtin.lines",
+              (role_path | quote) + "/controller-utils/query-brlin-vcsh-repositories.sh",
+              wantlist=True
+            )
+          }}
+
+    - name: Import vcsh-managed configurations.
+      register: import_vcsh
+      changed_when: import_vcsh.rc == 0
+      # 10: Repo already exists
+      failed_when: >-
+        import_vcsh.rc != 0
+        and import_vcsh.rc != 10
+      loop: '{{ vcsh_repo_names_raw }}'
+      loop_control:
+        loop_var: vcsh_repo_name
+      ansible.builtin.command:
+        argv:
+          - vcsh
+          - clone
+          - https://github.com/brlin-tw/{{ vcsh_repo_name }}.git
+          - '{{ vcsh_repo_name | replace("vcsh-", "") }}'
