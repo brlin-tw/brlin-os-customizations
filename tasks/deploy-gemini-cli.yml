@@ -1,0 +1,117 @@
+# Task list for deploying Gemini CLI on the managed nodes
+#
+# Copyright 2025 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0+
+- name: Assert that gemini_api_key variable is defined
+  ansible.builtin.assert:
+    that:
+      - gemini_api_key is defined
+      - gemini_api_key | length > 0
+      - gemini_api_key != '__REDACTED__'
+    fail_msg: >
+      The gemini_api_key variable must be defined and not empty
+      or placeholder value.
+
+- name: Install NPM
+  become: true
+  ansible.builtin.package:
+    name: npm
+
+- name: Query the required Node.js version for Gemini CLI
+  become: false
+  changed_when: false
+  register: gemini_cli_required_node_version_raw
+  failed_when: gemini_cli_required_node_version_raw.rc != 0
+  ansible.builtin.command:
+    argv:
+      - npm
+      - view
+      - '@google/gemini-cli'
+      - engines.node
+
+- name: Assign gemini_cli_required_node_version fact
+  when: gemini_cli_required_node_version_raw.stdout is defined
+  ansible.builtin.set_fact:
+    gemini_cli_required_node_version: '{{ gemini_cli_required_node_version_raw.stdout | regex_replace("[^0-9\\.]", "") | string }}'
+    gemini_cli_required_node_version_operator: '{{ gemini_cli_required_node_version_raw.stdout | regex_replace("[0-9]+$", "") }}'
+
+- name: Query the package version of Node.JS in the DNF/YUM package cache
+  when: ansible_pkg_mgr in ['dnf', 'yum']
+  become: true
+  changed_when: false
+  register: nodejs_package_version_raw
+  failed_when: nodejs_package_version_raw.rc != 0
+  ansible.builtin.shell: |-
+    set -o pipefail
+    if command -v dnf >/dev/null 2>&1; then
+      dnf list available nodejs \
+        | tail -1 \
+        | awk '{print $2}' \
+        | grep \
+          --only-matching \
+          --extended-regexp \
+          --regexp '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]'
+    else
+      yum list available nodejs \
+        | tail -1 \
+        | awk '{print $2}' \
+        | grep \
+          --only-matching \
+          --extended-regexp \
+          --regexp '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]'
+    fi
+
+- name: Query the package version of Node.JS in the APT package cache
+  when: ansible_pkg_mgr in ['apt']
+  become: true
+  changed_when: false
+  register: nodejs_package_version_raw
+  failed_when: nodejs_package_version_raw.rc != 0
+  environment:
+    LANG: C.UTF-8
+  ansible.builtin.shell: |-
+    set -o pipefail
+    apt-cache policy nodejs \
+      | grep Candidate \
+      | tail -1 \
+      | awk '{print $2}' \
+      | grep \
+        --only-matching \
+        --extended-regexp \
+        --regexp '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+'
+
+- name: Assign nodejs_package_version fact
+  when: nodejs_package_version_raw.stdout is defined
+  ansible.builtin.set_fact:
+    nodejs_package_version: '{{ nodejs_package_version_raw.stdout | string }}'
+
+- name: Bail out if the installed Node.js version is lower than the required version for Gemini CLI
+  ansible.builtin.assert:
+    that:
+      - nodejs_package_version is defined
+      - nodejs_package_version != ''
+      - nodejs_package_version is ansible.builtin.version(gemini_cli_required_node_version, gemini_cli_required_node_version_operator)
+    fail_msg: >
+      The Node.JS version available in the distro's package repository
+      ({{ nodejs_package_version }}) is lower than the required version
+      for Gemini CLI ({{ gemini_cli_required_node_version }}).
+
+- name: Install Gemini CLI
+  become: true
+  community.general.npm:
+    name: '@google/gemini-cli'
+    global: true
+
+- name: Ensure the .profile.d configuration drop-in directory exists.
+  ansible.builtin.file:
+    path: '{{ _profile_d_dir }}'
+    state: directory
+    owner: '{{ ansible_user_id }}'
+    group: '{{ ansible_user_id }}'
+    mode: '0755'
+
+- name: Deploy companion .profile.d scriplet from template.
+  ansible.builtin.template:
+    src: '{{ role_path }}/templates/dot-profile.d/10-configure-gemini-cli.source.sh.j2'
+    dest: '{{ _profile_d_dir }}/10-configure-gemini-cli.source.sh'
+    mode: '0600'

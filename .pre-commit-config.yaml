@@ -21,6 +21,8 @@ repos:
       - id: check-symlinks
       - id: check-vcs-permalinks
       - id: check-yaml
+        args:
+          - --unsafe
       - id: detect-aws-credentials
         args:
           - --allow-missing-credentials

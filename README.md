@@ -32,12 +32,15 @@ Your Ansible managed nodes to deploy must satisfy the following requirements:
 1. Extract the downloaded release archive
 1. Launch a text terminal application
 1. In the text terminal application, change the working directory to the extracted project folder
-1. Run the following commands to execute [the customization playbook](playbooks/apply-customizations.yml) and provide your sudo password on prompt:
+1. Run the following commands to execute [the customization playbook](playbooks/apply-customizations.yml) and provide your sudo password and Ansible vault decryption password on prompt:
 
     ```bash
     ansible_playbook_opts=(
         # Ask the user's become password
         --ask-become-pass
+
+        # Ask for the user's Ansible vault decryption password
+        --ask-vault-pass
     )
     ansible-playbook \
         "${ansible_playbook_opts[@]}" \
@@ -185,6 +188,10 @@ The following external materials are reference during the development of this pr
   Explains how to use the `ansible.builtin.fileglob` lookup plugin to list files matching a pattern.
 * [Chapter 14. Configuring NetworkManager to ignore certain devices | Configuring and managing networking | Red Hat Enterprise Linux | 8 | Red Hat Documentation](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-networkmanager-to-ignore-certain-devices_configuring-and-managing-networking)  
   Explains how to configure NetworkManager to ignore specific network devices.
+* [community.general.npm module – Manage node.js packages with npm — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/npm_module.html)  
+  Explains how to manage NPM global packages in Ansible.
+* [ansible.builtin.version test – compare version strings — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/version_test.html)  
+  Explains how to use compare two version strings in Ansible.
 
 ## Licensing
 

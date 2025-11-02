@@ -749,3 +749,6 @@
   community.general.gio_mime:
     mime_type: "{{ mime_type }}"
     handler: org.kde.kate.desktop
+
+- name: Ensure that the Gemini CLI application is installed, which is my preferred AI agent CLI client.
+  ansible.builtin.include_tasks: deploy-gemini-cli.yml
