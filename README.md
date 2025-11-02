@@ -55,6 +55,8 @@ Your Ansible managed nodes to deploy must satisfy the following requirements:
 
 The following host variables can customize the playbooks' behaviors.
 
+Refer to [the default variables definition file](defaults/main.yml) for the full list.
+
 You can specify it by using the `-e` `ansible-playbook` command option or by directly edit the inventory/playbook.
 
 ### brlinos_skip_upgrade
