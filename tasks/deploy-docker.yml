@@ -13,9 +13,6 @@
       or ansible_distribution == 'Alpine'
       or ansible_distribution == 'ArchLinux'
   become: true
-  vars:
-    docker_edition: ce
-    docker_install_compose_plugin: true
   ansible.builtin.import_role:
     name: geerlingguy.docker
 
