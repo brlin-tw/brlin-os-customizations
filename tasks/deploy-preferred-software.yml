@@ -99,6 +99,13 @@
     name:
       - kate
 
+- name: Ensure that the Kate data directory exists
+  become: false
+  ansible.builtin.file:
+    path: '{{ ansible_user_dir }}/.local/share/kate'
+    state: directory
+    mode: '0755'
+
 - name: Enable the File System Browser plugin of the Kate editor by default.
   become: false
   community.general.kdeconfig:

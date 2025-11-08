@@ -35,37 +35,18 @@
     dest: '{{ ansible_user_dir }}/.config/plasma-workspace/env/90-load-user-profile.source.sh'
     mode: '0644'
 
-- name: Check whether the preferred single click behavior is configured in the KDE desktop environment.
-  become: false
-  changed_when: false
-  register: kde_single_click_behavior_raw
-  ansible.builtin.command:
-    argv:
-      - kreadconfig6
-      - --file
-      - kdeglobals
-      - --group
-      - KDE
-      - --key
-      - SingleClick
-
 - name: Configure the preferred single click behavior in the KDE desktop environment.
-  when: kde_single_click_behavior_raw.stdout != "false"
   become: false
-  register: kde_single_click_behavior_changing_raw
-  changed_when: kde_single_click_behavior_changing_raw.rc == 0
-  ansible.builtin.command:
-    argv:
-      - kwriteconfig6
-      - --file
-      - kdeglobals
-      - --group
-      - KDE
-      - --type
-      - bool
-      - --key
-      - SingleClick
-      - false
+  community.general.kdeconfig:
+    path: >-
+      {{
+        ansible_env.XDG_CONFIG_HOME
+        | default(ansible_user_dir + "/.config")
+      }}/kdeglobals
+    values:
+      - group: KDE
+        key: SingleClick
+        bool_value: false
 
 - name: Check whether the Breeze Dark global theme is configured in the KDE desktop environment.
   become: false
@@ -93,42 +74,21 @@
       - --apply
       - org.kde.breezedark.desktop
 
-- name: Check whether the Plastik window decoration in KDE desktop environment is configured
-  become: false
-  changed_when: false
-  register: kde_window_decoration_theme_raw
-  ansible.builtin.command:
-    argv:
-      - kreadconfig6
-      - --file
-      - kwinrc
-      - --group
-      - org.kde.kdecoration2
-      - --key
-      - theme
-
 - name: Use Plastik window decoration in KDE desktop environment to provide a Windows-like user interface.
-  when: kde_window_decoration_theme_raw.stdout != 'kwin4_decoration_qml_plastik'
   become: false
-  register: plastik_configuration_result_raw
-  changed_when: plastik_configuration_result_raw.rc == 0
-  loop:
-    - key: library
-      value: org.kde.kwin.aurorae
-    - key: theme
-      value: kwin4_decoration_qml_plastik
-  loop_control:
-    loop_var: config
-  ansible.builtin.command:
-    argv:
-      - kwriteconfig6
-      - --file
-      - kwinrc
-      - --group
-      - org.kde.kdecoration2
-      - --key
-      - '{{ config.key }}'
-      - '{{ config.value }}'
+  community.general.kdeconfig:
+    path: >-
+      {{
+        ansible_env.XDG_CONFIG_HOME
+        | default(ansible_user_dir + "/.config")
+      }}/kwinrc
+    values:
+      - group: org.kde.kdecoration2
+        key: library
+        value: org.kde.kwin.aurorae
+      - group: org.kde.kdecoration2
+        key: theme
+        value: kwin4_decoration_qml_plastik
 
 - name: Install runtime dependencies for the Dolphin UI configuration file patching logic
   become: true
@@ -187,35 +147,21 @@
     name:
       - kate
 
-- name: Check whether the Kate Editor has the File System Browser plugin enabled.
+- name: Ensure that the Kate data directory exists
   become: false
-  changed_when: false
-  register: kate_file_system_browser_plugin_presence_raw
-  ansible.builtin.command:
-    argv:
-      - kreadconfig6
-      - --file
-      - '{{ ansible_user_dir }}/.local/share/kate/anonymous.katesession'
-      - --group
-      - Kate Plugins
-      - --key
-      - katefilebrowserplugin
+  ansible.builtin.file:
+    path: '{{ ansible_user_dir }}/.local/share/kate'
+    state: directory
+    mode: '0755'
 
 - name: Enable the File System Browser plugin of the Kate editor by default.
-  when: kate_file_system_browser_plugin_presence_raw.stdout != 'true'
   become: false
-  register: kate_fsb_plugin_enablement_result
-  changed_when: kate_fsb_plugin_enablement_result.rc == 0
-  ansible.builtin.command:
-    argv:
-      - kwriteconfig6
-      - --file
-      - '{{ ansible_user_dir }}/.local/share/kate/anonymous.katesession'
-      - --group
-      - Kate Plugins
-      - --key
-      - katefilebrowserplugin
-      - 'true'
+  community.general.kdeconfig:
+    path: '{{ ansible_user_dir }}/.local/share/kate/anonymous.katesession'
+    values:
+      - group: Kate Plugins
+        key: katefilebrowserplugin
+        value: true
 
 - name: Ensure that the Konqueror browser is installed, which is used for reading manual and info pages in KDE.
   become: true
