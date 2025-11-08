@@ -1,0 +1,11 @@
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0+
+- name: Gather installed packages information
+  when: '"packages" not in hostvars[inventory_hostname]'
+  ansible.builtin.package_facts:
+
+- name: Install Google Chrome
+  when: '"google-chrome-stable" not in hostvars[inventory_hostname].packages'
+  become: true
+  ansible.builtin.apt:
+    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
