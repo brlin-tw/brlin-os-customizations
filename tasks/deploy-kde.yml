@@ -90,6 +90,19 @@
         key: theme
         value: kwin4_decoration_qml_plastik
 
+- name: Enable wobbly window desktop effect
+  become: false
+  community.general.kdeconfig:
+    path: >-
+      {{
+        ansible_env.XDG_CONFIG_HOME
+        | default(ansible_user_dir + "/.config")
+      }}/kwinrc
+    values:
+      - group: Plugins
+        key: wobblywindowsEnabled
+        bool_value: true
+
 - name: Install runtime dependencies for the Dolphin UI configuration file patching logic
   become: true
   ansible.builtin.package:
