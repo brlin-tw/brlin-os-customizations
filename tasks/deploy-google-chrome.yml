@@ -4,8 +4,10 @@
   when: '"packages" not in hostvars[inventory_hostname]'
   ansible.builtin.package_facts:
 
-- name: Install Google Chrome
-  when: '"google-chrome-stable" not in hostvars[inventory_hostname].packages'
+- name: Install Google Chrome(Debian-based OSes)
+  when: >-
+    ansible_os_family == "Debian"
+    and "google-chrome-stable" not in hostvars[inventory_hostname].packages
   become: true
   ansible.builtin.apt:
     deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
