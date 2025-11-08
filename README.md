@@ -211,6 +211,8 @@ The following external materials are reference during the development of this pr
   Explains how to install snap package against certain channel using the `community.general.snap` module.
 * [Prevent connectivity issues with LXD and Docker | How to configure your firewall | LXD docs](https://documentation.ubuntu.com/lxd/latest/howto/network_bridge_firewalld/#prevent-connectivity-issues-with-lxd-and-docker)  
   Explains how to workaround Docker's bug so that LXD containers can access the Internet.
+* [community.general.kdeconfig module – Manage KDE configuration files — Ansible Community Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/kdeconfig_module.html)  
+  Explains how to use the `community.general.kdeconfig` module to manage KDE configuration files.
 
 ## Licensing
 
