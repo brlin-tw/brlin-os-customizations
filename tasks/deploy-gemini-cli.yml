@@ -103,6 +103,7 @@
     global: true
 
 - name: Ensure the .profile.d configuration drop-in directory exists.
+  when: gemini_api_key is defined
   ansible.builtin.file:
     path: '{{ _profile_d_dir }}'
     state: directory
@@ -111,6 +112,7 @@
     mode: '0755'
 
 - name: Deploy companion .profile.d scriplet from template.
+  when: gemini_api_key is defined
   ansible.builtin.template:
     src: '{{ role_path }}/templates/dot-profile.d/10-configure-gemini-cli.source.sh.j2'
     dest: '{{ _profile_d_dir }}/10-configure-gemini-cli.source.sh'
