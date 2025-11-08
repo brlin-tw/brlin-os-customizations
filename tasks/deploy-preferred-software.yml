@@ -754,3 +754,13 @@
     Ensure that the Google Chrome web browser is installed, which is
     my preferred AI agent CLI client
   ansible.builtin.include_tasks: deploy-google-chrome.yml
+
+- name: Ensure that the Konqueror browser is installed, which is used for reading manual and info pages in KDE.
+  become: true
+  ansible.builtin.package:
+    name: konqueror
+
+- name: Ensure that KDE Connect is installed, which is for syncing data with my mobile devices in the KDE desktop environment.
+  become: true
+  ansible.builtin.package:
+    name: kdeconnect
