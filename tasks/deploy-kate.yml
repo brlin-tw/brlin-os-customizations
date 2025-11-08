@@ -1,0 +1,28 @@
+# Task list for deploying the Kate editor application
+#
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0+
+- name: >-
+    Ensure that the Kate Editor is installed, which is a powerful
+    plaintext file editor with syntax highlighting and other
+    powerful features.
+  become: true
+  ansible.builtin.package:
+    name:
+      - kate
+
+- name: Ensure that the Kate data directory exists
+  become: false
+  ansible.builtin.file:
+    path: '{{ ansible_user_dir }}/.local/share/kate'
+    state: directory
+    mode: '0755'
+
+- name: Enable the File System Browser plugin of the Kate editor by default.
+  become: false
+  community.general.kdeconfig:
+    path: '{{ ansible_user_dir }}/.local/share/kate/anonymous.katesession'
+    values:
+      - group: Kate Plugins
+        key: katefilebrowserplugin
+        value: true

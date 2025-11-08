@@ -138,30 +138,8 @@
       - Action:
           name: go_up
 
-- name: >-
-    Ensure that the Kate Editor is installed, which is a powerful
-    plaintext file editor with syntax highlighting and other
-    powerful features.
-  become: true
-  ansible.builtin.package:
-    name:
-      - kate
-
-- name: Ensure that the Kate data directory exists
-  become: false
-  ansible.builtin.file:
-    path: '{{ ansible_user_dir }}/.local/share/kate'
-    state: directory
-    mode: '0755'
-
-- name: Enable the File System Browser plugin of the Kate editor by default.
-  become: false
-  community.general.kdeconfig:
-    path: '{{ ansible_user_dir }}/.local/share/kate/anonymous.katesession'
-    values:
-      - group: Kate Plugins
-        key: katefilebrowserplugin
-        value: true
+- name: Deploy Kate
+  ansible.builtin.import_tasks: deploy-kate.yml
 
 - name: Ensure that the Konqueror browser is installed, which is used for reading manual and info pages in KDE.
   become: true
