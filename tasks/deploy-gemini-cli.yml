@@ -59,6 +59,8 @@
   failed_when: nodejs_package_version_raw.rc != 0
   environment:
     LANG: C.UTF-8
+  args:
+    executable: /bin/bash
   ansible.builtin.shell: |-
     set -o pipefail
     apt-cache policy nodejs \
