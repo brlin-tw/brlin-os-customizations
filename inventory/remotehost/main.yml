@@ -11,10 +11,10 @@
 all:
   # 主機定義
   hosts:
-    vagrant:
-      ansible_host: 127.0.0.1
-      ansible_port: 2222
-      ansible_user: vagrant
-      ansible_password: vagrant
-      ansible_become_password: vagrant
-      ansible_ssh_private_key: /home/brlin/文件/自由知識創作平台/作業系統 Operating Systems/Ubuntu/Ubuntu Desktop in Vagrant/.vagrant/machines/default/virtualbox/private_key
+    remote-host:
+      ansible_host: remote-host.local
+      #ansible_port: 22
+      #ansible_user: username
+      #ansible_password: password
+      #ansible_become_password: password
+      #ansible_ssh_private_key:
