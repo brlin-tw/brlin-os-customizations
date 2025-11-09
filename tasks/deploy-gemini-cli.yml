@@ -2,16 +2,6 @@
 #
 # Copyright 2025 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
-- name: Assert that gemini_api_key variable is defined
-  ansible.builtin.assert:
-    that:
-      - gemini_api_key is defined
-      - gemini_api_key | length > 0
-      - gemini_api_key != '__REDACTED__'
-    fail_msg: >
-      The gemini_api_key variable must be defined and not empty
-      or placeholder value.
-
 - name: Install NPM
   become: true
   ansible.builtin.package:
