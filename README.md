@@ -103,6 +103,19 @@ Set the maximum number of inotify user watches.
 **Supported values:** Any positive integer.  
 **Default value:** `1048576`
 
+### brlinos_preferred_input_method_framework
+
+Set the preferred input method framework to configure.  Both will be installed no matter which one is selected here, but only the selected framework will be configured as the default input method framework.
+
+**NOTE:** Currently this only applies to the KDE Plasma desktop environment, in other desktop environments IBus is used.
+
+**Supported values:**
+
+* `ibus`: Use IBus input method framework.
+* `fcitx`: Use Fcitx input method framework.
+
+**Default value:** `fcitx`
+
 ## Development
 
 This section documents helpful information in developing this project:

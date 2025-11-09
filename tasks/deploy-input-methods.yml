@@ -3,6 +3,22 @@
 # Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 
+- name: Ensure that the Fcitx input method framework is installed.
+  become: true
+  ansible.builtin.package:
+    name:
+      - fcitx5
+
+- name: Ensure that the Fcitx graphical frontends are installed
+  become: true
+  ansible.builtin.package:
+    name:
+      - fcitx5-frontend-gtk2
+      - fcitx5-frontend-gtk3
+      - fcitx5-frontend-gtk4
+      - fcitx5-frontend-qt5
+      - fcitx5-frontend-qt6
+
 - name: Ensure that the IBus input method framework and its graphical toolkit support modules are installed.
   become: true
   ansible.builtin.package:
@@ -83,7 +99,21 @@
     key: /desktop/ibus/engine/chewing/show-page-number
     value: true
 
+- name: Ensure the Fcitx Wayland virtual keyboard is set in the KDE desktop environment.
+  when: brlinos_preferred_input_method_framework == 'fcitx'
+  community.general.kdeconfig:
+    path: >-
+      {{
+        ansible_env.XDG_CONFIG_HOME
+        | default(ansible_user_dir + "/.config")
+      }}/kwinrc
+    values:
+      - group: Wayland
+        key: InputMethod
+        value: /usr/share/applications/fcitx5-wayland-launcher.desktop
+
 - name: Ensure the IBus Wayland virtual keyboard is set in the KDE desktop environment.
+  when: brlinos_preferred_input_method_framework == 'ibus'
   community.general.kdeconfig:
     path: >-
       {{
