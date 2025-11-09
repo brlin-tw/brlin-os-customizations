@@ -77,18 +77,23 @@
   ansible.builtin.set_fact:
     nodejs_package_version: '{{ nodejs_package_version_raw.stdout | string }}'
 
-- name: Bail out if the installed Node.js version is lower than the required version for Gemini CLI
-  ansible.builtin.assert:
-    that:
-      - nodejs_package_version is defined
-      - nodejs_package_version != ''
-      - nodejs_package_version is ansible.builtin.version(gemini_cli_required_node_version, gemini_cli_required_node_version_operator)
-    fail_msg: >
-      The Node.JS version available in the distro's package repository
+- name: Skip installation if the installed Node.js version is lower than the required version for Gemini CLI
+  when: >-
+    nodejs_package_version is defined
+    and nodejs_package_version != ''
+    and not nodejs_package_version is ansible.builtin.version(gemini_cli_required_node_version, gemini_cli_required_node_version_operator)
+  ansible.builtin.debug:
+    msg: >
+      Warning: The Node.JS version available in the distro's package repository
       ({{ nodejs_package_version }}) is lower than the required version
-      for Gemini CLI ({{ gemini_cli_required_node_version }}).
+      for Gemini CLI ({{ gemini_cli_required_node_version }}), installation
+      of Gemini CLI will be skipped.
 
 - name: Install Gemini CLI
+  when: >-
+    nodejs_package_version is defined
+    and nodejs_package_version != ''
+    and nodejs_package_version is ansible.builtin.version(gemini_cli_required_node_version, gemini_cli_required_node_version_operator)
   become: true
   community.general.npm:
     name: '@google/gemini-cli'
