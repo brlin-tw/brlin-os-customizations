@@ -6,17 +6,17 @@
 - name: Set docker users to current user
   ansible.builtin.set_fact:
     docker_users:
-      - "{{ ansible_user_id }}"
+      - '{{ ansible_facts["user_id"] }}'
 
 - name: >-
     Ensure that the Docker Engine and its supporting software is installed,
     which is used to create testing environments for some of my projects.
   when: >-
-    ansible_distribution == 'Ubuntu'
-      or ansible_distribution == 'Debian'
-      or ansible_distribution == 'Fedora'
-      or ansible_distribution == 'Alpine'
-      or ansible_distribution == 'ArchLinux'
+    ansible_facts["distribution"] == 'Ubuntu'
+      or ansible_facts["distribution"] == 'Debian'
+      or ansible_facts["distribution"] == 'Fedora'
+      or ansible_facts["distribution"] == 'Alpine'
+      or ansible_facts["distribution"] == 'ArchLinux'
   become: true
   ansible.builtin.import_role:
     name: geerlingguy.docker
@@ -34,7 +34,7 @@
     mode: '0644'
 
 - name: Workaround LXD networking blocked due to Docker firewall policies(ingress, IPv4).
-  when: ansible_virtualization_type != 'docker'
+  when: ansible_facts["virtualization_type"] != 'docker'
   become: true
   loop:
     - lxdbr0
@@ -46,7 +46,7 @@
     rule_num: 1
 
 - name: Workaround LXD networking blocked due to Docker firewall policies (ingress, IPv6).
-  when: ansible_virtualization_type != 'docker'
+  when: ansible_facts["virtualization_type"] != 'docker'
   become: true
   loop:
     - lxdbr0
@@ -59,7 +59,7 @@
     ip_version: ipv6
 
 - name: Workaround LXD networking blocked due to Docker firewall policies (egress, IPv4).
-  when: ansible_virtualization_type != 'docker'
+  when: ansible_facts["virtualization_type"] != 'docker'
   become: true
   loop:
     - lxdbr0
@@ -72,7 +72,7 @@
     rule_num: 1
 
 - name: Workaround LXD networking blocked due to Docker firewall policies (egress, IPv6).
-  when: ansible_virtualization_type != 'docker'
+  when: ansible_facts["virtualization_type"] != 'docker'
   become: true
   loop:
     - lxdbr0
@@ -87,16 +87,16 @@
 
 - name: Install iptables-persistent for rule persistence.
   when: >-
-    ansible_os_family == 'Debian'
-    and ansible_virtualization_type != 'docker'
+    ansible_facts["os_family"] == 'Debian'
+    and ansible_facts["virtualization_type"] != 'docker'
   become: true
   ansible.builtin.package:
     name: iptables-persistent
 
 - name: Save current iptables rules to persistent storage.
   when: >-
-    ansible_os_family == 'Debian'
-    and ansible_virtualization_type != 'docker'
+    ansible_facts["os_family"] == 'Debian'
+    and ansible_facts["virtualization_type"] != 'docker'
   become: true
   register: iptable_save_result
   changed_when: iptable_save_result.rc == 0
@@ -104,8 +104,8 @@
 
 - name: Save current ip6tables rules to persistent storage.
   when: >-
-    ansible_os_family == 'Debian'
-    and ansible_virtualization_type != 'docker'
+    ansible_facts["os_family"] == 'Debian'
+    and ansible_facts["virtualization_type"] != 'docker'
   become: true
   register: iptable_save_result
   changed_when: iptable_save_result.rc == 0
