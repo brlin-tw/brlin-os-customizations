@@ -1,6 +1,6 @@
 # Task list for deploying Docker and its utilities on the managed nodes
 #
-# Copyright 2024 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2026 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 
 - name: Set docker users to current user
@@ -33,7 +33,7 @@
     group: root
     mode: '0644'
 
-- name: Allow Docker egress traffic through LXD bridge interfaces.
+- name: Workaround LXD networking blocked due to Docker firewall policies(ingress, IPv4).
   when: ansible_virtualization_type != 'docker'
   become: true
   loop:
@@ -45,7 +45,7 @@
     action: insert
     rule_num: 1
 
-- name: Allow Docker egress traffic through LXD bridge interfaces (IPv6).
+- name: Workaround LXD networking blocked due to Docker firewall policies (ingress, IPv6).
   when: ansible_virtualization_type != 'docker'
   become: true
   loop:
@@ -58,7 +58,7 @@
     rule_num: 1
     ip_version: ipv6
 
-- name: Allow Docker established connections through LXD bridge interfaces.
+- name: Workaround LXD networking blocked due to Docker firewall policies (egress, IPv4).
   when: ansible_virtualization_type != 'docker'
   become: true
   loop:
@@ -71,7 +71,7 @@
     action: insert
     rule_num: 1
 
-- name: Allow Docker established connections through LXD bridge interfaces (IPv6).
+- name: Workaround LXD networking blocked due to Docker firewall policies (egress, IPv6).
   when: ansible_virtualization_type != 'docker'
   become: true
   loop:
