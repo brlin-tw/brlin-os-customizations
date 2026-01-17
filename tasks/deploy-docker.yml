@@ -85,6 +85,27 @@
     rule_num: 1
     ip_version: ipv6
 
+- name: Workaround NetworkManager hotspot networking blocked due to Docker firewall policies (egress).
+  when: ansible_facts["virtualization_type"] != 'docker'
+  become: true
+  ansible.builtin.iptables:
+    action: insert
+    chain: DOCKER-USER
+    source: 10.42.0.0/24
+    jump: ACCEPT
+
+- name: Workaround NetworkManager hotspot networking blocked due to Docker firewall policies (ingress).
+  when: ansible_facts["virtualization_type"] != 'docker'
+  become: true
+  ansible.builtin.iptables:
+    action: insert
+    chain: DOCKER-USER
+    destination: 10.42.0.0/24
+    ctstate:
+      - RELATED
+      - ESTABLISHED
+    jump: ACCEPT
+
 - name: Install iptables-persistent for rule persistence.
   when: >-
     ansible_facts["os_family"] == 'Debian'
