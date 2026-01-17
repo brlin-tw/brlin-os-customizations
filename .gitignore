@@ -102,3 +102,7 @@
 
 # Don't track JSON files which is used for testing API calls
 /*.json
+
+# Do track Agent Skills
+!/.claude
+/.claude/settings.local.json
