@@ -5,7 +5,7 @@
 # This file is based on The Common Pre-commit Framework Configuration Template
 # https://github.com/Lin-Buo-Ren/common-precommit-config-template
 #
-# Copyright 2023 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2026 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 repos:
@@ -43,8 +43,8 @@ repos:
 
   # Check REUSE compliance
   # https://reuse.software/
-  - repo: https://github.com/fsfe/reuse-tool
-    rev: v4.0.3
+  - repo: https://codeberg.org/fsfe/reuse-tool
+    rev: v6.2.0
     hooks:
       - id: reuse
 
