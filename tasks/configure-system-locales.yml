@@ -1,10 +1,10 @@
 # Task list to configure the preferred system locale settings.
 #
-# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# Copyright 2026 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 
 - name: Ensure the required locales are generated
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   become: true
   community.general.locale_gen:
     name:
@@ -16,14 +16,14 @@
       - zh_TW.UTF-8
 
 - name: Ensure that the Chinese locale data is installed on RedHat based systems
-  when: ansible_os_family == "RedHat"
+  when: ansible_facts['os_family'] == "RedHat"
   become: true
   ansible.builtin.package:
     name:
       - glibc-langpack-zh
 
 - name: Configure the preferred UI localization settings on RedHat based systems
-  when: ansible_os_family == "RedHat"
+  when: ansible_facts['os_family'] == "RedHat"
   become: true
   ansible.builtin.lineinfile:
     path: /etc/locale.conf
@@ -31,7 +31,7 @@
     line: 'LANGUAGE="zh_TW:zh:en"'
 
 - name: Configure preferred UI localization settings on Debian-based systems
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   become: true
   register: update_language
   changed_when: update_language.stdout != ""
@@ -43,7 +43,7 @@
 
 - name: Ensure that the Chinese-localized manpages are installed
   become: true
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   ansible.builtin.package:
     name:
       - manpages-zh

@@ -1,6 +1,6 @@
 # Task list for installing and configuring my preferred software
 #
-# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# Copyright 2026 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 
 - name: Ensure that the software repository local cache is fresh
@@ -152,7 +152,7 @@
 
 - name: Install codecs for multimedia playback.
   become: true
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_facts['distribution'] == "Ubuntu"
   ansible.builtin.package:
     name:
       - ubuntu-restricted-extras
@@ -224,7 +224,7 @@
         to the container engine.
       become: true
       ansible.builtin.user:
-        name: '{{ ansible_user_id }}'
+        name: '{{ ansible_facts["user_id"] }}'
         groups:
           - lxd
         append: true
@@ -260,8 +260,8 @@
     Ensure that the Steam gaming platform is installed, which is used
     to manage some of the games of mine.
   when: >-
-    ansible_architecture == "i386"
-      or ansible_architecture == "x86_64"
+    ansible_facts['architecture'] == "i386"
+      or ansible_facts['architecture'] == "x86_64"
   rescue:
     - name: Interrupt the play if any of the block tasks failed.
       ansible.builtin.fail:
@@ -278,7 +278,7 @@
         Ensure that the i386 architecture of the APT package management
         system is enabled to install Steam's runtime dependencies.
       when: >-
-        ansible_architecture == "x86_64"
+        ansible_facts['architecture'] == "x86_64"
           and "i386" not in dpkg_foreign_arches_raw.stdout_lines
       become: true
       register: dpkg_add_architecture_result
@@ -287,7 +287,7 @@
 
     - name: >-
         Reload APT local cache to apply foreign architecture settings.
-      when: ansible_architecture == "x86_64"
+      when: ansible_facts['architecture'] == "x86_64"
       ansible.builtin.include_tasks: ensure-software-repository-local-cache-is-fresh.yml
 
     - name: >-
@@ -386,10 +386,10 @@
       # Refer PPA support status at:
       # https://launchpad.net/~flatpak/+archive/ubuntu/stable
       when: >-
-        ansible_distribution == 'Ubuntu'
+        ansible_facts['distribution'] == 'Ubuntu'
           and (
-            ansible_distribution_version == '22.04'
-            or ansible_distribution_version == '20.04'
+            ansible_facts['distribution_version'] == '22.04'
+            or ansible_facts['distribution_version'] == '20.04'
           )
       ansible.builtin.apt_repository:
         repo: ppa:flatpak/stable
@@ -500,7 +500,7 @@
 - name: >-
     Ensure that the equivs utility is installed, for creating meta-packages to
     easily install/remove build/runtime dependencies.
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   become: true
   ansible.builtin.package:
     name: equivs

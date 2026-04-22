@@ -4,5 +4,5 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 iscan_udev_rules_file: /etc/udev/rules.d/60-iscan.rule
 cache_dir: '{{ role_path }}/files/cache'
-_profile_d_dir: '{{ ansible_user_dir }}/.profile.d'
-_bashrc_d_dir: '{{ ansible_user_dir }}/.bashrc.d'
+_profile_d_dir: '{{ ansible_facts["user_dir"] }}/.profile.d'
+_bashrc_d_dir: '{{ ansible_facts["user_dir"] }}/.bashrc.d'

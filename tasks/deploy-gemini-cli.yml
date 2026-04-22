@@ -1,6 +1,6 @@
 # Task list for deploying Gemini CLI on the managed nodes
 #
-# Copyright 2025 林博仁(Buo-ren Lin) <Buo.Ren.Lin@gmail.com>
+# Copyright 2026 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 - name: Install NPM
   become: true
@@ -26,7 +26,7 @@
     gemini_cli_required_node_version_operator: '{{ gemini_cli_required_node_version_raw.stdout | regex_replace("[0-9]+$", "") }}'
 
 - name: Query the package version of Node.JS in the DNF/YUM package cache
-  when: ansible_pkg_mgr in ['dnf', 'yum']
+  when: ansible_facts['pkg_mgr'] in ['dnf', 'yum']
   become: true
   changed_when: false
   register: nodejs_package_version_raw
@@ -52,7 +52,7 @@
     fi
 
 - name: Query the package version of Node.JS in the APT package cache
-  when: ansible_pkg_mgr in ['apt']
+  when: ansible_facts['pkg_mgr'] in ['apt']
   become: true
   changed_when: false
   register: nodejs_package_version_raw
@@ -104,8 +104,8 @@
   ansible.builtin.file:
     path: '{{ _profile_d_dir }}'
     state: directory
-    owner: '{{ ansible_user_id }}'
-    group: '{{ ansible_user_id }}'
+    owner: '{{ ansible_facts["user_id"] }}'
+    group: '{{ ansible_facts["user_id"] }}'
     mode: '0755'
 
 - name: Deploy companion .profile.d scriplet from template.

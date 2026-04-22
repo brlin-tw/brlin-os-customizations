@@ -1,6 +1,6 @@
 # Task list for deploying the preferred input methods
 #
-# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# Copyright 2026 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 
 - name: Ensure that the Fcitx input method framework is installed.
@@ -104,8 +104,8 @@
   community.general.kdeconfig:
     path: >-
       {{
-        ansible_env.XDG_CONFIG_HOME
-        | default(ansible_user_dir + "/.config")
+        ansible_facts['env'].XDG_CONFIG_HOME
+        | default(ansible_facts['user_dir'] + "/.config")
       }}/kwinrc
     values:
       - group: Wayland
@@ -117,8 +117,8 @@
   community.general.kdeconfig:
     path: >-
       {{
-        ansible_env.XDG_CONFIG_HOME
-        | default(ansible_user_dir + "/.config")
+        ansible_facts['env'].XDG_CONFIG_HOME
+        | default(ansible_facts['user_dir'] + "/.config")
       }}/kwinrc
     values:
       - group: Wayland

@@ -1,6 +1,6 @@
 # Task list for deploying the KDE desktop environment and its associated applications
 #
-# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# Copyright 2026 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
 
 - name: >-
@@ -13,8 +13,8 @@
 
 - name: Ensure that the Wayland session of KDE is installed.
   when: >-
-    ansible_distribution == "Ubuntu"
-    and ansible_distribution_version <= "24.04"
+    ansible_facts['distribution'] == "Ubuntu"
+    and ansible_facts['distribution_version'] <= "24.04"
   become: true
   ansible.builtin.package:
     name:
@@ -24,7 +24,7 @@
 - name: Ensure that the session environment variables drop-in configuration directory exists.
   become: false
   ansible.builtin.file:
-    path: '{{ ansible_user_dir }}/.config/plasma-workspace/env'
+    path: '{{ ansible_facts["user_dir"] }}/.config/plasma-workspace/env'
     state: directory
     mode: '0755'
 
@@ -32,7 +32,7 @@
   become: false
   ansible.builtin.copy:
     src: plasma-workspace-env/load-user-profile.source.sh
-    dest: '{{ ansible_user_dir }}/.config/plasma-workspace/env/90-load-user-profile.source.sh'
+    dest: '{{ ansible_facts["user_dir"] }}/.config/plasma-workspace/env/90-load-user-profile.source.sh'
     mode: '0644'
 
 - name: Configure the preferred single click behavior in the KDE desktop environment.
@@ -40,8 +40,8 @@
   community.general.kdeconfig:
     path: >-
       {{
-        ansible_env.XDG_CONFIG_HOME
-        | default(ansible_user_dir + "/.config")
+        ansible_facts['env'].XDG_CONFIG_HOME
+        | default(ansible_facts['user_dir'] + "/.config")
       }}/kdeglobals
     values:
       - group: KDE
@@ -59,7 +59,7 @@
       - --extended-regexp
       - --quiet
       - ^LookAndFeelPackage=org.kde.breezedark.desktop
-      - '{{ ansible_user_dir }}/.config/kdeglobals'
+      - '{{ ansible_facts["user_dir"] }}/.config/kdeglobals'
 
 - name: Configure the Breeze Dark KDE global theme.
   when: kde_global_theme_config_raw.rc != 0
@@ -79,8 +79,8 @@
   community.general.kdeconfig:
     path: >-
       {{
-        ansible_env.XDG_CONFIG_HOME
-        | default(ansible_user_dir + "/.config")
+        ansible_facts['env'].XDG_CONFIG_HOME
+        | default(ansible_facts['user_dir'] + "/.config")
       }}/kwinrc
     values:
       - group: org.kde.kdecoration2
@@ -95,8 +95,8 @@
   community.general.kdeconfig:
     path: >-
       {{
-        ansible_env.XDG_CONFIG_HOME
-        | default(ansible_user_dir + "/.config")
+        ansible_facts['env'].XDG_CONFIG_HOME
+        | default(ansible_facts['user_dir'] + "/.config")
       }}/kwinrc
     values:
       - group: Plugins
@@ -112,12 +112,12 @@
   become: false
   register: dolphinui_config_presence_raw
   ansible.builtin.stat:
-    path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
+    path: '{{ ansible_facts["user_dir"] }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
 
 - name: Ensure the Dolphin kxmlgui configuration directory exists
   when: not dolphinui_config_presence_raw.stat.exists
   ansible.builtin.file:
-    path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin'
+    path: '{{ ansible_facts["user_dir"] }}/.local/share/kxmlgui5/dolphin'
     state: directory
     mode: '0755'
 
@@ -128,14 +128,14 @@
   become: false
   ansible.builtin.copy:
     src: kxmlgui5/dolphin/dolphinui.rc
-    dest: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
+    dest: '{{ ansible_facts["user_dir"] }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
     mode: '0644'
 
 - name: Check whether the "back to upper directory" toolbar option is already available
   become: false
   register: dolphin_go_up_toolbar_option_presence_raw
   community.general.xml:
-    path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
+    path: '{{ ansible_facts["user_dir"] }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
     xpath: '/gui/ToolBar[@name="mainToolBar"]/Action[@name="go_up"]'
     count: true
 
@@ -143,7 +143,7 @@
   when: dolphin_go_up_toolbar_option_presence_raw.count == 0
   become: false
   community.general.xml:
-    path: '{{ ansible_user_dir }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
+    path: '{{ ansible_facts["user_dir"] }}/.local/share/kxmlgui5/dolphin/dolphinui.rc'
     backup: true
     xpath: '/gui/ToolBar[@name="mainToolBar"]/Action[@name="go_back"]'
     insertafter: true
