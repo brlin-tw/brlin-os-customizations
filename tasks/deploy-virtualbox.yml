@@ -109,42 +109,42 @@
   # https://www.virtualbox.org/wiki/Linux_Downloads
   when: >-
     (
-      ansible_distribution == "Ubuntu"
+      ansible_facts['distribution'] == "Ubuntu"
         and (
-        ansible_distribution_version == "24.04"
-          or ansible_distribution_version == "22.04"
-          or ansible_distribution_version == "20.04"
+        ansible_facts['distribution_version'] == "24.04"
+          or ansible_facts['distribution_version'] == "22.04"
+          or ansible_facts['distribution_version'] == "20.04"
         )
     ) or (
       (
-        ansible_distribution == "RedHat"
-          or ansible_distribution == "OracleLinux"
+        ansible_facts['distribution'] == "RedHat"
+          or ansible_facts['distribution'] == "OracleLinux"
       ) and (
-        ansible_distribution_version == "9"
-          or ansible_distribution_version == "8"
+        ansible_facts['distribution_version'] == "9"
+          or ansible_facts['distribution_version'] == "8"
       )
     ) or (
-      ansible_distribution == "Debian"
+      ansible_facts['distribution'] == "Debian"
         and (
-          ansible_distribution_version == "12"
-            or ansible_distribution_version == "11"
+          ansible_facts['distribution_version'] == "12"
+            or ansible_facts['distribution_version'] == "11"
         )
     ) or (
-      ansible_distribution == "openSUSE"
+      ansible_facts['distribution'] == "openSUSE"
         and (
-          ansible_distribution_version == "15.6"
-            or ansible_distribution_version == "15.5"
-            or ansible_distribution_version == "15.4"
-            or ansible_distribution_version == "15.3"
+          ansible_facts['distribution_version'] == "15.6"
+            or ansible_facts['distribution_version'] == "15.5"
+            or ansible_facts['distribution_version'] == "15.4"
+            or ansible_facts['distribution_version'] == "15.3"
         )
     ) or (
-      ansible_distribution == "Fedora"
+      ansible_facts['distribution'] == "Fedora"
         and (
-          ansible_distribution_version == "40"
-            or ansible_distribution_version == "39"
-            or ansible_distribution_version == "38"
-            or ansible_distribution_version == "37"
-            or ansible_distribution_version == "36"
+          ansible_facts['distribution_version'] == "40"
+            or ansible_facts['distribution_version'] == "39"
+            or ansible_facts['distribution_version'] == "38"
+            or ansible_facts['distribution_version'] == "37"
+            or ansible_facts['distribution_version'] == "36"
         )
     )
   rescue:
@@ -157,9 +157,9 @@
         virtualbox_version: '{{ virtualbox_major_version }}.{{ virtualbox_minor_version }}'
         virtualbox_version_minor: '{{ virtualbox_patch_version }}'
 
-        virtualbox_user: '{{ ansible_user_id }}'
-        virtualbox_vm_folder_group: '{{ ansible_user_id }}'
-        virtualbox_vm_dir: '{{ ansible_user_dir }}/VirtualBoxVMs'
+        virtualbox_user: '{{ ansible_facts["user_id"] }}'
+        virtualbox_vm_folder_group: '{{ ansible_facts["user_id"] }}'
+        virtualbox_vm_dir: '{{ ansible_facts["user_dir"] }}/VirtualBoxVMs'
       ansible.builtin.include_role:
         name: brlin.virtualbox
         apply:
