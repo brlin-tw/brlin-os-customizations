@@ -46,10 +46,10 @@ Your Ansible managed nodes to deploy must satisfy the following requirements:
     )
     ansible-playbook \
         "${ansible_playbook_opts[@]}" \
-        playbooks/apply-customizations.yml
+        playbooks/deploy-brlin-os-customizations.yml
     ```
 
-   If you intend to use [the remotehost inventory](inventory/remotehost/main.yml), add the `-i inventory/remotehost` command option and argument to the `ansible_playbook_opts` array definition, note that in this case the system will automatically reboot to apply the changes while running [the customization apply playbook](playbooks/apply-customizations.yml).
+   If you intend to use [the remotehost inventory](inventory/remotehost/main.yml), add the `-i inventory/remotehost` command option and argument to the `ansible_playbook_opts` array definition, note that in this case the system will automatically reboot to apply the changes while running [the customization apply playbook](playbooks/deploy-brlin-os-customizations.yml).
 
 1. (If using the localhost inventory) Reboot the system to apply the changes
 
