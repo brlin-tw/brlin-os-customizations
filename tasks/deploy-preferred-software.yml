@@ -764,3 +764,6 @@
   become: true
   ansible.builtin.package:
     name: kdeconnect
+
+- name: Ensure that Visual Studio Code is installed, which is currently my preferred code editor.
+  ansible.builtin.include_tasks: deploy-vscode.yml

@@ -1,0 +1,63 @@
+# Copyright 2026 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0+
+- name: Install task list runtime dependencies
+  become: true
+  ansible.builtin.package:
+    name:
+      - apt-transport-https
+      - gpg
+
+- name: Create a temporary directory for download things
+  register: temp_dir
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: vscode
+
+- name: Download the signing key for Microsoft packages
+  become: true
+  ansible.builtin.get_url:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    dest: '{{ temp_dir.path }}/microsoft.asc'
+    mode: '0644'
+
+- name: Dearmor the Microsoft package signing key
+  changed_when: false
+  ansible.builtin.shell:
+    cmd: gpg --dearmor <{{ temp_dir.path | quote }}/microsoft.asc >{{ temp_dir.path | quote }}/microsoft.gpg
+
+- name: Install the Microsoft package signing key
+  become: true
+  ansible.builtin.copy:
+    src: '{{ temp_dir.path | quote }}/microsoft.gpg'
+    dest: /usr/share/keyrings/microsoft.gpg
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Install the APT sources list file
+  become: true
+  ansible.builtin.copy:
+    src: apt-sources.list.d/vscode.sources
+    dest: /etc/apt/sources.list.d/vscode.sources
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Update package index
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Configure the "code" Debian package to automatically install the apt repository and signing key
+  become: true
+  ansible.builtin.debconf:
+    name: code
+    question: code/add-microsoft-repo
+    vtype: select
+    value: 'true'
+
+- name: Install Visual Studio Code
+  become: true
+  ansible.builtin.package:
+    name:
+      - code
