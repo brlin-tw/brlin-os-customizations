@@ -33,6 +33,7 @@
     owner: root
     group: root
     mode: '0644'
+    remote_src: true
 
 - name: Install the APT sources list file
   become: true
