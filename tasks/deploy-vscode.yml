@@ -49,7 +49,9 @@
   ansible.builtin.apt:
     update_cache: yes
 
-- name: Configure the "code" Debian package to automatically install the apt repository and signing key
+- name: >
+    Configure the "code" Debian package to automatically install the apt
+    repository and signing key
   become: true
   ansible.builtin.debconf:
     name: code
