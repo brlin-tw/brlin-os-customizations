@@ -1,3 +1,7 @@
+# APT source definition of Visual Studio code
+#
+# Copyright 2026 Microsoft Corporation et. al. <https://github.com/microsoft/vscode-docs/blob/main/LICENSE.md>
+# SPDX-License-Identifier: MIT
 Types: deb
 URIs: https://packages.microsoft.com/repos/code
 Suites: stable
