@@ -752,7 +752,7 @@
 
 - name: >-
     Ensure that the Google Chrome web browser is installed, which is
-    my preferred AI agent CLI client
+    for workarounds of some websites that do not work well with other browsers.
   ansible.builtin.include_tasks: deploy-google-chrome.yml
 
 - name: Ensure that the Konqueror browser is installed, which is used for reading manual and info pages in KDE.
