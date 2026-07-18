@@ -1,0 +1,19 @@
+# Configure Gemini API key for Gemini related products
+#
+# Copyright 2026 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0+
+- name: Ensure the .profile.d configuration drop-in directory exists.
+  when: gemini_api_key is defined
+  ansible.builtin.file:
+    path: '{{ _profile_d_dir }}'
+    state: directory
+    owner: '{{ ansible_facts["user_id"] }}'
+    group: '{{ ansible_facts["user_id"] }}'
+    mode: '0755'
+
+- name: Deploy companion .profile.d scriptlet from template.
+  when: gemini_api_key is defined
+  ansible.builtin.template:
+    src: '{{ role_path }}/templates/dot-profile.d/10-configure-gemini-api-key.source.sh.j2'
+    dest: '{{ _profile_d_dir }}/10-configure-gemini-api-key.source.sh'
+    mode: '0600'

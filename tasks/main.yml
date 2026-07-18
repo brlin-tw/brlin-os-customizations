@@ -92,6 +92,9 @@
     group: root
     mode: '0644'
 
+- name: Ensure that the Gemini API key is configured for Gemini related products
+  ansible.builtin.include_tasks: configure-gemini-api-key.yml
+
 - name: Cleanup customizations from old versions of the playbook.
   ansible.builtin.import_tasks: cleanup.yml
 

@@ -1,9 +1,8 @@
-# Playbook for deploying Gemini CLI of Buo-ren Lin's
-# preferred operating system to the managed nodes
+# Playbook for configuring Gemini API key to the managed nodes
 #
-# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# Copyright 2026 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0+
-- name: Deploy Gemini CLI to the managed nodes
+- name: Configure Gemini API key for Gemini related products
   hosts: all
   environment: {}
     # Set these environment variables if you need to access the
@@ -12,8 +11,8 @@
     #https_proxy: http://192.168.49.1:8228
   tasks:
     - name: >-
-        Import corresponding task list from the
-        brlin_os_customizations role
+        Import corresponding task list from the brlin_os_customizations
+        role
       ansible.builtin.import_role:
         name: brlin.brlin_os_customizations
-        tasks_from: deploy-gemini-cli.yml
+        tasks_from: configure-gemini-api-key.yml

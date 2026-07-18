@@ -14,3 +14,12 @@
   ansible.builtin.file:
     path: /etc/udev/rules.d/{{ udev_rule_filename }}
     state: absent
+
+- name: Cleanup old .profile.d configuration files
+  loop_control:
+    loop_var: profile_d_filename
+  loop:
+    - 10-configure-gemini-cli.source.sh
+  ansible.builtin.file:
+    path: '{{ _profile_d_dir }}/{{ profile_d_filename }}'
+    state: absent
