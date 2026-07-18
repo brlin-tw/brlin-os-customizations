@@ -1,4 +1,4 @@
-# Release product and their build aritfacts
+# Release product and their build artifacts
 #
 # References:
 #
@@ -7,7 +7,7 @@
 #
 # Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
-name: Release product and their build aritfacts
+name: Release product and their build artifacts
 on:
   push:
     tags:
@@ -15,7 +15,7 @@ on:
 
 jobs:
   release:
-    name: Release product and their build aritfacts
+    name: Release product and their build artifacts
     runs-on: ubuntu-24.04
     permissions:
       # Allow publishing release packages to Releases

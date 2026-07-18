@@ -22,7 +22,7 @@
     name: fail2ban
 
 - name: >-
-    Allow workstation to be broadcasted via Multicast for access
+    Allow workstation to be advertised via Multicast for access
     convenience.
   become: true
   notify:

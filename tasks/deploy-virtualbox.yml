@@ -83,7 +83,7 @@
               ) | list
           }}
 
-    - name: Determine the lastest VirtualBox version that matches the user-specified major.minor version.
+    - name: Determine the latest VirtualBox version that matches the user-specified major.minor version.
       ansible.builtin.set_fact:
         virtualbox_version: '{{ virtualbox_versions_matched_major_minor | last }}'
 

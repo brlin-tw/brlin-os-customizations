@@ -116,7 +116,7 @@ for dropin_file in "${sudoers_dropin_dir}/"*.sudoers; do
         "${dropin_filename}"
 
     # sudo will not accept filename with the period symbol in the
-    # filename, strip the convenicence filename suffix
+    # filename, strip the convenience filename suffix
     dropin_filename_without_suffix="${dropin_filename%.sudoers}"
 
     installed_dropin_file="${sudoers_dropin_dir_system}/${dropin_filename_without_suffix}"

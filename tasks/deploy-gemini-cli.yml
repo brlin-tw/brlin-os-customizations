@@ -108,7 +108,7 @@
     group: '{{ ansible_facts["user_id"] }}'
     mode: '0755'
 
-- name: Deploy companion .profile.d scriplet from template.
+- name: Deploy companion .profile.d scriptlet from template.
   when: gemini_api_key is defined
   ansible.builtin.template:
     src: '{{ role_path }}/templates/dot-profile.d/10-configure-gemini-cli.source.sh.j2'

@@ -1,4 +1,4 @@
-# udev(7) rule for workarounding lack of support for garbage collect operations(DISCARD/UNMAP/TRIM) on flash memory drives over the USB protocol
+# udev(7) rule for working around lack of support for garbage collect operations(DISCARD/UNMAP/TRIM) on flash memory drives over the USB protocol
 #
 # References:
 #

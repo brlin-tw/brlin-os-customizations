@@ -220,7 +220,7 @@ if ! test -e "${shellcheck_dir}/shellcheck"; then
     fi
 
     printf \
-        'Info: Checking ShellCheck architecure availability...\n'
+        'Info: Checking ShellCheck architecture availability...\n'
     case "${arch}" in
         x86_64|armv6hf|aarch64)
             # Assuming the ShellCheck architecture is the same, which
