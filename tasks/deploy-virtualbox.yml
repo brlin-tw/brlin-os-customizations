@@ -101,6 +101,92 @@
     virtualbox_minor_version: '{{ virtualbox_version_components[1] }}'
     virtualbox_patch_version: '{{ virtualbox_version_components[2] }}'
 
+- name: Check if the system is using UEFI firmware
+  register: efi_check
+  ansible.builtin.stat:
+    path: /sys/firmware/efi
+
+- name: Register the has_uefi variable
+  ansible.builtin.set_fact:
+    has_uefi: '{{ efi_check.stat.exists }}'
+
+- name: Check whether mokutil command is available
+  register: mokutil_check
+  changed_when: false
+  failed_when: false
+  ansible.builtin.command:
+    cmd: which -s mokutil
+
+- name: Register the has_mokutil variable
+  ansible.builtin.set_fact:
+    has_mokutil: '{{ mokutil_check.rc == 0 }}'
+
+- name: Check whether Secure Boot is enabled
+  when: has_uefi and has_mokutil
+  register: secureboot_check
+  changed_when: false
+  failed_when: false
+  ansible.builtin.command:
+    cmd: mokutil --sb-state
+
+- name: Register has_secureboot variable
+  when: >-
+    has_uefi and has_mokutil
+  ansible.builtin.set_fact:
+    has_secureboot: >-
+      {{
+        secureboot_check.rc == 0
+        and "SecureBoot enabled" in secureboot_check.stdout
+      }}
+
+- name: Check whether machine owner key(MOK) is available
+  register: mok_check
+  ansible.builtin.stat:
+    path: '{{ mok_cert }}'
+
+- name: Register has_mok variable
+  ansible.builtin.set_fact:
+    has_mok: '{{ mok_check.stat.exists }}'
+
+- name: Check whether the MOK is enrolled
+  when: >-
+    has_uefi
+    and has_mokutil
+    and has_mok
+    and has_secureboot
+  become: true
+  register: mok_enrolled_check
+  changed_when: false
+  failed_when: mok_enrolled_check.rc != 0
+  ansible.builtin.command:
+    argv:
+      - mokutil
+      - --test-key
+      - '{{ mok_cert }}'
+
+- name: Register has_mok_enrolled variable
+  when: >-
+    has_uefi
+    and has_mokutil
+    and has_mok
+    and has_secureboot
+  ansible.builtin.set_fact:
+    has_mok_enrolled: >-
+      {{
+      mok_enrolled_check.stdout
+      | regex_search("MOK is enrolled") is not none
+      }}
+
+- name: Bail out if Secure Boot is enabled and the MOK is not enrolled
+  when: >-
+    has_mok_enrolled is defined
+    and not has_mok_enrolled
+  ansible.builtin.fail:
+    msg: >-
+      Error: Secure Boot is enabled, but the MOK is not enrolled.
+      Please enroll the MOK before proceeding with the installation
+      of the Oracle VirtualBox application.
+
 - name: >-
     (Upstream official packages) Ensure that the Oracle VirtualBox
     application is installed, which is used to create
